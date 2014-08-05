@@ -1,13 +1,11 @@
-"use strict"
+bugsnag = require "bugsnag"
+express = require "express"
+http    = require "http"
+path    = require "path"
+_       = require "lodash"
+request = require 'request'
 
-bugsnag = require("bugsnag")
-express = require("express")
-http = require("http")
-path = require("path")
-_ = require("underscore")
-request = require('request')
-
-authConfig = require('./config')
+authConfig = require './config'
 bugsnag.register(authConfig.bugsnag)
 
 if authConfig.campfire
@@ -17,9 +15,6 @@ if authConfig.campfire
 quizConfig = require('./quiz-config')
 env =
   maxDuration: quizConfig.maxDuration
-
-
-
 
 # Mangoose / Models
 # ------------------------------
