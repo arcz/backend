@@ -18,19 +18,16 @@ module.exports = function (grunt) {
     app: 'app',
     server: 'server',
     tmpServer: '.tmp/server',
-    dist: 'dist'
+    dist: 'dist',
+    config: 'config'
   };
 
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
-      coffeeClient: {
-        files: ['<%= yeoman.app %>/scripts/{,**/}*.coffee'],
-        tasks: ['coffee:client']
-      },
-      coffeeServer: {
-        files: ['<%= yeoman.server %>/{,*/}*.coffee'],
-        tasks: ['coffee:server']
+      coffee: {
+        files: ['*.coffee'],
+        tasks: ['coffee']
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -59,6 +56,7 @@ module.exports = function (grunt) {
         ]
       }
     },
+
     connect: {
       options: {
         port: 3000,
@@ -91,7 +89,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    // express app
+
     express: {
       options: {
         // Override defaults here
@@ -99,102 +97,40 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
-          script: '<%= yeoman.tmpServer %>/server.js',
+          script: '<%= yeoman.tmpServer %>/index.js',
           node_env: 'development'
         }
       },
       prod: {
         options: {
-          script: '<%= yeoman.tmpServer %>/server.js',
+          script: '<%= yeoman.tmpServer %>/index.js',
           node_env: 'production'
         }
       },
       test: {
         options: {
-          script: '<%= yeoman.tmpServer %>/server.js'
+          script: '<%= yeoman.tmpServer %>/index.js'
         }
       }
     },
+
     clean: {
+      dist: [ '.tmp' ]
+    },
+
+    coffee: {
       dist: {
         files: [
           {
-            dot: true,
-            src: [
-              '.tmp',
-              '<%= yeoman.dist %>/*',
-              '!<%= yeoman.dist %>/.git*'
-            ]
-          }
-        ]
-      },
-      server: '.tmp'
-    },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js',
-        '!<%= yeoman.app %>/scripts/vendor/*',
-        'test/spec/{,*/}*.js'
-      ]
-    },
-    mocha: {
-      all: {
-        options: {
-          run: true,
-          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
-        }
-      }
-    },
-    coffee: {
-      client: {
-        files: [
-          {
             expand: true,
-            cwd: '<%= yeoman.app %>/scripts',
-            src: ['{,*/}*.coffee'],
-            dest: '.tmp/scripts',
+            src: [ '**/*.coffee', '!node_modules/**', '!**/bower_components/**'],
+            dest: '.tmp',
             ext: '.js'
           }
         ]
       },
-      server:{
-        files: [
-          {
-            expand: true,
-            cwd: '<%= yeoman.server %>',
-            src: ['{,*/}*.coffee'],
-            dest: '<%= yeoman.tmpServer %>',
-            ext: '.js'
-          }
-        ]
-      },
-      config: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= yeoman.server %>',
-            src: 'quiz-config.coffee',
-            dest: '<%= yeoman.server %>',
-            ext: '.js'
-          }
-        ]
-      },
-      test: {
-        files: [
-          {
-            expand: true,
-            cwd: 'test/spec',
-            src: '{,*/}*.coffee',
-            dest: '.tmp/spec',
-            ext: '.js'
-          }
-        ]
-      }
     },
+
     compass: {
       options: {
         sassDir: '<%= yeoman.app %>/styles',
@@ -220,6 +156,7 @@ module.exports = function (grunt) {
         }
       }
     },
+
     autoprefixer: {
       options: {
         browsers: ['last 1 version']
@@ -235,16 +172,7 @@ module.exports = function (grunt) {
         ]
       }
     },
-    // not enabled since usemin task does concat and uglify
-    // check index.html to edit your build targets
-    // enable this task if you prefer defining your build targets here
-    uglify: {
-     config: {
-       files: {
-         '<%= yeoman.server %>/quiz-config.js': '<%= yeoman.server %>/quiz-config.js'
-       }
-     }
-    },
+
     rev: {
       dist: {
         files: {
@@ -257,12 +185,14 @@ module.exports = function (grunt) {
         }
       }
     },
+
     useminPrepare: {
       options: {
         dest: '<%= yeoman.dist %>'
       },
       html: '<%= yeoman.app %>/index.html'
     },
+
     usemin: {
       options: {
         dirs: ['<%= yeoman.dist %>']
@@ -270,6 +200,7 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
     },
+
     imagemin: {
       dist: {
         files: [
@@ -282,6 +213,7 @@ module.exports = function (grunt) {
         ]
       }
     },
+
     svgmin: {
       dist: {
         files: [
@@ -294,35 +226,9 @@ module.exports = function (grunt) {
         ]
       }
     },
-    cssmin: {
-      // This task is pre-configured if you do not wish to use Usemin
-      // blocks for your CSS. By default, the Usemin block from your
-      // `index.html` will take care of minification, e.g.
-      //
-      //     <!-- build:css({.tmp,app}) styles/main.css -->
-      //
-      // dist: {
-      //     files: {
-      //         '<%= yeoman.dist %>/styles/main.css': [
-      //             '.tmp/styles/{,*/}*.css',
-      //             '<%= yeoman.app %>/styles/{,*/}*.css'
-      //         ]
-      //     }
-      // }
-    },
+
     htmlmin: {
       dist: {
-        options: {
-          /*removeCommentsFromCDATA: true,
-           // https://github.com/yeoman/grunt-usemin/issues/44
-           //collapseWhitespace: true,
-           collapseBooleanAttributes: true,
-           removeAttributeQuotes: true,
-           removeRedundantAttributes: true,
-           useShortDoctype: true,
-           removeEmptyAttributes: true,
-           removeOptionalTags: true*/
-        },
         files: [
           {
             expand: true,
@@ -333,6 +239,7 @@ module.exports = function (grunt) {
         ]
       }
     },
+
     // Put files not handled in other tasks here
     copy: {
       dist: {
@@ -374,11 +281,11 @@ module.exports = function (grunt) {
         src: '{,*/}*.*'
       }
     },
+
     concurrent: {
       server: [
         'compass',
-        'coffee:server',
-        'coffee:client',
+        'coffee',
         'copy:styles',
         'copy:fonts'
       ],
@@ -403,7 +310,7 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
-      'clean:server',
+      'clean',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -411,32 +318,22 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'connect:test',
-    'mocha'
-  ]);
-
   grunt.registerTask('build', [
-    'clean:dist',
+    'clean',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
     'cssmin',
-    'uglify',
     'copy:dist',
     'rev',
     'usemin'
   ]);
 
   grunt.registerTask('default', [
-    'clean:server',
+    'clean',
     'concurrent:server',
     'autoprefixer',
-//    'connect:livereload',
     'express:dev',
     'watch'
   ]);
