@@ -2,11 +2,11 @@ bugsnag  = require "bugsnag"
 express  = require "express"
 path     = require "path"
 passport = require "passport"
-chalk    = require "chalk"
 
-config     = require '../config/config'
-quizConfig = require '../config/quiz-config'
-requireDir = require '../lib/require-dir'
+config     = require "../config/config"
+quizConfig = require "../config/quiz-config"
+requireDir = require "../lib/require-dir"
+log        = require "../lib/log"
 
 # Passport Strategies
 require './auth'
@@ -25,7 +25,7 @@ app.set "port", process.env.PORT or 3000
 
 # Development only settings
 app.configure 'development', ->
-  console.log "#{chalk.yellow "Warning:"} Running in development mode"
+  log.warn "Running in development mode"
   app.use express.errorHandler dumpExceptions: true, showStack: true
   app.use require('coffee-middleware')
     src: path.join __dirname, '../app'
@@ -37,4 +37,4 @@ route app for route in routes
 
 # Start the application
 app.listen process.env.PORT or 3000, ->
-  console.log "#{chalk.green "Sucess:"} Lobzik listening on port #{app.get 'port'}"
+  log.success "Lobzik listening on port #{app.get 'port'}"
