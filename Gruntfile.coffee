@@ -9,8 +9,8 @@ module.exports = (grunt) ->
   grunt.registerTask 'server', [
     'copy'
     'compass'
-    'autoprefixer'
-    'concurrent:dev'
+    'express:dev'
+    'watch'
   ]
 
   grunt.registerTask 'default', [ 'server' ]
@@ -20,14 +20,14 @@ module.exports = (grunt) ->
     watch:
       compass:
         files: ['<%= path.app %>/styles/{,*/}*.{scss,sass}']
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['compass']
 
       server:
         files: ['./{,*/}*']
         tasks: ['express:dev']
         options:
           # Without this option specified express won't be reloaded
-          spawn: false
+          spawn: true
 
     express:
       options:
@@ -38,6 +38,7 @@ module.exports = (grunt) ->
           script: './server'
           opts: [ 'node_modules/coffee-script/bin/coffee' ]
           debug: false
+          background: true
           node_env: 'development'
 
     clean:
@@ -47,37 +48,14 @@ module.exports = (grunt) ->
       options:
         sassDir: '<%= path.app %>/styles'
         cssDir: '<%= path.app %>/styles'
-        # generatedImagesDir: '.tmp/images/generated',
-        # imagesDir: '<%= yeoman.app %>/images',
-        # javascriptsDir: '<%= yeoman.app %>/scripts',
-        # fontsDir: '<%= yeoman.app %>/styles/fonts',
-        # importPath: '<%= yeoman.app %>/bower_components',
-        httpImagesPath: '/images'
-        httpGeneratedImagesPath: '/images/generated'
-        httpFontsPath: '/styles/fonts'
-        relativeAssets: false
-
-    autoprefixer:
-      options:
-        browsers: ['last 1 version']
-      dist:
-        files: [
-          expand: true
-          cwd: '<%= path.app %>/styles/'
-          src: '{,*/}*.css'
-          # dest: '.tmp/styles/'
-        ]
-
-    concurrent:
-      dev:
-        tasks: [ 'watch', 'express:dev' ]
-        options: logConcurrentOutput: true
+      files:
+        '<%= path.app %>/styles/main.css': 'main.scss'
 
     copy:
       fonts:
         expand: true
         dot: true
         cwd: '<%= path.app %>/bower_components/font-awesome/font'
-        dest: '<%= path.app %>/styles/font'
+        dest: '<%= path.app %>/font'
         src: '{,*/}*.*'
 
