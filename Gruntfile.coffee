@@ -38,7 +38,6 @@ module.exports = (grunt) ->
           script: './server'
           opts: [ 'node_modules/coffee-script/bin/coffee' ]
           debug: false
-          background: false
           node_env: 'development'
 
     clean:
