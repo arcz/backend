@@ -7,9 +7,9 @@ module.exports = (grunt) ->
     app: 'app'
 
   grunt.registerTask 'server', [
-    'copy',
-    'compass',
-    'autoprefixer',
+    'copy'
+    'compass'
+    'autoprefixer'
     'concurrent:dev'
   ]
 
@@ -63,12 +63,10 @@ module.exports = (grunt) ->
         browsers: ['last 1 version']
       dist:
         files: [
-          {
-            expand: true
-            cwd: '<%= path.app %>/styles/'
-            src: '{,*/}*.css'
-            # dest: '.tmp/styles/'
-          }
+          expand: true
+          cwd: '<%= path.app %>/styles/'
+          src: '{,*/}*.css'
+          # dest: '.tmp/styles/'
         ]
 
     concurrent:
