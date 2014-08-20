@@ -1,6 +1,9 @@
 {
-  "name": "testing-framework",
+  "name": "lobzik",
   "version": "0.0.0",
+  "scripts": {
+    "postinstall": "bower install"
+  },
   "dependencies": {
     "async": "~0.2.8",
     "baucis": "~0.4.6",
