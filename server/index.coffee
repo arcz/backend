@@ -34,6 +34,9 @@ app.configure 'development', ->
 routes = requireDir path.resolve __dirname, './routes'
 route app for route in routes
 
+# Initialize the db connection
+require './db'
+
 # Start the application
 app.listen process.env.PORT or 3000, ->
   log.success "Lobzik listening on port #{app.get 'port'}"
