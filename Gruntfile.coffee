@@ -5,6 +5,7 @@ module.exports = (grunt) ->
   # configurable paths
   paths =
     app: 'app'
+    server: 'server'
 
   grunt.registerTask 'server', [
     'copy'
@@ -23,7 +24,7 @@ module.exports = (grunt) ->
         tasks: ['compass']
 
       server:
-        files: ['./{,*/}*']
+        files: ['<%= path.server %>/**/*']
         tasks: ['express:dev']
         options:
           # Without this option specified express won't be reloaded
