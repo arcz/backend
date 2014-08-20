@@ -4,7 +4,6 @@ path     = require "path"
 passport = require "passport"
 
 config     = require "../config/config"
-quizConfig = require "../config/quiz-config"
 requireDir = require "../lib/require-dir"
 log        = require "../lib/log"
 

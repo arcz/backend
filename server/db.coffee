@@ -1,7 +1,7 @@
-config = require './config'
+config = require '../config/database'
 
 mongoose = require("mongoose")
-mongoose.connect config.mongoUrl
+mongoose.connect config.url
 
 db = mongoose.connection
 db.on 'error', console.error.bind console, 'connection error:'

@@ -1,11 +1,11 @@
 LinkedInStrategy = require('passport-linkedin-oauth2').Strategy
 User             = require '../models/user'
 
-config = require '../../config/config'
+{ linkedIn } = require '../../config/strategies'
 
 requiredData =
-  clientID: config.linkedIn.consumerKey,
-  clientSecret: config.linkedIn.consumerSecret
+  clientID: linkedIn.consumerKey,
+  clientSecret: linkedIn.consumerSecret
   callbackURL: '/auth/linkedin/callback'
   scope: [
     'r_emailaddress',

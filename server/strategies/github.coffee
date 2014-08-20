@@ -1,11 +1,11 @@
 GitHubStrategy = require('passport-github').Strategy
 User           = require '../models/user'
 
-config = require '../../config/config'
+{ github } = require '../../config/strategies'
 
 requiredData =
-  clientID: config.github.appId,
-  clientSecret: config.github.appSecret,
+  clientID: github.appId,
+  clientSecret: github.appSecret,
   callbackURL: "/auth/github/callback"
   scope: ['user:email']
 
