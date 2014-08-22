@@ -6,7 +6,6 @@ passport = require "passport"
 bodyParser     = require 'body-parser'
 cookieParser   = require 'cookie-parser'
 expressSession = require 'express-session'
-errorHandler   = require 'error-handler'
 coffee         = require 'coffee-middleware'
 serveStatic    = require 'serve-static'
 
