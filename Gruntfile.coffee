@@ -81,9 +81,6 @@ module.exports = (grunt) ->
         ui        : 'tdd'
         bail      : true # Fail fast
 
-    # Linting is unobtrusive. If linting errors happen then they wont break the process
     coffeelint:
-      options:
-        force: true # Display lint errors as warnings. Do not break.
-        configFile: 'coffeelint.json'
+      options: configFile: 'coffeelint.json'
       files: [ '**/*.coffee', '!node_modules/**/*', '!app/bower_components/**/*' ]
