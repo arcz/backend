@@ -7,8 +7,8 @@ module.exports = (grunt) ->
     app    : 'app'
     server : 'server'
 
-  grunt.registerTask 'test', [ 'mochacov:spec' ]
-
+  grunt.registerTask 'test', [ 'lint', 'mochacov:spec' ]
+  grunt.registerTask 'lint', [ 'coffeelint' ]
   grunt.registerTask 'server', [
     'copy'
     'compass'
@@ -27,7 +27,7 @@ module.exports = (grunt) ->
 
       test:
         files: ['**/*.coffee', '!node_modules/', 'app/bower_components']
-        tasks: ['test']
+        tasks: ['lint', 'test']
 
       server:
         files: ['<%= path.server %>/**/*']
@@ -81,4 +81,9 @@ module.exports = (grunt) ->
         ui        : 'tdd'
         bail      : true # Fail fast
 
-
+    # Linting is unobtrusive. If linting errors happen then they wont break the process
+    coffeelint:
+      options:
+        force: true # Display lint errors as warnings. Do not break.
+        configFile: 'coffeelint.json'
+      files: [ '**/*.coffee', '!./node_modules', '!./app/bower_components' ]
