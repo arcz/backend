@@ -9,3 +9,7 @@ module.exports =
     # A long unique string value of your choice that is hard to guess.
     # Used to prevent CSRF.
     state: 'blahblah'
+
+  facebook:
+    appId: 'your-app-id-here'
+    appSecret: 'your-app-secret-key-here'
