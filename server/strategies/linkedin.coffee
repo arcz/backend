@@ -3,24 +3,7 @@ User             = require '../models/user'
 
 { linkedIn } = require '../../config/strategies'
 
-requiredData =
-  clientID: linkedIn.appId,
-  clientSecret: linkedIn.appSecret
-  callbackURL: '/auth/linkedin/callback'
-  scope: [
-    'r_emailaddress',
-    'r_basicprofile'
-  ]
-  profileFields: [
-    'id',
-    'picture-url',
-    'first-name',
-    'last-name',
-    'email-address',
-    'public-profile-url'
-  ]
-
-module.exports = new LinkedInStrategy requiredData,
+module.exports = new LinkedInStrategy linkedIn,
   (accessToken, refreshToken, profile, done) ->
     profile = profile._json
     User.findOrCreateUser done,

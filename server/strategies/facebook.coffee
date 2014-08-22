@@ -6,13 +6,7 @@ User = require '../models/user.coffee'
 getAvatarUrl = (id) ->
   "https://graph.facebook.com/#{id}/picture?type=large"
 
-requiredData =
-  clientID     : facebook.appId,
-  clientSecret : facebook.appSecret,
-  callbackURL  : '/auth/facebook/callback'
-  profileFields: ['email', 'first_name', 'last_name', 'link', 'id']
-
-module.exports = new FacebookStrategy requiredData, (accessToken, token, dataObj, done) ->
+module.exports = new FacebookStrategy facebook, (accessToken, token, dataObj, done) ->
   data = dataObj._json
   User.findOrCreateUser done,
     email: data.email
