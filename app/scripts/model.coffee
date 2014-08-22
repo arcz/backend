@@ -32,10 +32,11 @@ class app.User extends Backbone.Model
     @save codeSolutions: solutions
 
 assert = (args, output) ->
-  throw "No user function" unless @userFun
+  throw new Error "No user function" unless @userFun
   actual = @userFun.apply(this, args)
   if not _.isEqual actual, output
-    throw "For arguments #{JSON.stringify(args)}: #{JSON.stringify(output)} was expected, but got #{JSON.stringify(actual)}"
+    throw new Error "For arguments #{JSON.stringify(args)}:
+                     #{JSON.stringify(output)} was expected, but got #{JSON.stringify(actual)}"
 
 class app.Environment extends Backbone.Model
   modelName: 'user'

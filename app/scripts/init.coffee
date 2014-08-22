@@ -7,6 +7,6 @@ CodeMirror.defaults.lineNumbers = true
 CodeMirror.defaults.tabMode = 'spaces'
 CodeMirror.defaults.extraKeys = {"Tab": "indentMore"}
 
-SyntaxHighlighter.defaults['tab-size'] = 2;
-SyntaxHighlighter.defaults['smart-tabs'] = false;
+SyntaxHighlighter.defaults['tab-size'] = 2
+SyntaxHighlighter.defaults['smart-tabs'] = false
 SyntaxHighlighter.all()

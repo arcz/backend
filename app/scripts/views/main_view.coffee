@@ -22,7 +22,7 @@ class app.MainView extends Backbone.View
     app.user.on 'change:finished', ->
       app.router.navigate('page/result', trigger:true) if app.user.get('finished')
 
-    app.user.on 'change:id', =>
+    app.user.on 'change:id', ->
       app.mainView.startTimer()
       app.mainView.renderUser()
 

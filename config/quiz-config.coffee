@@ -59,7 +59,11 @@ module.exports =
     }
     {
       name: "foobar-game"
-      description: "Let's play `foo-bar` game! Implement function that returns `foo` if given input divisible by 3 `bar` if divisible by 5 and `foobar` if divisible by 3 AND 5 otherwise return number itself."
+      description: "
+        Let's play `foo-bar` game!
+        Implement function that returns `foo` if given input divisible by 3 `bar` if divisible by 5 and `foobar`
+        if divisible by 3 AND 5 otherwise return number itself.
+      "
       placeholderCode:
         coffeescript: "(num) -> #your code goes here"
         javascript: "function(num){\n\t//your code goes here\n}"
@@ -71,7 +75,7 @@ module.exports =
           try
             @assert [foobarNumber], 'foobar'
           catch e
-            throw "Until 15 it works, but than it doesn't. Hacker?"
+            throw new Error "Until 15 it works, but than it doesn't. Hacker?"
     }
     {
       name: "harder"

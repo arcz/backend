@@ -38,9 +38,11 @@ class app.AdminView extends Backbone.View
       if groupIndex is 0 and user.resultPercent < 60
         groupIndex = 1
 
-    html = "<h2 class='group'><i class='icon-thumbs-up pull-right'></i> #{groups[0].length} users &gt; 60%</h2><ul class='list-group good'>"
+    html = "<h2 class='group'><i class='icon-thumbs-up pull-right'></i>
+            #{groups[0].length} users &gt; 60%</h2><ul class='list-group good'>"
     html += groups[0].join("")
-    html += "</ul><h2 class='group'><i class='icon-thumbs-down pull-right'></i> #{groups[1].length} users &lt; 60%</h2><ul class='list-group bad'>"
+    html += "</ul><h2 class='group'><i class='icon-thumbs-down pull-right'></i>
+            #{groups[1].length} users &lt; 60%</h2><ul class='list-group bad'>"
     html += groups[1].join("")
     html += "</ul>"
 

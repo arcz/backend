@@ -47,7 +47,7 @@ class app.Router extends Backbone.Router
         @goto 'test'
 
   admin: ->
-    @securedPage =>
+    @securedPage ->
       if app.user?.get('isAdmin')
         app.mainView.show 'admin'
 
