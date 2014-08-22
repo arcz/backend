@@ -1,7 +1,7 @@
 module.exports =
   github:
-    appId: '1234'
-    appSecret: '5678'
+    appId: 'your-app-id-here'
+    appSecret: 'your-app-secret-here'
 
   linkedIn:
     consumerKey: '09101112'
