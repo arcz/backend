@@ -5,3 +5,4 @@ dist
 app/bower_components
 server/config.coffee
 app/font
+app/bower_components/**
