@@ -4,17 +4,15 @@ User           = require '../models/user'
 { github } = require '../../config/strategies'
 
 requiredData =
-  clientID: github.appId,
-  clientSecret: github.appSecret,
-  callbackURL: "/auth/github/callback"
-  scope: ['user:email']
-
+  clientID     : github.appId,
+  clientSecret : github.appSecret,
+  callbackURL  : "/auth/github/callback"
+  scope        : ['user:email']
 
 module.exports = new GitHubStrategy requiredData,
   (accessToken, refreshToken, profile, done) ->
     profile = profile._json
     next = ->
-      console.log 'findOrCreateUser', profile
       User.findOrCreateUser done,
         email: profile.email or profile.html_url
         avatar: profile.avatar_url

@@ -1,8 +1,9 @@
-_ = require 'lodash'
+_          = require 'lodash'
+quizConfig = require '../../config/quiz-config'
 
 module.exports = (app) ->
   app.get "/api/env", (req, res) ->
-    # userEnv = _.clone env
+    userEnv = {}
     user = req.user
     if user?.isAdmin
       userEnv = _.clone quizConfig
