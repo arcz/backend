@@ -27,7 +27,7 @@ module.exports = (grunt) ->
 
       test:
         files: ['**/*.coffee', '!node_modules/**/*', '!app/bower_components/**/*']
-        tasks: ['lint', 'test']
+        tasks: ['test']
 
       server:
         files: ['<%= path.server %>/**/*']
