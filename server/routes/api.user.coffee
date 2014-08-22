@@ -3,7 +3,7 @@ module.exports = (app) ->
     if req.user
       next()
     else
-      res.send(403, 'Not logged in')
+      res.status(403).send('Not logged in')
 
   app.get "/api/user", (req, res) ->
     user = req.user
@@ -14,11 +14,11 @@ module.exports = (app) ->
     user = req.user
 
     if user.finished
-      return res.send 403, 'Already finished'
+      return res.status(403).send('Already finished')
 
     finished = user.checkIfFinished ->
       if user.finished
-        res.send 403, 'Already finished'
+        res.status(403).send('Already finished')
     return if finished
 
     codeSolutions = req.body?.codeSolutions or {}
@@ -39,6 +39,5 @@ module.exports = (app) ->
     user.preferedLanguage = req.body?.preferedLanguage
 
     user.save (err, user) ->
-      return res.send(400, err) if err
+      return res.status(400).send(err) if err
       res.send user.publicJSON()
-
