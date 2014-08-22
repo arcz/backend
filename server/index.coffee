@@ -13,19 +13,9 @@ config     = require "../config/config"
 requireDir = require "../lib/require-dir"
 log        = require "../lib/log"
 
-# Passport Strategies
-require './auth'
-
 # Express configuration
 app = express()
 env = process.env.NODE_ENV or 'development'
-
-app.use bodyParser.json()
-app.use cookieParser()
-app.use serveStatic path.join __dirname, '../app'
-app.use passport.initialize()
-app.use passport.session()
-app.set "port", process.env.PORT or 3000
 
 # Development only settings
 if env is 'development'
@@ -33,6 +23,20 @@ if env is 'development'
   app.use coffee
     src: path.join __dirname, '../app'
     compress: false
+
+app.use bodyParser.json()
+app.use cookieParser()
+app.use serveStatic path.join __dirname, '../app'
+app.set "port", process.env.PORT or 3000
+app.use expressSession
+  secret: config.sessionKey
+  resave: true
+  saveUninitialized: true
+
+# Passport Strategies
+require './auth'
+app.use passport.initialize()
+app.use passport.session()
 
 # initialize all routes
 routes = requireDir path.resolve __dirname, './routes'
