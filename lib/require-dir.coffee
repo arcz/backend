@@ -1,10 +1,11 @@
 fs   = require 'fs'
 path = require 'path'
 
+VALID_EXTENSIONS = [ 'js', 'coffee', 'json' ]
+
 isValidFile = (fileName) ->
-  return if fileName is "index.coffee"
   ext = fileName.substr fileName.lastIndexOf('.') + 1
-  ext in [ 'js', 'coffee' ]
+  ext in VALID_EXTENSIONS
 
 module.exports = (folder) ->
   res = []
