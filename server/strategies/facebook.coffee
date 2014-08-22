@@ -14,7 +14,6 @@ requiredData =
 
 module.exports = new FacebookStrategy requiredData, (accessToken, token, dataObj, done) ->
   data = dataObj._json
-  console.log data
   User.findOrCreateUser done,
     email: data.email
     avatar: getAvatarUrl data.id
