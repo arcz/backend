@@ -4,8 +4,10 @@ module.exports = (grunt) ->
 
   # configurable paths
   paths =
-    app: 'app'
-    server: 'server'
+    app    : 'app'
+    server : 'server'
+
+  grunt.registerTask 'test', [ 'mochacov:spec' ]
 
   grunt.registerTask 'server', [
     'copy'
@@ -22,6 +24,10 @@ module.exports = (grunt) ->
       compass:
         files: ['<%= path.app %>/styles/{,*/}*.{scss,sass}']
         tasks: ['compass']
+
+      test:
+        files: ['**/*.coffee', '!node_modules/', 'app/bower_components']
+        tasks: ['test']
 
       server:
         files: ['<%= path.server %>/**/*']
@@ -59,4 +65,20 @@ module.exports = (grunt) ->
         cwd: '<%= path.app %>/bower_components/font-awesome/font'
         dest: '<%= path.app %>/font'
         src: '{,*/}*.*'
+
+    mochacov :
+      travis :
+        options : coveralls : serviceName : 'travis-ci'
+      spec :
+        options : reporter : 'spec'
+      cov  :
+        options : reporter : 'html-cov'
+      options :
+        compilers : [ 'coffee:coffee-script/register' ]
+        files     : [ 'test/**/*.spec.coffee' ]
+        require   : [ 'should' ]
+        growl     : true
+        ui        : 'tdd'
+        bail      : true # Fail fast
+
 
