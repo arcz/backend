@@ -4,8 +4,8 @@ module.exports =
     appSecret: 'your-app-secret-here'
 
   linkedIn:
-    consumerKey: '09101112'
-    consumerSecret: '131415'
+    appId: 'your-api-key-here'
+    appSecret: 'your-secret-key-here'
     # A long unique string value of your choice that is hard to guess.
     # Used to prevent CSRF.
     state: 'blahblah'

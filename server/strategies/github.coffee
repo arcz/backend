@@ -17,4 +17,3 @@ module.exports = new GitHubStrategy requiredData, (accessToken, token, dataObj, 
     url: data.html_url
     name: data.name
     authType: 'github'
-
