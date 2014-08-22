@@ -12,6 +12,7 @@ serveStatic    = require 'serve-static'
 config     = require "../config/config"
 requireDir = require "../lib/require-dir"
 log        = require "../lib/log"
+questions  = require './questions'
 
 # Express configuration
 app = express()
@@ -44,6 +45,9 @@ route app for route in routes
 
 # Initialize the db connection
 require './db'
+
+# Require all the questions
+questions.load config.questionsDir
 
 # Start the application
 app.listen process.env.PORT or 3000, ->
