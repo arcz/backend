@@ -1,35 +1,11 @@
 mongoose = require 'mongoose'
+_        = require 'lodash'
 
-fields =
-  email: String
-  name: String
-  avatar: String
-  url: String
-  authType: String
-  startedAt: Date
-  durationTook: Number
-  finished:
-    type: Boolean
-    default: false
-  testIndecies: [Number]
-  codeAsignIndecies: [Number]
-  codeSolutions: mongoose.Schema.Types.Mixed
-  testAnswers: mongoose.Schema.Types.Mixed
-  result:
-    test:
-      totalScore: Number
-      normScore: Number
-      rightAnswers: Number
-      notGivenRightAnswers: Number
-      wrongAnswers: Number
-    coding:
-      rightSolutions: Number
-      wrongSolutions: Number
-  preferedLanguage:
-    type: String
-    'enum': ['javascript', 'coffeescript']
+fields     = require './user.fields'
+config     = require '../../config/config'
+quizConfig = require '../../config/quiz-config.coffee'
 
-module.exports = UserSchema = mongoose.Schema fields,
+UserSchema = mongoose.Schema fields,
   toObject: virtuals: true
   toJSON: virtuals: true
 
@@ -84,7 +60,7 @@ UserSchema.methods.publicJSON = ->
 UserSchema.methods.checkIfFinished = (cb) ->
   if @durationLeft <= 0 and not @finished
     @finishUser()
-    @durationTook = env.maxDuration
+    @durationTook = quizConfig.maxDuration
     @save cb
     return true
   else
@@ -92,7 +68,7 @@ UserSchema.methods.checkIfFinished = (cb) ->
     return false
 
 UserSchema.methods.finishUser = ->
-  @durationTook = env.maxDuration - @durationLeft * 1000
+  @durationTook = quizConfig.maxDuration - @durationLeft * 1000
   @finished = true
 
   # My personal formula. I think it works the best
@@ -156,19 +132,15 @@ UserSchema.methods.finishUser = ->
   @markModified('result')
   totalPercent = Math.round ((rightSolutions/@codeAsignIndecies.length) + @result.test.normScore) * 100/2
 
-#   campfire?.join authConfig.campfire.roomId, (err, room) =>
-#     return console.error(err) if err and not room
-#     room.paste """#{@name} (#{@email}) just finished test with #{totalPercent}% of success. Details:
-#                   - test: #{totalRightAnswers} right answers, #{totalWrongAnswers} wrong answers, #{notGivenRightAnswers} not given right answers
-#                   - coding: #{rightSolutions} right solutions, #{wrongSolutions} wrong solutions
-#                """
-
 UserSchema.virtual('resultPercent').get ->
   Math.round ((@result.coding.rightSolutions/@codeAsignIndecies.length) + @result.test.normScore) * 100/2
 
 UserSchema.virtual('durationLeft').get ->
-  res = Math.ceil (env.maxDuration - (Date.now() - @startedAt.getTime())) / 1000
+  res = Math.ceil (quizConfig.maxDuration - (Date.now() - @startedAt.getTime())) / 1000
   res = 0 if res < 0
   res
 
-UserSchema.virtual('isAdmin').get -> @email in authConfig.admins
+UserSchema.virtual('isAdmin').get ->
+  @email in config.admins
+
+module.exports = User = mongoose.model 'User', UserSchema
