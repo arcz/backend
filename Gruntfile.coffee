@@ -26,7 +26,7 @@ module.exports = (grunt) ->
         tasks: ['compass']
 
       test:
-        files: ['**/*.coffee', '!node_modules/', 'app/bower_components']
+        files: ['**/*.coffee', '!node_modules/**/*', '!app/bower_components/**/*']
         tasks: ['lint', 'test']
 
       server:
@@ -86,4 +86,4 @@ module.exports = (grunt) ->
       options:
         force: true # Display lint errors as warnings. Do not break.
         configFile: 'coffeelint.json'
-      files: [ '**/*.coffee', '!./node_modules', '!./app/bower_components' ]
+      files: [ '**/*.coffee', '!node_modules/**/*', '!app/bower_components/**/*' ]
