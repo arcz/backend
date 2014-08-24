@@ -7,7 +7,9 @@ module.exports = (grunt) ->
     app    : 'app'
     server : 'server'
 
-  grunt.registerTask 'test', [ 'lint', 'mochacov:spec' ]
+  grunt.registerTask 'test', [ 'mochacov:spec', 'mochacov:it' ]
+  grunt.registerTask 'test:spec', [ 'mochacov:spec' ]
+  grunt.registerTask 'test:it', [ 'mochacov:it' ]
   grunt.registerTask 'lint', [ 'coffeelint' ]
   grunt.registerTask 'server', [
     'copy'
@@ -15,8 +17,8 @@ module.exports = (grunt) ->
     'express:dev'
     'watch'
   ]
-
   grunt.registerTask 'default', [ 'server' ]
+
 
   grunt.initConfig
     path: paths
@@ -67,19 +69,26 @@ module.exports = (grunt) ->
         src: '{,*/}*.*'
 
     mochacov :
-      travis :
-        options : coveralls : serviceName : 'travis-ci'
-      spec :
-        options : reporter : 'spec'
-      cov  :
-        options : reporter : 'html-cov'
       options :
+        files     : [ 'test/**/*.spec.coffee', 'test/**/*.it.coffee' ]
         compilers : [ 'coffee:coffee-script/register' ]
-        files     : [ 'test/**/*.spec.coffee' ]
         require   : [ 'should' ]
         growl     : true
         ui        : 'tdd'
         bail      : true # Fail fast
+      travis :
+        options : coveralls : serviceName : 'travis-ci'
+      spec :
+        options :
+          reporter : 'spec'
+          files: [ 'test/**/*.spec.coffee' ]
+      it:
+        options :
+          reporter : 'spec'
+          files: [ 'test/**/*.it.coffee' ]
+      cov  :
+        options : reporter : 'html-cov'
+
 
     coffeelint:
       options: configFile: 'coffeelint.json'
