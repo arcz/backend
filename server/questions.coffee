@@ -1,3 +1,5 @@
+_ = require 'lodash'
+
 requireDir       = require '../lib/require-dir'
 validateQuestion = require '../lib/validate-question'
 
@@ -9,3 +11,10 @@ exports.clear = =>
 
 exports.load = (dir) =>
   @list = requireDir(dir).filter validateQuestion
+
+exports.getRandomQuestions = (type, nr = 1) =>
+  throw new Error("No question type defined") unless type
+  _(@list).filter({ type })
+          .shuffle()
+          .first(nr)
+          .value()
