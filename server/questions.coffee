@@ -1,5 +1,6 @@
 _ = require 'lodash'
 
+arrToObj         = require '../lib/arr-to-obj'
 requireDir       = require '../lib/require-dir'
 validateQuestion = require '../lib/validate-question'
 
@@ -18,3 +19,7 @@ exports.getRandomQuestions = (type, nr = 1) =>
           .shuffle()
           .first(nr)
           .value()
+
+exports.buildQuestionList = (questionCountByType) =>
+  _.transform questionCountByType, (obj, val, key) =>
+    obj[key] = arrToObj @getRandomQuestions key, val
