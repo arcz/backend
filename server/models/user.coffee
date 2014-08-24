@@ -3,7 +3,7 @@ _        = require 'lodash'
 
 fields     = require './user.fields'
 config     = require '../../config/config'
-quizConfig = require '../../config/quiz-config.coffee'
+quizConfig = require '../../config/quiz.coffee'
 
 UserSchema = mongoose.Schema fields,
   toObject: virtuals: true
@@ -60,7 +60,7 @@ UserSchema.methods.publicJSON = ->
 UserSchema.methods.checkIfFinished = (cb) ->
   if @durationLeft <= 0 and not @finished
     @finishUser()
-    @durationTook = quizConfig.maxDuration
+    @durationTook = quizConfig.duration
     @save cb
     return true
   else
@@ -68,7 +68,7 @@ UserSchema.methods.checkIfFinished = (cb) ->
     return false
 
 UserSchema.methods.finishUser = ->
-  @durationTook = quizConfig.maxDuration - @durationLeft * 1000
+  @durationTook = quizConfig.duration - @durationLeft * 1000
   @finished = true
 
   # My personal formula. I think it works the best
@@ -136,7 +136,7 @@ UserSchema.virtual('resultPercent').get ->
   Math.round ((@result.coding.rightSolutions/@codeAsignIndecies.length) + @result.test.normScore) * 100/2
 
 UserSchema.virtual('durationLeft').get ->
-  res = Math.ceil (quizConfig.maxDuration - (Date.now() - @startedAt.getTime())) / 1000
+  res = Math.ceil (quizConfig.duration - (Date.now() - @startedAt.getTime())) / 1000
   res = 0 if res < 0
   res
 

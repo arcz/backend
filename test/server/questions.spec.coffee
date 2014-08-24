@@ -12,7 +12,7 @@ describe 'questions', ->
     it 'should unset the list', ->
       questions.list = 'asd'
       questions.clear()
-      questions.list.should.eql {}
+      questions.list.should.eql []
 
   describe '#load', ->
     beforeEach ->

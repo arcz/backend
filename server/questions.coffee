@@ -2,11 +2,10 @@ requireDir       = require '../lib/require-dir'
 validateQuestion = require '../lib/validate-question'
 
 # All questions that we have
-exports.list = {}
+exports.list = []
 
 exports.clear = =>
-  @list = {}
+  @list = []
 
 exports.load = (dir) =>
   @list = requireDir(dir).filter validateQuestion
-
