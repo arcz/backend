@@ -1,31 +1,27 @@
 mongoose = require 'mongoose'
 
 module.exports =
-  email: String
-  name: String
+  email:
+    type: String
+    trim: true
+    required: true
+  name:
+    type: String
+    trim: true
+    required: true
   avatar: String
   url: String
   authType: String
-  startedAt: Date
-  durationTook: Number
+  startedAt:
+    type: Date
+    default: Date.now
+  finishedAt: Date
+
   finished:
     type    : Boolean
     default : false
-  testIndecies: [Number]
-  codeAsignIndecies: [Number]
-  codeSolutions: mongoose.Schema.Types.Mixed
-  testAnswers: mongoose.Schema.Types.Mixed
-  result:
-    test:
-      totalScore: Number
-      normScore: Number
-      rightAnswers: Number
-      notGivenRightAnswers: Number
-      wrongAnswers: Number
-    coding:
-      rightSolutions: Number
-      wrongSolutions: Number
-  preferedLanguage:
-    type: String
-    enum: ['javascript', 'coffeescript']
+
+  questions: mongoose.Schema.Types.Mixed
+  answers: [Object]
+
 
