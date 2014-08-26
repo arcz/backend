@@ -1,7 +1,7 @@
 config = require '../config/database'
 log    = require '../lib/log'
 
-mongoose = require("mongoose")
+mongoose = require "mongoose"
 mongoose.connect config.url
 
 module.exports = db = mongoose.connection
