@@ -3,26 +3,27 @@ mongoose = require 'mongoose'
 QuestionSchema = require './question'
 
 module.exports =
-  avatar: String
-  url: String
-  finishedAt: Date
+  avatar     : String
+  url        : String
+  finishedAt : Date
 
   email:
-    type: String
-    trim: true
-    required: true
+    type     : String
+    trim     : true
+    required : true
+
   name:
-    type: String
-    trim: true
-    required: true
+    type     : String
+    trim     : true
+    required : true
 
   authType:
-    type: String
-    required: true
+    type     : String
+    required : true
 
   startedAt:
-    type: Date
-    default: Date.now
+    type    : Date
+    default : Date.now
 
   finished:
     type    : Boolean
