@@ -1,146 +1,52 @@
 mongoose = require 'mongoose'
 _        = require 'lodash'
 
-fields     = require './user.fields'
+questions  = require '../questions'
 config     = require '../../config/config'
-quizConfig = require '../../config/quiz.coffee'
+quizConfig = require '../../config/quiz'
 
-UserSchema = mongoose.Schema fields,
+fields = require './user.fields'
+
+module.exports = UserSchema = mongoose.Schema fields,
   toObject: virtuals: true
   toJSON: virtuals: true
 
-UserSchema.statics.create = (data) ->
-  data.startedAt = new Date()
-  data.testIndecies = _.shuffle([0...quizConfig.testQuestions.length])[...quizConfig.testQuestionsToShow]
-  data.codeAsignIndecies = _.shuffle([0...quizConfig.codeAssignments.length])[...quizConfig.codeAssignmentsToShow]
+# Build questions from questions list before saving
+UserSchema.pre 'save', (next) ->
+  questionList = questions.getRandomQuestionsCombined quizConfig.count
+  @questions.push question for question in questionList
+  next()
 
-  data.codeSolutions = {}
-  for idx in data.codeAsignIndecies
-    name = quizConfig.codeAssignments[idx].name
-    data.codeSolutions[name] = []
-  data.codeSolutions[quizConfig.creativeCodeAssignment.name] = []
-
-  data.testAnswers = {}
-  for idx in data.testIndecies
-    name = quizConfig.testQuestions[idx].name
-    data.testAnswers[name] = []
-  new User(data)
-
-UserSchema.statics.findOrCreateUser = (cb, userInfo) ->
-  @findOne { $or: [{email: userInfo.email}, {url: userInfo.url}] }, (err, user) ->
-    if err or not user
-      console.log 'Not found. Creating.'
-      user = User.create userInfo
+# Finds a current user or creates a new one
+#
+# If we have found a current user by its url and it has a different email
+# then lets update the users email and return the updated user
+UserSchema.statics.findOrCreate = (data, cb) ->
+  { email, url } = data
+  condition = $or: [{email}, {url}]
+  @findOne condition, (err, user) =>
+    return cb err, null if err
+    return @create data, cb unless user
+    # So it seems that the users email is changed
+    # lets update the user
+    if user.email isnt email
+      user.email = email
+      user.save cb
     else
-      console.log 'Found. Reading.'
-      if user.email isnt userInfo.email
-        user.email = userInfo.email
-        console.log "Found by url. Rewriting: #{user.url} -> #{user.email}"
-
-    user.save (err, user) ->
-      return cb(err) if err
       cb null, user
 
-UserSchema.methods.publicJSON = ->
-  omitFields = ['__v', '_id', 'testIndecies', 'codeAsignIndecies']
-  omitFields = omitFields.concat if @finished
-    ['codeSolutions', 'testAnswers']
-  else
-    ['result', 'resultPercent']
+# UserSchema.methods.answer = (type, id, result, cb) ->
 
-  userObj = _.omit @toObject(), omitFields...
 
-  unless @finished
-    userObj.codeSolutions = {}
-    for name, solutions of @codeSolutions
-      userObj.codeSolutions[name] = _.last solutions
-
-  JSON.stringify userObj
-
-UserSchema.methods.checkIfFinished = (cb) ->
+UserSchema.methods.isFinished = (cb) ->
   if @durationLeft <= 0 and not @finished
-    @finishUser()
+    @finish()
     @durationTook = quizConfig.duration
     @save cb
-    return true
   else
     cb null, this
-    return false
 
-UserSchema.methods.finishUser = ->
-  @durationTook = quizConfig.duration - @durationLeft * 1000
-  @finished = true
-
-  # My personal formula. I think it works the best
-  scoreFormula = (answeredRight, answeredWrong, totalRight, totalWrong) ->
-    answeredRight/totalRight - answeredWrong/(totalWrong + 1)
-
-  # Making TEST results
-  totalScore = 0
-  totalRightAnswers = 0
-  totalWrongAnswers = 0
-  notGivenRightAnswers = 0
-  for idx in @testIndecies
-
-    question = quizConfig.testQuestions[idx]
-    name = question.name
-    rightAnswersNumber = question.rightAnswers.length
-    givenAnswers = @testAnswers[name]
-    rightGivenAnswers = _.intersection givenAnswers, question.rightAnswers
-    rightGivenAnswersNumber = rightGivenAnswers.length
-    rightNotGivenAnswersNumber = rightAnswersNumber - rightGivenAnswersNumber
-
-    [wrongGivenAnswersNumber, wrongAnswersNumber] = if question.cloze
-      [rightAnswersNumber - rightGivenAnswersNumber,
-       rightAnswersNumber]
-    else
-      wrongAnswers = _.difference [0...question.options.length], question.rightAnswers
-      wrongGivenAnswers = _.intersection givenAnswers, wrongAnswers
-      [wrongGivenAnswers.length, wrongAnswers.length]
-
-    score = scoreFormula rightGivenAnswersNumber,
-      wrongGivenAnswersNumber,
-      rightAnswersNumber,
-      wrongAnswersNumber
-
-    totalScore += score
-    totalRightAnswers += rightGivenAnswersNumber
-    totalWrongAnswers += wrongGivenAnswersNumber
-    notGivenRightAnswers += rightNotGivenAnswersNumber
-    score = rightGivenAnswersNumber = wrongGivenAnswersNumber = rightNotGivenAnswersNumber = 0
-
-  @result.test =
-    totalScore: totalScore
-    normScore: totalScore / @testIndecies.length #Normilized (Average) score. From -xx to 1
-    rightAnswers: totalRightAnswers
-    wrongAnswers: totalWrongAnswers
-    notGivenRightAnswers: notGivenRightAnswers
-
-  #make Coding result
-  rightSolutions = 0
-  for idx in @codeAsignIndecies
-    codeAssignment = quizConfig.codeAssignments[idx]
-    name = codeAssignment.name
-    goodSolution = _.findWhere @codeSolutions[name], pass: true
-    rightSolutions += 1 if goodSolution
-  wrongSolutions = @codeAsignIndecies.length - rightSolutions
-
-  @result.coding =
-    rightSolutions: rightSolutions
-    wrongSolutions: wrongSolutions
-
-  @markModified('result')
-  totalPercent = Math.round ((rightSolutions/@codeAsignIndecies.length) + @result.test.normScore) * 100/2
-
-UserSchema.virtual('resultPercent').get ->
-  Math.round ((@result.coding.rightSolutions/@codeAsignIndecies.length) + @result.test.normScore) * 100/2
-
-UserSchema.virtual('durationLeft').get ->
-  res = Math.ceil (quizConfig.duration - (Date.now() - @startedAt.getTime())) / 1000
-  res = 0 if res < 0
-  res
-
-UserSchema.virtual('isAdmin').get ->
+UserSchema.virtual('admin').get ->
   @email in config.admins
 
-module.exports = User = mongoose.model 'User', UserSchema
+mongoose.model 'User', UserSchema

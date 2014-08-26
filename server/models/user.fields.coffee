@@ -1,6 +1,12 @@
 mongoose = require 'mongoose'
 
+QuestionSchema = require './question'
+
 module.exports =
+  avatar: String
+  url: String
+  finishedAt: Date
+
   email:
     type: String
     trim: true
@@ -9,19 +15,17 @@ module.exports =
     type: String
     trim: true
     required: true
-  avatar: String
-  url: String
-  authType: String
+
+  authType:
+    type: String
+    required: true
+
   startedAt:
     type: Date
     default: Date.now
-  finishedAt: Date
 
   finished:
     type    : Boolean
     default : false
 
-  questions: mongoose.Schema.Types.Mixed
-  answers: [Object]
-
-
+  questions: [ QuestionSchema ]
