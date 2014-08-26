@@ -1,5 +1,5 @@
-mongoose   = require 'mongoose'
-requireDir = require '../../lib/require-dir'
+mongoose       = require 'mongoose'
+requireDirSync = require 'require-dir-sync'
 
 removeExtension = (name) ->
   name.substr 0, name.lastIndexOf('.')
@@ -7,7 +7,7 @@ removeExtension = (name) ->
 capitalise = (string) ->
   string.charAt(0).toUpperCase() + string.slice(1)
 
-models = requireDir __dirname, ignore: [ /\.fields\.coffee/, /^index\./ ]
+models = requireDirSync __dirname, ignore: [ /\.fields\.coffee/, /^index\./ ]
 
 # Loop through all the schemas and register them
 for name, Schema of models

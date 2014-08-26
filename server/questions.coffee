@@ -1,7 +1,7 @@
-_ = require 'lodash'
+requireDirSync = require 'require-dir-sync'
+_              = require 'lodash'
 
 arrToObj         = require '../lib/arr-to-obj'
-requireDir       = require '../lib/require-dir'
 validateQuestion = require '../lib/validate-question'
 
 # All questions that we have
@@ -11,9 +11,9 @@ exports.clear = =>
   @list = []
 
 exports.load = (dir) =>
-  @list = _(requireDir dir).values()
-                           .filter validateQuestion
-                           .value()
+  @list = _(requireDirSync dir).values()
+                               .filter validateQuestion
+                               .value()
 
 exports.getRandomQuestions = (type, nr = 1) =>
   throw new Error("No question type defined") unless type

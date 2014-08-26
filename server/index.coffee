@@ -1,6 +1,7 @@
-express  = require 'express'
-path     = require 'path'
-passport = require 'passport'
+requireDirSync = require 'require-dir-sync'
+express        = require 'express'
+path           = require 'path'
+passport       = require 'passport'
 
 # Express middleware
 bodyParser     = require 'body-parser'
@@ -12,7 +13,6 @@ serveStatic    = require 'serve-static'
 config     = require '../config/config'
 quizConfig = require '../config/quiz'
 
-requireDir = require '../lib/require-dir'
 log        = require '../lib/log'
 
 # Express configuration
@@ -41,7 +41,7 @@ app.use passport.initialize()
 app.use passport.session()
 
 # initialize all routes
-routes = requireDir path.resolve __dirname, './routes'
+routes = requireDirSync path.resolve __dirname, './routes'
 route app for name, route of routes
 
 # Initialize the db connection
