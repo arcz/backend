@@ -1,12 +1,12 @@
 LinkedInStrategy = require('passport-linkedin-oauth2').Strategy
-User             = require '../models/user'
+{ User }         = require '../models'
 
 { linkedIn } = require '../../config/strategies'
 
 module.exports = new LinkedInStrategy linkedIn,
   (accessToken, refreshToken, profile, done) ->
     profile = profile._json
-    User.findOrCreateUser done,
+    User.findOrCreate done,
       email: profile.emailAddress
       avatar: profile.pictureUrl
       url: profile.publicProfileUrl

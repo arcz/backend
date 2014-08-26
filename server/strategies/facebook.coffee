@@ -1,6 +1,6 @@
 FacebookStrategy = require('passport-facebook').Strategy
-User = require '../models/user.coffee'
 
+{ User }     = require '../models'
 { facebook } = require '../../config/strategies'
 
 getAvatarUrl = (id) ->
@@ -8,7 +8,7 @@ getAvatarUrl = (id) ->
 
 module.exports = new FacebookStrategy facebook, (accessToken, token, dataObj, done) ->
   data = dataObj._json
-  User.findOrCreateUser done,
+  User.findOrCreate done,
     email: data.email
     avatar: getAvatarUrl data.id
     url: data.link
