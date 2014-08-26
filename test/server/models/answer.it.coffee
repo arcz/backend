@@ -1,7 +1,7 @@
 mongoose = require 'mongoose'
 
-require '../../../server/models/answer'
-Answer = mongoose.model 'Answer'
+AnswerSchema = require '../../../server/models/answer'
+Answer = mongoose.model 'Answer', AnswerSchema
 
 describe 'Answer model', ->
   it 'should exist', ->

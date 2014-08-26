@@ -7,15 +7,15 @@ mongoose   = require 'mongoose'
 path       = require 'path'
 clearDB    = require('mocha-mongoose') helpers.dbURL
 
-# Require the module
-proxyquire '../../../server/models/user',
+# Require the schema
+UserSchema = proxyquire '../../../server/models/user',
   '../../config/quiz': count: text: 1
   '../../config/config': admins: [ 'test@test.ee' ]
 
 # Required for mocking purposes
 questions = require '../../../server/questions'
 
-User = mongoose.model 'User'
+User = mongoose.model 'User', UserSchema
 
 describe 'User model', ->
   REQUIRED_FIELDS = null

@@ -48,5 +48,3 @@ UserSchema.methods.isFinished = (cb) ->
 
 UserSchema.virtual('admin').get ->
   @email in config.admins
-
-mongoose.model 'User', UserSchema
