@@ -11,7 +11,9 @@ exports.clear = =>
   @list = []
 
 exports.load = (dir) =>
-  @list = requireDir(dir).filter validateQuestion
+  @list = _(requireDir dir).values()
+                           .filter validateQuestion
+                           .value()
 
 exports.getRandomQuestions = (type, nr = 1) =>
   throw new Error("No question type defined") unless type
