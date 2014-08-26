@@ -20,6 +20,10 @@ exports.getRandomQuestions = (type, nr = 1) =>
           .first(nr)
           .value()
 
-exports.buildQuestionList = (questionCountByType) =>
-  _.transform questionCountByType, (obj, val, key) =>
-    obj[key] = arrToObj @getRandomQuestions key, val
+# Swap the arguments of a function
+swapArgs = (fn) -> (a, b) -> fn b, a
+
+exports.getRandomQuestionsCombined = (obj = {}) =>
+  _(obj).map swapArgs @getRandomQuestions
+        .flatten()
+        .value()

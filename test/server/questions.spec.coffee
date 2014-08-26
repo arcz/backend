@@ -58,7 +58,6 @@ describe 'questions', ->
         questions.getRandomQuestions null
       ).should.throw "No question type defined"
 
-
     it 'should return one question by default', ->
       res = questions.getRandomQuestions "test"
       res.length.should.be.eql 1
@@ -71,7 +70,7 @@ describe 'questions', ->
       res = questions.getRandomQuestions "does-not-exist", 12
       res.length.should.be.eql 0
 
-  describe '#buildQuestionList', ->
+  describe '#getRandomQuestionsCombined', ->
     beforeEach ->
       type = "test"
       questions.list = [
@@ -81,40 +80,22 @@ describe 'questions', ->
       ]
 
     afterEach questions.clear
-
-    it 'should exist', ->
-      questions.buildQuestionList.should.be.ok
-
-    it 'should return an object', ->
-      res = questions.buildQuestionList 'test': 1
-      _.isPlainObject(res).should.be.ok
-
-    it 'should return the same keys in object as asked', ->
-      res = questions.buildQuestionList
-        test: 1
-        code: 2
-      Object.keys(res).should.eql [ 'test', 'code' ]
-
-    it 'should return each question from a count as an array', ->
-      res = questions.buildQuestionList
-        test: 1
-        code: 2
-      _.every(res, (val, key) -> _.isPlainObject val).should.be.ok
-
-    it 'should ask getRandomQuestions by each type', sinon.test ->
+    it 'should call getRandomQuestions for each key', sinon.test ->
       @spy questions, 'getRandomQuestions'
-      res = questions.buildQuestionList
-        test: 1
-        code: 2
-      questions.getRandomQuestions.calledTwice.should.be.ok
+      questions.getRandomQuestionsCombined 'test': 2
+      questions.getRandomQuestions.calledWith('test', 2).should.be.ok
 
-    it 'should ask getRandomQuestions by each type with a count', sinon.test ->
-      @spy questions, 'getRandomQuestions'
-      res = questions.buildQuestionList
-        test: 12
-      questions.getRandomQuestions.calledWith('test', 12).should.be.ok
+    it 'should return an array', ->
+      res = questions.getRandomQuestionsCombined test: 2
+      res.should.be.instanceof Array
 
-    it 'should have ids for keys for each obj', ->
-      res = questions.buildQuestionList
-        test: 12
-      _.every(_.keys(res.test), (val, key) -> _.isNumber key).should.be.ok
+    it 'should return an array with one level', ->
+      res = questions.getRandomQuestionsCombined test: 3
+      flat = _.flatten res
+      res[0].should.eql flat[0]
+
+    it 'should return random questions', ->
+      res = questions.getRandomQuestionsCombined test: 1
+      res[0].type.should.eql 'test'
+
+
