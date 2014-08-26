@@ -1,7 +1,7 @@
 passport = require 'passport'
 path     = require 'path'
 
-User       = require './models/user'
+{ User }   = require './models'
 requireDir = require '../lib/require-dir'
 
 # Load all the strategies
