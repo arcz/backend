@@ -3,7 +3,7 @@ fs         = require 'fs'
 path       = require 'path'
 requireDir = require '../../lib/require-dir'
 
-FIXTURE_DIR = path.join __dirname, '../../test/fixtures'
+FIXTURE_DIR = path.join __dirname, '../../test/fixtures/requireTest/'
 
 describe 'require-dir', ->
   it 'should find all the files in a directory', sinon.test ->
