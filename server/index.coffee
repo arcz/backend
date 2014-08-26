@@ -42,7 +42,7 @@ app.use passport.session()
 
 # initialize all routes
 routes = requireDir path.resolve __dirname, './routes'
-route app for route in routes
+route app for name, route of routes
 
 # Initialize the db connection
 require './db'
