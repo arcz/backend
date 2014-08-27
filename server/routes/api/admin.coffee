@@ -1,5 +1,5 @@
 _    = require 'lodash'
-User = require '../models/user'
+User = require '../../models/user'
 
 USER_FIELDS = [
   'id'

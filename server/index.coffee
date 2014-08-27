@@ -41,8 +41,7 @@ app.use passport.initialize()
 app.use passport.session()
 
 # initialize all routes
-routes = requireDirSync path.resolve __dirname, './routes'
-route app for name, route of routes
+require('./routes') app
 
 # Initialize the db connection
 require './db'

@@ -1,6 +1,6 @@
 passport = require 'passport'
 
-{ linkedIn } = require '../../config/strategies'
+{ linkedIn } = require '../../../config/strategies'
 
 module.exports = (app) ->
   app.get '/auth/linkedin', passport.authenticate 'linkedin',

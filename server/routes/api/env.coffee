@@ -1,5 +1,5 @@
 _          = require 'lodash'
-quizConfig = require '../../config/quiz'
+quizConfig = require '../../../config/quiz'
 
 module.exports = (app) ->
   app.get "/api/env", (req, res) ->
