@@ -11,6 +11,13 @@ module.exports = UserSchema = mongoose.Schema fields,
   toObject: virtuals: true
   toJSON: virtuals: true
 
+UserSchema.options.toJSON =
+  transform: (doc, user) ->
+    user.id = user._id
+    # Hide all the fields that start with _
+    delete user[key] for key of user when key.charAt(0) is '_'
+    user
+
 # Build questions from questions list before saving
 UserSchema.pre 'save', (next) ->
   questionList = questions.getRandomQuestionsCombined quizConfig.count

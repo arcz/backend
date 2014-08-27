@@ -1,5 +1,6 @@
 helpers = require '../../test-helpers'
 
+assert     = require 'assert'
 _          = require 'lodash'
 proxyquire = require 'proxyquire'
 sinon      = require 'sinon'
@@ -63,6 +64,23 @@ describe 'User model', ->
         User.findOne 'email': 'kitty', (err, user) ->
           user.should.be.ok
           done err
+
+  describe '#toJSON', ->
+    it 'should hide _id', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        assert user.toJSON()._id is undefined
+        done err
+
+    it 'should hide __v', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        assert user.toJSON().__v is undefined
+        done err
+
+    it 'should set id', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.toJSON().id.should.be.ok
+        done err
+
 
   describe 'admin', ->
     it 'should be true if user is in admin list', (done) ->
