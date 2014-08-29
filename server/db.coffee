@@ -7,7 +7,8 @@ mongoose.connect config.url
 module.exports = db = mongoose.connection
 
 db.on 'error', (error) ->
-  log.error "Failed to connect to db: #{error}"
+  log.error "MongoDB: failed to connect to [#{config.url}]"
+  process.exit 1
 
 db.once 'open', ->
   log.success "Connected to mongo"
