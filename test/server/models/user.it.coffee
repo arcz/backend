@@ -20,7 +20,7 @@ User = mongoose.model 'User', UserSchema
 
 describe 'User model', ->
   REQUIRED_FIELDS = null
-  beforeEach -> REQUIRED_FIELDS = { 'email', 'name', 'authType'}
+  beforeEach -> REQUIRED_FIELDS = { 'email', 'name', 'authType' }
   before helpers.connect
 
   it 'should exist', ->
