@@ -36,7 +36,7 @@ module.exports = (grunt) ->
 
     watch:
       test:
-        files: ['**/*.coffee', '!node_modules/**/*', '!<%= path.app %>/vendor/**/*']
+        files: ['**/*.coffee', '!node_modules/**/*', '!<%= path.app %>/**', '!<%= path.dist %>/**']
         tasks: ['test']
 
     # Using nodemon to restart the express server for each backend change
