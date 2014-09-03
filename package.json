@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "browserify": "^5.11.0",
-    "coffee-middleware": "^0.2.1",
     "coffee-script": "^1.7.1",
     "coffeeify": "^0.7.0",
     "coffeelint": "^1.5.6",

@@ -7,7 +7,6 @@ passport       = require 'passport'
 bodyParser     = require 'body-parser'
 cookieParser   = require 'cookie-parser'
 expressSession = require 'express-session'
-coffee         = require 'coffee-middleware'
 serveStatic    = require 'serve-static'
 
 config     = require '../config/config'
@@ -20,11 +19,7 @@ app = express()
 env = process.env.NODE_ENV or 'development'
 
 # Development only settings
-if env is 'development'
-  log.warn 'Running in development mode'
-  app.use coffee
-    src: path.join __dirname, '../app'
-    compress: false
+log.warn 'Running in development mode' if env is 'development'
 
 app.use bodyParser.json()
 app.use cookieParser()
