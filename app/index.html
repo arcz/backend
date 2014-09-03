@@ -14,15 +14,10 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
-  <!-- build:css styles/highl.css -->
-  <link rel="stylesheet" href="bower_components/SyntaxHighlighter/styles/shCore.css">
-  <link rel="stylesheet" href="bower_components/SyntaxHighlighter/styles/shThemeDefault.css">
-  <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
-  <!-- endbuild -->
-  <script src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-1.0.9.min.js" data-apikey="!BUGSNAG KEY!"></script>
 </head>
 <body>
 
@@ -42,7 +37,7 @@
       <li class="step test"><span>Test questions</span></li>
       <li class="step coding"><span>Code assignment</span></li>
       <li class="step result"><span>Result</span></li>
-      <li class="time "></li>
+      <li class="time"></li>
     </ol>
 
     <div id="login" class="screen">
@@ -282,38 +277,7 @@
   <a class="logout btn btn-xs btn-default" href="/logout">Logout</a>
 </script>
 
-<!-- build:js scripts/vendor.js -->
-<script src="bower_components/SyntaxHighlighter/scripts/XRegExp.js"></script>
-<script src="bower_components/SyntaxHighlighter/scripts/shCore.js"></script>
-<script src="bower_components/SyntaxHighlighter/scripts/shBrushCss.js"></script>
-<script src="bower_components/SyntaxHighlighter/scripts/shBrushSass.js"></script>
-<script src="bower_components/SyntaxHighlighter/scripts/shBrushJScript.js"></script>
-<script src="bower_components/SyntaxHighlighter/scripts/shBrushXml.js"></script>
-<script src="bower_components/jquery/jquery.js"></script>
-<script src="bower_components/underscore/underscore.js"></script>
-<script src="bower_components/backbone/backbone.js"></script>
-<script src="bower_components/momentjs/moment.js"></script>
-<script src="bower_components/codemirror/lib/codemirror.js"></script>
-<script src="bower_components/codemirror/mode/coffeescript/coffeescript.js"></script>
-<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
-<script src="bower_components/coffee-script/extras/coffee-script.js"></script>
-<script src="bower_components/sass-bootstrap/js/alert.js"></script>
-<script src="bower_components/sass-bootstrap/js/modal.js"></script>
-<script src="bower_components/sass-bootstrap/js/transition.js"></script>
-<script src="bower_components/sass-bootstrap/js/button.js"></script>
-<!-- endbuild -->
+<script src="scripts/main.js"></script>
 
-<!-- build:js(.tmp) scripts/main.js -->
-<script src="scripts/init.js"></script>
-<script src="scripts/views/test_view.js"></script>
-<script src="scripts/views/admin_view.js"></script>
-<script src="scripts/views/coding_view.js"></script>
-<script src="scripts/views/result_view.js"></script>
-<script src="scripts/views/login_view.js"></script>
-<script src="scripts/views/main_view.js"></script>
-<script src="scripts/model.js"></script>
-<script src="scripts/router.js"></script>
-<script src="scripts/start.js"></script>
-<!-- endbuild -->
 </body>
 </html>
