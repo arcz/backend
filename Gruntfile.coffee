@@ -25,8 +25,7 @@ module.exports = (grunt) ->
     path: paths
 
     concurrent:
-      options:
-        logConcurrentOutput: true
+      options: logConcurrentOutput: true
       dev:
         tasks: [
           'nodemon:dev'
@@ -46,8 +45,7 @@ module.exports = (grunt) ->
         options:
           ignore: ['node_modules/**', '<%= path.app %>/**/*', '<%= path.dist %>/**/*']
           ext: 'coffee'
-          env:
-            node_env: 'development'
+          env: node_env: 'development'
 
     clean: dist: [ '<%= path.dist %>' ]
 
@@ -56,8 +54,7 @@ module.exports = (grunt) ->
         sassDir: '<%= path.app %>/styles'
         cssDir: '<%= path.app %>/styles'
       dev:
-        options:
-          watch: true
+        options: watch: true
       files: 'main.scss'
 
     # For release we copy the files instead
