@@ -1,5 +1,5 @@
 modules = [
-  require './views/login/login.coffee'
+  require './view/login/login.coffee'
 ].map (mod) -> mod.name
 
 lobzik = angular.module 'lobzik', modules
