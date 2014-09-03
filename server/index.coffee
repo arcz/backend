@@ -28,7 +28,7 @@ if env is 'development'
 
 app.use bodyParser.json()
 app.use cookieParser()
-app.use serveStatic path.join __dirname, '../app'
+app.use serveStatic path.join __dirname, '../dist'
 app.set "port", process.env.PORT or 3000
 app.use expressSession
   secret: config.sessionKey

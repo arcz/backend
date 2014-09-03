@@ -6,56 +6,88 @@ module.exports = (grunt) ->
   paths =
     app    : 'app'
     server : 'server'
+    dist   : 'dist'
 
+  grunt.registerTask 'default', [ 'server' ]
   grunt.registerTask 'test', [ 'mochacov:spec', 'mochacov:it' ]
   grunt.registerTask 'test:spec', [ 'mochacov:spec' ]
   grunt.registerTask 'test:it', [ 'mochacov:it' ]
   grunt.registerTask 'lint', [ 'coffeelint' ]
+  grunt.registerTask 'build', [ 'clean', 'browserify:dist', 'copy' ]
   grunt.registerTask 'server', [
-    'copy'
-    'compass'
-    'nodemon:dev'
-    'watch'
+    'clean'
+    'symlink'
+    'concurrent:dev'
   ]
-  grunt.registerTask 'default', [ 'server' ]
 
 
   grunt.initConfig
     path: paths
-    watch:
-      compass:
-        files: ['<%= path.app %>/styles/{,*/}*.{scss,sass}']
-        tasks: ['compass']
 
+    concurrent:
+      options:
+        logConcurrentOutput: true
+      dev:
+        tasks: [
+          'nodemon:dev'
+          'compass:dev'
+          'watch:test'
+        ]
+
+    watch:
       test:
-        files: ['**/*.coffee', '!node_modules/**/*', '!app/bower_components/**/*']
+        files: ['**/*.coffee', '!node_modules/**/*', '!<%= path.app %>/vendor/**/*']
         tasks: ['test']
 
+    # Using nodemon to restart the express server for each backend change
     nodemon:
       dev:
         script: 'server/index.coffee'
         options:
-          ignore: ['./node_modules/**', './app/bower_components/**']
+          ignore: ['node_modules/**', '<%= path.app %>/**/*', '<%= path.dist %>/**/*']
           ext: 'coffee'
           env:
             node_env: 'development'
 
-    clean: dist: [ '.tmp' ]
+    clean: dist: [ '<%= path.dist %>' ]
 
     compass:
       options:
         sassDir: '<%= path.app %>/styles'
         cssDir: '<%= path.app %>/styles'
-      files:
-        '<%= path.app %>/styles/main.css': 'main.scss'
+      dev:
+        options:
+          watch: true
+      files: 'main.scss'
 
+    # For release we copy the files instead
     copy:
-      fonts:
+      build:
         expand: true
-        dot: true
-        cwd: '<%= path.app %>/bower_components/font-awesome/font'
-        dest: '<%= path.app %>/font'
-        src: '{,*/}*.*'
+        cwd: '<%= path.app %>'
+        src: [
+          'index.html'
+          'styles/main.css'
+        ]
+        dest: '<%= path.dist %>'
+      fonts:
+        src: '<%= path.app %>/vendor/fontawesome/fonts'
+        dest: '<%= path.dist %>/fonts'
+
+    # For development mode we symlink the index.html and stylesheet files
+    symlink:
+      options: overwrite: true
+      dev:
+        expand: true
+        cwd: '<%= path.app %>'
+        src: [
+          'index.html'
+          'styles/main.css'
+        ]
+        dest: '<%= path.dist %>'
+      fonts:
+        src: '<%= path.app %>/vendor/fontawesome/fonts'
+        dest: '<%= path.dist %>/fonts'
 
     mochacov :
       options :
@@ -78,7 +110,24 @@ module.exports = (grunt) ->
       cov  :
         options : reporter : 'html-cov'
 
-
     coffeelint:
       options: configFile: 'coffeelint.json'
-      files: [ '**/*.coffee', '!node_modules/**/*', '!app/bower_components/**/*' ]
+      files: [ '**/*.coffee', '!node_modules/**/*', '!<%= path.app %>/vendor/**/*' ]
+
+    browserify:
+      options:
+        transform: [
+          'coffeeify'
+          'debowerify'
+        ]
+
+      app:
+        options:
+          watch: true
+          keepAlive: true
+        files:
+          '<%= path.dist %>/scripts/main.js': [ '<%= path.app %>/scripts/main.coffee' ]
+
+      dist:
+        files:
+          'dist/scripts/main.js': [ './app/scripts/main.coffee' ]

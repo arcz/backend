@@ -2,7 +2,9 @@ node_modules
 dist
 .tmp
 .sass-cache
-app/bower_components
-server/config.coffee
+app/vendor
+app/vendor/**
 app/font
-app/bower_components/**
+dist/
+dist/**
+server/config.coffee

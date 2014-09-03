@@ -2,15 +2,9 @@
   "name": "testing-framework",
   "version": "0.0.0",
   "dependencies": {
-    "sass-bootstrap": "~3.0.0",
-    "jquery": "~1.10.2",
-    "font-awesome": "~3.2.1",
-    "backbone": "~1.0.0",
-    "underscore": "~1.5.2",
-    "momentjs": "~2.2.1",
-    "codemirror": "~3.16.0",
-    "coffee-script": "~1.6.3",
-    "SyntaxHighlighter": "~3.0.83"
+    "angular": "~1.2.23",
+    "fontawesome": "~4.2.0",
+    "sass-bootstrap": "~3.0.2"
   },
   "devDependencies": {}
 }
