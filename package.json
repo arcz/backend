@@ -43,6 +43,7 @@
     "load-grunt-tasks": "~0.1.0",
     "mocha": "^1.21.4",
     "mocha-mongoose": "^1.0.1",
+    "partialify": "^3.1.1",
     "proxyquire": "^1.0.1",
     "should": "^4.0.4",
     "sinon": "^1.10.3",

@@ -81,6 +81,7 @@ module.exports = (grunt) ->
         src: [
           'index.html'
           'styles/main.css'
+          'vendor'
         ]
         dest: '<%= path.dist %>'
       fonts:
@@ -118,6 +119,7 @@ module.exports = (grunt) ->
         keepAlive : false
         transform : [
           'coffeeify'
+          'partialify'
           'debowerify'
         ]
 
