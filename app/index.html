@@ -26,45 +26,16 @@
   your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div id="loader">
-  <div class="icon-refresh icon-spin"></div>
-</div>
-
 <div class="container">
-  <div class="col-md-8 content">
+  <div class="col-md-12 content">
     <ol class="breadcrumb">
       <li class="step login"><span>Login</span></li>
       <li class="step test"><span>Test questions</span></li>
       <li class="step coding"><span>Code assignment</span></li>
       <li class="step result"><span>Result</span></li>
-      <li class="time"></li>
     </ol>
 
-    <div id="login" class="screen">
-      <div class="jumbotron">
-        <h1>Ready to start?</h1>
-
-        <p class="lead">Log in to take the Front-End skill test:</p>
-
-        <p>
-          <a class="btn btn-lg btn-primary" href="/auth/github"><i class="icon-github-sign"></i> GitHub</a>
-          <a class="btn btn-lg btn-primary" href="/auth/linkedin"><i class="icon-linkedin-sign"></i> LinkedIn</a>
-          <a class="btn btn-lg btn-primary" href="/auth/facebook"><i class="icon-facebook-sign"></i> Facebook</a>
-          <a class="btn btn-lg btn-primary" href="/auth/google"><i class="icon-google-plus"></i> Google</a>
-        </p>
-      </div>
-      <div class="row marketing">
-        <div class="col-lg-9">
-          <h4>What is behind login?</h4>
-          <ul>
-            <li>You have 30 minutes to complete the test</li>
-            <li>There will be 3 questions with pre-determined selectable answers</li>
-            <li>Additionally you're challenged with 2 code assignments + a bonus for extra capable developers</li>
-            <li>We'll show you test results immediately for rapid feedback</li>
-          </ul>
-        </div>
-      </div>
-        </div>
+    <div data-ng-view></div>
 
     <div id="test" class="screen">
       <div class="row">
@@ -276,6 +247,12 @@
   <% } %>
   <a class="logout btn btn-xs btn-default" href="/logout">Logout</a>
 </script>
+
+<!-- build:js scripts/vendor.js -->
+<script src="vendor/angular/angular.js"></script>
+<script src="vendor/angular-route/angular-route.js"></script>
+<script src="vendor/angular-classy/angular-classy.js"></script>
+<!-- endbuild -->
 
 <script src="scripts/main.js"></script>
 

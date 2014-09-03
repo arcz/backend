@@ -1,3 +1,6 @@
-angular = require 'angular'
+login = require './login/login.coffee'
 
-console.log angular
+lobzik = angular.module 'lobzik', [ login ].map (mod) -> mod.name
+angular.bootstrap document, [ lobzik.name ]
+
+
