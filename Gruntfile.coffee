@@ -30,6 +30,7 @@ module.exports = (grunt) ->
         tasks: [
           'nodemon:dev'
           'compass:dev'
+          'browserify:dev'
           'watch:test'
         ]
 
@@ -113,18 +114,20 @@ module.exports = (grunt) ->
 
     browserify:
       options:
-        transform: [
+        watch     : false
+        keepAlive : false
+        transform : [
           'coffeeify'
           'debowerify'
         ]
 
-      app:
+      dev:
         options:
-          watch: true
-          keepAlive: true
+          watch     : true
+          keepAlive : true
         files:
           '<%= path.dist %>/scripts/main.js': [ '<%= path.app %>/scripts/main.coffee' ]
 
       dist:
         files:
-          'dist/scripts/main.js': [ './app/scripts/main.coffee' ]
+          '<%= path.dist %>/scripts/main.js': [ '<%= path.app %>/scripts/main.coffee' ]
