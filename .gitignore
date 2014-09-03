@@ -8,3 +8,4 @@ app/font
 dist/
 dist/**
 server/config.coffee
+app/test/tmp
