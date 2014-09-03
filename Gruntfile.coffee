@@ -9,9 +9,10 @@ module.exports = (grunt) ->
     dist   : 'dist'
 
   grunt.registerTask 'default', [ 'server' ]
-  grunt.registerTask 'test', [ 'mochacov:spec', 'mochacov:it' ]
+  grunt.registerTask 'test', [ 'mochacov:spec', 'mochacov:it', 'test:karma' ]
   grunt.registerTask 'test:spec', [ 'mochacov:spec' ]
   grunt.registerTask 'test:it', [ 'mochacov:it' ]
+  grunt.registerTask 'test:karma', [ 'browserify:karma', 'karma:single' ]
   grunt.registerTask 'lint', [ 'coffeelint' ]
   grunt.registerTask 'build', [ 'clean', 'browserify:dist', 'copy' ]
   grunt.registerTask 'server', [
@@ -31,13 +32,15 @@ module.exports = (grunt) ->
           'nodemon:dev'
           'compass:dev'
           'browserify:dev'
-          'watch:test'
+          'browserify:karmaDev'
+          'watch:server'
+          'karma:dev'
         ]
 
     watch:
-      test:
+      server:
         files: ['**/*.coffee', '!node_modules/**/*', '!<%= path.app %>/**', '!<%= path.dist %>/**']
-        tasks: ['test']
+        tasks: [ 'mochacov:it', 'mochacov:spec' ]
 
     # Using nodemon to restart the express server for each backend change
     nodemon:
@@ -49,6 +52,7 @@ module.exports = (grunt) ->
           env: node_env: 'development'
 
     clean: dist: [ '<%= path.dist %>' ]
+
 
     compass:
       options:
@@ -87,6 +91,14 @@ module.exports = (grunt) ->
       fonts:
         src: '<%= path.app %>/vendor/fontawesome/fonts'
         dest: '<%= path.dist %>/fonts'
+
+    karma:
+      single:
+        singleRun: true
+        configFile: 'karma.conf.coffee'
+      dev:
+        singleRun: false
+        configFile: 'karma.conf.coffee'
 
     mochacov :
       options :
@@ -133,3 +145,14 @@ module.exports = (grunt) ->
       dist:
         files:
           '<%= path.dist %>/scripts/main.js': [ '<%= path.app %>/scripts/main.coffee' ]
+
+      karma:
+        files:
+          '<%= path.app %>/test/tmp/test-bundle.js': [ '<%= path.app %>/test/**/*.spec.coffee']
+
+      karmaDev:
+        options:
+          watch     : true
+          keepAlive : true
+        files:
+          '<%= path.app %>/test/tmp/test-bundle.js': [ '<%= path.app %>/test/**/*.spec.coffee']
