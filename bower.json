@@ -4,7 +4,9 @@
   "dependencies": {
     "angular": "~1.2.23",
     "fontawesome": "~4.2.0",
-    "sass-bootstrap": "~3.0.2"
+    "sass-bootstrap": "~3.0.2",
+    "angular-route": "~1.2.23",
+    "angular-classy": "~0.4.2"
   },
   "devDependencies": {}
 }
