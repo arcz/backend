@@ -1,6 +1,7 @@
-express  = require "express"
-path     = require "path"
-passport = require "passport"
+requireDirSync = require 'require-dir-sync'
+express        = require 'express'
+path           = require 'path'
+passport       = require 'passport'
 
 # Express middleware
 bodyParser     = require 'body-parser'
@@ -9,10 +10,10 @@ expressSession = require 'express-session'
 coffee         = require 'coffee-middleware'
 serveStatic    = require 'serve-static'
 
-config     = require "../config/config"
-requireDir = require "../lib/require-dir"
-log        = require "../lib/log"
-questions  = require './questions'
+config     = require '../config/config'
+quizConfig = require '../config/quiz'
+
+log        = require '../lib/log'
 
 # Express configuration
 app = express()
@@ -20,7 +21,7 @@ env = process.env.NODE_ENV or 'development'
 
 # Development only settings
 if env is 'development'
-  log.warn "Running in development mode"
+  log.warn 'Running in development mode'
   app.use coffee
     src: path.join __dirname, '../app'
     compress: false
@@ -40,14 +41,13 @@ app.use passport.initialize()
 app.use passport.session()
 
 # initialize all routes
-routes = requireDir path.resolve __dirname, './routes'
-route app for route in routes
+require('./routes') app
 
 # Initialize the db connection
 require './db'
 
 # Require all the questions
-questions.load config.questionsDir
+require('./questions').load quizConfig.dir
 
 # Start the application
 app.listen process.env.PORT or 3000, ->

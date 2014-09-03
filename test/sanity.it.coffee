@@ -1,13 +1,18 @@
-dbUrl    = 'mongodb://localhost/lobzik-test'
-mongoose = require 'mongoose'
+helpers = require './test-helpers'
+expect  = require 'expect'
 
 describe 'sanity integration test', ->
-  db = null
   it 'should connect to db', (done) ->
-    db = mongoose.connect dbUrl, done
+    helpers.connect done
+
+  it 'should disconnect from db', (done) ->
+    helpers.connect ->
+      helpers.disconnect ->
+        expect(helpers.connection).toBe null
+        done()
 
   afterEach (done) ->
-    db.disconnect done
+    helpers.disconnect done
 
 
 

@@ -1,31 +1,32 @@
 mongoose = require 'mongoose'
 
+QuestionSchema = require './question'
+
 module.exports =
-  email: String
-  name: String
-  avatar: String
-  url: String
-  authType: String
-  startedAt: Date
-  durationTook: Number
+  avatar     : String
+  url        : String
+  finishedAt : Date
+
+  email:
+    type     : String
+    trim     : true
+    required : true
+
+  name:
+    type     : String
+    trim     : true
+    required : true
+
+  authType:
+    type     : String
+    required : true
+
+  startedAt:
+    type    : Date
+    default : Date.now
+
   finished:
     type    : Boolean
     default : false
-  testIndecies: [Number]
-  codeAsignIndecies: [Number]
-  codeSolutions: mongoose.Schema.Types.Mixed
-  testAnswers: mongoose.Schema.Types.Mixed
-  result:
-    test:
-      totalScore: Number
-      normScore: Number
-      rightAnswers: Number
-      notGivenRightAnswers: Number
-      wrongAnswers: Number
-    coding:
-      rightSolutions: Number
-      wrongSolutions: Number
-  preferedLanguage:
-    type: String
-    enum: ['javascript', 'coffeescript']
 
+  questions: [ QuestionSchema ]

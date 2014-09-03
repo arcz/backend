@@ -14,7 +14,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'server', [
     'copy'
     'compass'
-    'express:dev'
+    'nodemon:dev'
     'watch'
   ]
   grunt.registerTask 'default', [ 'server' ]
@@ -31,27 +31,16 @@ module.exports = (grunt) ->
         files: ['**/*.coffee', '!node_modules/**/*', '!app/bower_components/**/*']
         tasks: ['test']
 
-      server:
-        files: ['<%= path.server %>/**/*']
-        tasks: ['express:dev']
-        options:
-          # Without this option specified express won't be reloaded
-          spawn: true
-
-    express:
-      options:
-        port: '3000'
-
+    nodemon:
       dev:
+        script: 'server/index.coffee'
         options:
-          script: './server'
-          opts: [ 'node_modules/coffee-script/bin/coffee' ]
-          debug: false
-          background: true
-          node_env: 'development'
+          ignore: ['./node_modules/**', './app/bower_components/**']
+          ext: 'coffee'
+          env:
+            node_env: 'development'
 
-    clean:
-      dist: [ '.tmp' ]
+    clean: dist: [ '.tmp' ]
 
     compass:
       options:
