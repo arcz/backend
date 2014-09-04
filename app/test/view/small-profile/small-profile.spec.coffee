@@ -34,4 +34,3 @@ describe 'small profile view', ->
     elm = create '<div small-profile></div>'
     $httpBackend.flush()
     elm.children().length.should.be.ok
-

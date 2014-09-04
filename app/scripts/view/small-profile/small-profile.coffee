@@ -1,15 +1,21 @@
 state = require '../../state.coffee'
 
-module.exports = smallprofile = angular.module 'lobzik.view.smallprofile', [ state.name ]
+module.exports = smallProfile = angular.module 'lobzik.view.smallprofile', [
+  'classy'
+  state.name
+]
 
-class SmallProfileController
-  constructor: (@$scope, @state) ->
-    @getUser()
-
-  getUser: =>
-    @state.get().then (user) =>
-      @$scope.user = user
-
-smallprofile.directive 'smallProfile', ->
+smallProfile.directive 'smallProfile', ->
   template: require './small-profile.tpl.html'
-  controller: [ '$scope', 'state', SmallProfileController ]
+  controller: smallProfile.classy.controller
+    inject: [
+      '$scope'
+      'state'
+    ]
+
+    init: ->
+      @getUser()
+
+    getUser: ->
+      @state.get().then (user) =>
+        @$scope.user = user
