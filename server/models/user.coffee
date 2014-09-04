@@ -39,7 +39,7 @@ UserSchema.statics.findOrCreate = (data, cb) ->
 # UserSchema.methods.answer = (type, id, result, cb) ->
 
 UserSchema.methods.start = ({ email, name }, cb) ->
-  return if @startedAt?
+  return cb(null, this) if @startedAt?
   listQuestions = questions.getRandomQuestionsCombined quizConfig.count
   @questions.push question for question in listQuestions
   @email = email if email?

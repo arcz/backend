@@ -94,6 +94,14 @@ describe 'User model', ->
           user.email.should.eql 'email'
           done err
 
+    it 'should not update any fields if already started', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start {}, (err, user) ->
+          oldStartedAt = user.startedAt
+          user.start {}, (err, user) ->
+            user.startedAt.should.eql oldStartedAt
+            done err
+
     it 'should update given name', (done) ->
       User.create REQUIRED_FIELDS, (err, user) ->
         user.start { name: '11' }, (err, user) ->
