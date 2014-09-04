@@ -1,0 +1,18 @@
+#running-timer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 8px 25px;
+  font-weight: bold;
+
+  .separator {
+    color: #000;
+  }
+
+  .warning {
+    color: #FFBF00
+  }
+  .critical {
+    color: red;
+  }
+}

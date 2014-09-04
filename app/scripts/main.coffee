@@ -1,5 +1,6 @@
 modules = [
   require './init.coffee'
+  require './view/running-timer/running-timer.coffee'
   require './view/login/login.coffee'
   require './view/profile/profile.coffee'
   require './view/questions/questions.coffee'
