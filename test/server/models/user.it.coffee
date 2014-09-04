@@ -78,6 +78,11 @@ describe 'User model', ->
         user.toJSON().id.should.be.ok
         done err
 
+    it 'should include virtuals', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.toJSON().isStarted.should.exist
+        done err
+
   describe '#start', ->
     beforeEach ->
       questions.load path.join __dirname, '../../fixtures/questions'
@@ -143,19 +148,29 @@ describe 'User model', ->
         user.admin.should.not.be.ok
         done err
 
-  # describe '#answer', ->
-  #   it 'should return false if the user has already finished the test', ->
-  #     User.create
+  describe '#isStarted', ->
+    it 'should be true if user has startedAt', (done) ->
+      fields = _.extend REQUIRED_FIELDS, { startedAt: Date.now() }
+      User.create fields, (err, user) ->
+        user.isStarted.should.be.ok
+        done err
 
+    it 'should be fase if user has no startedAt', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.isStarted.should.be.not.ok
+        done err
 
+  describe '#timeLeft', ->
+    it 'should not exist if no startedAt', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        assert user.timeLeft is undefined
+        done err
 
-  # describe '#isFinished', ->
-  #   beforeEach ->
-  #     sinon.spy User, 'finish'
+    it 'should exist if there is startedAT', (done) ->
+      fields = _.extend REQUIRED_FIELDS, { startedAt: Date.now() }
+      User.create fields, (err, user) ->
+        user.timeLeft.should.be.ok
+        done err
 
-    # afterEach ->
-    #   User.finish.restore()
-
-    # it 'should description', ->
 
 

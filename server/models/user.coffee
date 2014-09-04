@@ -8,11 +8,12 @@ quizConfig = require '../../config/quiz'
 fields = require './user.fields'
 
 module.exports = UserSchema = mongoose.Schema fields,
-  toObject: virtuals: true
-  toJSON: virtuals: true
+  toObject : virtuals : true
+  toJSON   : virtuals : true
 
 UserSchema.options.toJSON =
-  transform: (doc, user) ->
+  transform: (doc) ->
+    user = doc.toObject()
     user.id = user._id
     # Hide all the fields that start with _
     delete user[key] for key of user when key.charAt(0) is '_'
@@ -58,3 +59,9 @@ UserSchema.virtual('isStarted').get ->
 
 UserSchema.virtual('admin').get ->
   @email in config.admins
+
+UserSchema.virtual('timeLeft').get ->
+  return unless @isStarted
+  res = Math.ceil (quizConfig.duration - (Date.now() - @startedAt.getTime())) / 1000
+  res = 0 if res < 0
+  res
