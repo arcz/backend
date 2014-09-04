@@ -6,6 +6,10 @@ init.run [ 'state', '$location', (state, $location) ->
   redirect = (path) ->
     $location.path path
 
-  state.get().then _.partial(redirect, '/'),
-                   _.partial(redirect, '/login')
+  successCb = (user) ->
+    path = '/'
+    path = '/questions' if user.isStarted
+    redirect path
+
+  state.get().then successCb, _.partial(redirect, '/login')
 ]
