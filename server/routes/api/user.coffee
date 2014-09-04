@@ -9,5 +9,5 @@ module.exports = (app) ->
 
   app.put "/api/user/start", (req, res) ->
     user = req.user
-    user.start req.params, (err, user) ->
+    user.start req.body, (err, user) ->
       res.send user

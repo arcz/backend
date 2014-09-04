@@ -37,7 +37,7 @@ UserSchema.statics.findOrCreate = (data, cb) ->
       cb null, user
 
 UserSchema.methods.start = ({ email, name }, cb) ->
-  return cb(null, this) if @startedAt?
+  return cb(null, this) if @isStarted
   listQuestions = questions.getRandomQuestionsCombined quizConfig.count
   @questions.push question for question in listQuestions
   @email = email if email?
@@ -52,6 +52,9 @@ UserSchema.methods.isFinished = (cb) ->
     @save cb
   else
     cb null, this
+
+UserSchema.virtual('isStarted').get ->
+  @startedAt?
 
 UserSchema.virtual('admin').get ->
   @email in config.admins
