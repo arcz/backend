@@ -1,0 +1,9 @@
+<div data-ng-if='user' id="small-profile">
+  <img data-ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" class="pull-left avatar"/>
+  <section class="data">
+    <span class="name">{{ user.name }}</span>
+    <span class="email">{{ user.email }}</span>
+    <a data-ng-if="user.isAdmin" class="logout btn btn-xs btn-info" href="#page/admin">Admin console</a>
+    <a class="logout btn btn-xs btn-default" href="/logout">Logout</a>
+  </section>
+</div>

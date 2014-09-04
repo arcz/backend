@@ -6,7 +6,10 @@
     "fontawesome": "~4.2.0",
     "sass-bootstrap": "~3.0.2",
     "angular-route": "~1.2.23",
-    "angular-classy": "~0.4.2"
+    "pace": "~0.5.6",
+    "angular-resource": "~1.2.23"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "angular-mocks": "~1.2.23"
+  }
 }

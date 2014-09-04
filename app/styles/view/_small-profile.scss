@@ -1,0 +1,32 @@
+#small-profile {
+  $width: 145px;
+  $avatar-dimensions: 80px;
+
+  margin-bottom: $line-height-computed;
+  border-radius: $border-radius-large;
+  background-color: $background-color;
+
+  position: absolute;
+  float: left;
+  top: 0;
+  right: -230px;
+
+  .avatar{
+    max-width: $avatar-dimensions;
+    max-height: $avatar-dimensions;
+  }
+
+  .data {
+    padding-left: 5px;
+    float: left;
+    width: $width;
+    .email,.name {
+      display: block;
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
+
