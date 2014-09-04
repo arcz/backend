@@ -1,14 +1,16 @@
 state = require '../../state.coffee'
 
 module.exports = profile = angular.module 'lobzik.view.profile', [
-  'classy'
   state.name
+  'classy'
+  'ngRoute'
 ]
 
 ProfileController = profile.classy.controller
-
+  name: 'ProfileController'
   inject: [
     '$scope'
+    '$location'
     'state'
   ]
 
@@ -16,8 +18,12 @@ ProfileController = profile.classy.controller
     @state.get().then (user) =>
       @$scope.user = user
 
+  isAlreadyStarted: (user) ->
+    !!user.startedAt
+
   validateAndStart: (user) ->
-    user.$start()
+    user.$start =>
+      @$location.path '/questions'
 
 profile.config [ '$routeProvider', ($routeProvider) ->
   $routeProvider.when '/',
