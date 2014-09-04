@@ -23,7 +23,6 @@ module.exports =
 
   startedAt:
     type    : Date
-    default : Date.now
 
   finished:
     type    : Boolean

@@ -6,3 +6,8 @@ module.exports = (app) ->
   app.get "/api/user", (req, res) ->
     user = req.user
     res.send user.toJSON()
+
+  app.put "/api/user/start", (req, res) ->
+    user = req.user
+    user.start req.params, (err, user) ->
+      res.send user

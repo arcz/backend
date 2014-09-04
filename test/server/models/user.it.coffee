@@ -27,12 +27,9 @@ describe 'User model', ->
     User.should.be.ok
 
   describe 'creating a user', ->
-    beforeEach ->
-      questions.load path.join __dirname, '../../fixtures/questions'
-    afterEach questions.clear
-    it 'should add questions from built questionlist', (done) ->
+    it 'should not add questions', (done) ->
       User.create REQUIRED_FIELDS, (err, user) ->
-        user.questions.length.should.eql 1
+        user.questions.length.should.not.be.ok
         done err
 
   describe '#findOrCreate', ->
@@ -81,6 +78,47 @@ describe 'User model', ->
         user.toJSON().id.should.be.ok
         done err
 
+  describe '#start', ->
+    beforeEach ->
+      questions.load path.join __dirname, '../../fixtures/questions'
+    afterEach questions.clear
+    it 'should update given email', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start { email: '11' }, (err, user) ->
+          user.email.should.eql 11
+          done err
+
+    it 'should not update given email if empty', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start {}, (err, user) ->
+          user.email.should.eql 'email'
+          done err
+
+    it 'should update given name', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start { name: '11' }, (err, user) ->
+          user.name.should.eql 11
+          done err
+
+    it 'should not update given name if empty', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start { }, (err, user) ->
+          user.name.should.eql 'name'
+          done err
+
+    it 'should add startedAt', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        assert user.startedAt is undefined
+        user.start { }, (err, user) ->
+          user.startedAt.should.be.ok
+          done err
+
+    it 'should fill questions', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.questions.length.should.eql 0
+        user.start { }, (err, user) ->
+          user.questions.length.should.eql 1
+          done err
 
   describe 'admin', ->
     it 'should be true if user is in admin list', (done) ->

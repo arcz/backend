@@ -18,12 +18,6 @@ UserSchema.options.toJSON =
     delete user[key] for key of user when key.charAt(0) is '_'
     user
 
-# Build questions from questions list before saving
-UserSchema.pre 'save', (next) ->
-  questionList = questions.getRandomQuestionsCombined quizConfig.count
-  @questions.push question for question in questionList
-  next()
-
 # Finds a current user or creates a new one
 #
 # If we have found a current user by its url and it has a different email
@@ -44,6 +38,14 @@ UserSchema.statics.findOrCreate = (data, cb) ->
 
 # UserSchema.methods.answer = (type, id, result, cb) ->
 
+UserSchema.methods.start = ({ email, name }, cb) ->
+  return if @startedAt?
+  listQuestions = questions.getRandomQuestionsCombined quizConfig.count
+  @questions.push question for question in listQuestions
+  @email = email if email?
+  @name  = name  if name?
+  @startedAt = new Date()
+  @save cb
 
 UserSchema.methods.isFinished = (cb) ->
   if @durationLeft <= 0 and not @finished

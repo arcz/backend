@@ -18,5 +18,4 @@ module.exports =
 
   content:
     type     : String
-    required : true
 
