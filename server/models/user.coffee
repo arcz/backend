@@ -62,6 +62,9 @@ UserSchema.virtual('admin').get ->
 
 UserSchema.virtual('timeLeft').get ->
   return unless @isStarted
-  res = Math.ceil (quizConfig.duration - (Date.now() - @startedAt.getTime()))
+  res = Math.ceil (@timeTotal - (Date.now() - @startedAt.getTime()))
   res = 0 if res < 0
   res
+
+UserSchema.virtual('timeTotal').get ->
+  quizConfig.duration

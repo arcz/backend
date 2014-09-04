@@ -172,5 +172,11 @@ describe 'User model', ->
         user.timeLeft.should.be.ok
         done err
 
+  describe '#timeTotal', ->
+    # TODO: Add a better test
+    it 'should be quizConfig duration', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.timeTotal.should.be.ok
+        done err
 
 
