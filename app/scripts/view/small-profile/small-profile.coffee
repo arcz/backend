@@ -14,8 +14,5 @@ smallProfile.directive 'smallProfile', ->
     ]
 
     init: ->
-      @getUser()
-
-    getUser: ->
       @state.get().then (user) =>
         @$scope.user = user
