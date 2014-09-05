@@ -1,6 +1,6 @@
 state = require '../../state.coffee'
 
-module.exports = smallProfile = angular.module 'lobzik.view.smallprofile', [
+module.exports = smallProfile = angular.module 'testlab.view.smallprofile', [
   'classy'
   state.name
 ]

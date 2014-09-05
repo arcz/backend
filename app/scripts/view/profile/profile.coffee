@@ -1,6 +1,6 @@
 state = require '../../state.coffee'
 
-module.exports = profile = angular.module 'lobzik.view.profile', [
+module.exports = profile = angular.module 'testlab.view.profile', [
   state.name
   'classy'
   'ngRoute'

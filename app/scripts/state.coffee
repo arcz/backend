@@ -1,6 +1,6 @@
 user = require './user.coffee'
 
-module.exports = state = angular.module 'lobzik.state', [ user.name ]
+module.exports = state = angular.module 'testlab.state', [ user.name ]
 
 class State
   constructor: (@User, @$q) ->

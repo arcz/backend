@@ -1,5 +1,5 @@
 {
-  "name": "lobzik",
+  "name": "test-lab",
   "version": "0.0.0",
   "scripts": {
     "postinstall": "bower install",

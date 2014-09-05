@@ -1,7 +1,7 @@
 moment = require 'moment'
 state  = require '../../state.coffee'
 
-module.exports = runningTimer = angular.module 'lobzik.view.runningtimer', [
+module.exports = runningTimer = angular.module 'testlab.view.runningtimer', [
   'classy'
   state.name
 ]

@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
 
-exports.dbURL = 'mongodb://localhost/lobzik-test'
+exports.dbURL = 'mongodb://localhost/testlab-test'
 
 # Currently active connection
 exports.connection = null

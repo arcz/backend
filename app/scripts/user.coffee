@@ -1,4 +1,4 @@
-module.exports = user = angular.module 'lobzik.user', [ 'ngResource' ]
+module.exports = user = angular.module 'testlab.user', [ 'ngResource' ]
 
 user.factory 'User', [ '$resource', ($resource) ->
   $resource '/api/user', { }, {
