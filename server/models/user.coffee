@@ -11,12 +11,14 @@ module.exports = UserSchema = mongoose.Schema fields,
   toObject : virtuals : true
   toJSON   : virtuals : true
 
+# Removes all keys that start with _
+# Removes questions object
 UserSchema.options.toJSON =
   transform: (doc) ->
     user = doc.toObject()
-    user.id = user._id
     # Hide all the fields that start with _
     delete user[key] for key of user when key.charAt(0) is '_'
+    delete user.questions
     user
 
 # Finds a current user or creates a new one
@@ -68,3 +70,6 @@ UserSchema.virtual('timeLeft').get ->
 
 UserSchema.virtual('timeTotal').get ->
   quizConfig.duration
+
+UserSchema.virtual('id').get ->
+  @_id.toHexString()

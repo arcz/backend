@@ -1,4 +1,4 @@
-<div data-ng-if='user' id="small-profile">
+<div data-ng-if='user && user.$resolved' id="small-profile">
   <img data-ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" class="pull-left avatar"/>
   <section class="data">
     <span class="name">{{ user.name }}</span>

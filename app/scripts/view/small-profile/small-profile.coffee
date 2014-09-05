@@ -1,8 +1,8 @@
-state = require '../../state.coffee'
+User = require '../../resource/user.coffee'
 
 module.exports = smallProfile = angular.module 'testlab.view.smallprofile', [
+  User.name
   'classy'
-  state.name
 ]
 
 smallProfile.directive 'smallProfile', ->
@@ -10,9 +10,9 @@ smallProfile.directive 'smallProfile', ->
   controller: smallProfile.classy.controller
     inject: [
       '$scope'
-      'state'
+      'User'
     ]
 
     init: ->
-      @state.get().then (user) =>
+      @User.get().$promise.then (user) =>
         @$scope.user = user

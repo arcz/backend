@@ -55,6 +55,7 @@
     "proxyquire": "^1.0.1",
     "should": "^4.0.4",
     "sinon": "^1.10.3",
+    "time-eventloop": "0.0.5",
     "time-grunt": "~0.1.1"
   },
   "engines": {

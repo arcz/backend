@@ -25,7 +25,7 @@
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-6">
           <button type="submit" data-ng-disabled="profileForm.$invalid || isAlreadyStarted(user)" class="btn btn-default">Validate and start</button>
-          <a class="btn btn-success" data-ng-disabled="!isAlreadyStarted(user)" href="#/questions">Fill the test</a>
+          <a class="btn btn-success" data-ng-disabled="!isAlreadyStarted(user)" data-ui-sref="question">Fill the test</a>
         </div>
       </div>
     </form>

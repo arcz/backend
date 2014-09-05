@@ -1,12 +1,30 @@
-state = require '../../state.coffee'
+questionResource = require '../../resource/questions.coffee'
+questionView     = require './question.coffee'
 
-module.exports = questions = angular.module 'testlab.view.questions', [ state.name ]
-
-questions.config [ '$routeProvider', ($routeProvider) ->
-  $routeProvider
-    .when '/questions/',
-      redirectTo: '/questions/1'
-    .when '/questions/:id',
-      template: require './questions.tpl.html'
-      resolve: [ 'state', (state) -> state.get() ]
+module.exports = questions = angular.module 'testlab.view.questions', [
+  questionResource.name
+  questionView.name
+  'classy'
+  'ui.router'
 ]
+
+questions.config [ '$stateProvider', ($stateProvider) ->
+  $stateProvider.state 'question',
+      url: '/question'
+      template: require './questions.tpl.html'
+      controller: QuestionsController
+      resolve:
+        questions: [ 'Question', (Question) -> Question.list().$promise ]
+]
+
+QuestionsController = questions.classy.controller
+  inject: [
+    '$scope'
+    '$state'
+    'questions'
+  ]
+
+  init: ->
+    @$scope.questions = @questions
+
+

@@ -1,17 +1,18 @@
-state = require '../../state.coffee'
+User = require '../../resource/user.coffee'
 
 module.exports = login = angular.module 'testlab.view.login', [
-  'ngRoute',
-  state.name
+  User.name
+  'ui.router'
 ]
 
-login.config [ '$routeProvider', ($routeProvider) ->
-  $routeProvider.when '/login',
+login.config [ '$stateProvider', ($stateProvider) ->
+  $stateProvider.state 'login',
+    url: '/login',
     template: require './login.tpl.html'
-    resolve: [ 'state', '$q', (state, $q) ->
+    resolve: [ 'User', '$q', (User, $q) ->
       deffered = $q.defer()
       # If we have the state then do not allow showing the login page
-      state.get().then deffered.reject, deffered.resolve
+      User.get().$promise.then deffered.reject, deffered.resolve
       deffered.promise
     ]
 ]

@@ -1,9 +1,9 @@
-state = require '../../state.coffee'
+User = require '../../resource/user.coffee'
 
 module.exports = profile = angular.module 'testlab.view.profile', [
-  state.name
+  User.name
   'classy'
-  'ngRoute'
+  'ui.router'
 ]
 
 ProfileController = profile.classy.controller
@@ -11,12 +11,11 @@ ProfileController = profile.classy.controller
   inject: [
     '$scope'
     '$location'
-    'state'
+    'User'
   ]
 
   init: ->
-    @state.get().then (user) =>
-      @$scope.user = user
+    @$scope.user = @User.get()
 
   isAlreadyStarted: (user) ->
     !!user.startedAt
@@ -25,9 +24,10 @@ ProfileController = profile.classy.controller
     user.$start =>
       @$location.path '/questions'
 
-profile.config [ '$routeProvider', ($routeProvider) ->
-  $routeProvider.when '/',
+profile.config [ '$stateProvider', ($stateProvider) ->
+  $stateProvider.state 'profile',
+    url: '/',
     template: require './profile.tpl.html'
     controller: ProfileController
-    resolve: [ 'state', (state) -> state.get() ]
+    resolve: [ 'User', (User) -> User.get() ]
 ]

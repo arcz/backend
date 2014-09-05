@@ -19,7 +19,11 @@ app = express()
 env = process.env.NODE_ENV or 'development'
 
 # Development only settings
-log.warn 'Running in development mode' if env is 'development'
+if env is 'development'
+  log.warn 'Running in development mode'
+  # Analyse the eventloop
+  timeEv = require 'time-eventloop'
+  timeEv.start interval: 10
 
 app.use bodyParser.json()
 app.use cookieParser()

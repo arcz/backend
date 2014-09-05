@@ -1,9 +1,9 @@
 moment = require 'moment'
-state  = require '../../state.coffee'
+User  = require '../../resource/user.coffee'
 
 module.exports = runningTimer = angular.module 'testlab.view.runningtimer', [
   'classy'
-  state.name
+  User.name
 ]
 
 formatMs = (ms) ->
@@ -18,11 +18,11 @@ runningTimer.directive 'runningTimer', ->
     inject: [
       '$scope'
       '$timeout'
-      'state'
+      'User'
     ]
 
     init: ->
-      @state.get().then (user) =>
+      @User.get().$promise.then (user) =>
         @$scope.user     = user
         @$scope.timeLeft = user.timeLeft
         @updateRunningTimer() if @isStarted
@@ -48,5 +48,3 @@ runningTimer.directive 'runningTimer', ->
 
     isWarning: (ms) ->
       toMin(ms) <= 8
-
-

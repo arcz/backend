@@ -1,15 +1,18 @@
 _     = require 'lodash'
-state = require './state.coffee'
+User = require './resource/user.coffee'
 
-module.exports = init = angular.module 'testlab.init', [ state.name ]
-init.run [ 'state', '$location', (state, $location) ->
-  redirect = (path) ->
-    $location.path path
+module.exports = init = angular.module 'testlab.init', [
+  User.name
+  'ui.router'
+]
+
+init.run [ 'User', '$state', (User, $state) ->
+  redirect = $state.go
 
   successCb = (user) ->
-    path = '/'
-    path = '/questions' if user.isStarted
+    path = 'login'
+    path = 'question' if user.isStarted
     redirect path
 
-  state.get().then successCb, _.partial(redirect, '/login')
+  User.get().$promise.then successCb, _.partial(redirect, 'login')
 ]

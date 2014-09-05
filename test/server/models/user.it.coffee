@@ -83,6 +83,12 @@ describe 'User model', ->
         user.toJSON().isStarted.should.exist
         done err
 
+    it 'should not include questions', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start {}, (err, user) ->
+          assert user.toJSON().questions is undefined
+          done err
+
   describe '#start', ->
     beforeEach ->
       questions.load path.join __dirname, '../../fixtures/questions'
@@ -170,6 +176,12 @@ describe 'User model', ->
       fields = _.extend REQUIRED_FIELDS, { startedAt: Date.now() }
       User.create fields, (err, user) ->
         user.timeLeft.should.be.ok
+        done err
+
+  describe '#id', ->
+    it 'should set id', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.id.should.be.ok
         done err
 
   describe '#timeTotal', ->
