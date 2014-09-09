@@ -10,7 +10,7 @@ init.run [ 'User', '$state', (User, $state) ->
   redirect = $state.go
 
   successCb = (user) ->
-    path = 'login'
+    path = 'profile'
     path = 'question' if user.isStarted
     redirect path
 
