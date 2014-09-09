@@ -1,6 +1,8 @@
 questionResource = require '../../resource/questions.coffee'
 questionView     = require './question.coffee'
 
+_ = require 'lodash'
+
 module.exports = questions = angular.module 'testlab.view.questions', [
   questionResource.name
   questionView.name
@@ -26,5 +28,4 @@ QuestionsController = questions.classy.controller
 
   init: ->
     @$scope.questions = @questions
-
-
+    @$state.go 'question.id', id: _.first(@questions).id
