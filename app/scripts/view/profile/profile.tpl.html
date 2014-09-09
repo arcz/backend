@@ -9,15 +9,15 @@
     </div>
   </div>
   <div class="col-md-12">
-    <form novalidate class="form-horizontal" data-ng-submit="validateAndStart(user)" name="profileForm">
+    <form novalidate class="form-horizontal col-md-offset-2" data-ng-submit="validateAndStart(user)" name="profileForm">
       <div class="form-group" data-ng-class="{ 'has-error': profileForm.name.$invalid }">
-        <label for="name" class="col-sm-2 control-label">Fullname</label>
+        <label for="name" class="col-sm-2 control-label">Fullname *</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" data-ng-disabled="isAlreadyStarted(user)" name="name" id="name" required data-ng-model="user.name" placeholder="Your name">
         </div>
       </div>
       <div class="form-group" data-ng-class="{ 'has-error': profileForm.email.$invalid }">
-        <label for="email" class="col-sm-2 control-label">Email</label>
+        <label for="email" class="col-sm-2 control-label">Email *</label>
         <div class="col-sm-6">
           <input type="email" class="form-control" data-ng-disabled="isAlreadyStarted(user)" id="email" name="email" required data-ng-model="user.email" placeholder="Your email">
         </div>
@@ -43,7 +43,7 @@
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-6">
           <button type="submit" data-ng-disabled="profileForm.$invalid || isAlreadyStarted(user)" class="btn btn-default">Validate and start</button>
-          <a class="btn btn-success" data-ng-disabled="!isAlreadyStarted(user)" data-ui-sref="question">Fill the test</a>
+          <a class="btn btn-success pull-right" data-ng-disabled="!isAlreadyStarted(user)" data-ui-sref="question">Fill the test <i class="fa fa-arrow-right"></i></a>
         </div>
       </div>
     </form>
