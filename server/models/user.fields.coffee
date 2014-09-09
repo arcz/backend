@@ -6,6 +6,7 @@ module.exports =
   avatar     : String
   url        : String
   finishedAt : Date
+  startedAt  : Date
 
   email:
     type     : String
@@ -21,11 +22,21 @@ module.exports =
     type     : String
     required : true
 
-  startedAt:
-    type    : Date
-
   finished:
     type    : Boolean
     default : false
+
+  address:
+    country:
+      type: String
+      trim: true
+
+    city:
+      type: String
+      trim: true
+
+    timezone:
+      type: String
+      trim: true
 
   questions: [ QuestionSchema ]

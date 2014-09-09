@@ -5,9 +5,7 @@ questions  = require '../questions'
 config     = require '../../config/config'
 quizConfig = require '../../config/quiz'
 
-fields = require './user.fields'
-
-module.exports = UserSchema = mongoose.Schema fields,
+module.exports = UserSchema = mongoose.Schema require('./user.fields'),
   toObject : virtuals : true
   toJSON   : virtuals : true
 
@@ -39,12 +37,15 @@ UserSchema.statics.findOrCreate = (data, cb) ->
     else
       cb null, user
 
-UserSchema.methods.start = ({ email, name }, cb) ->
+UserSchema.methods.start = ({ email, name, address } = {}, cb) ->
   return cb(null, this) if @isStarted
   listQuestions = questions.getRandomQuestionsCombined quizConfig.count
   @questions.push question for question in listQuestions
-  @email = email if email?
-  @name  = name  if name?
+
+  @address = address if address?
+  @email   = email if email?
+  @name    = name  if name?
+
   @startedAt = new Date()
   @save cb
 

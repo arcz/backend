@@ -90,13 +90,19 @@ describe 'User model', ->
           done err
 
   describe '#start', ->
-    beforeEach ->
-      questions.load path.join __dirname, '../../fixtures/questions'
+    beforeEach -> questions.load path.join __dirname, '../../fixtures/questions'
     afterEach questions.clear
     it 'should update given email', (done) ->
       User.create REQUIRED_FIELDS, (err, user) ->
         user.start { email: '11' }, (err, user) ->
           user.email.should.eql 11
+          done err
+
+    it 'should update the users address', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        address = timezone: 'hello kids'
+        user.start { address }, (err, user) ->
+          user.address.timezone.should.eql 'hello kids'
           done err
 
     it 'should not update given email if empty', (done) ->
