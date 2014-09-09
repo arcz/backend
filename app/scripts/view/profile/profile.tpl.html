@@ -41,9 +41,9 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-6">
-          <button type="submit" data-ng-disabled="profileForm.$invalid || isAlreadyStarted(user)" class="btn btn-default">Validate and start</button>
-          <a class="btn btn-success pull-right" data-ng-disabled="!isAlreadyStarted(user)" data-ui-sref="question">Fill the test <i class="fa fa-arrow-right"></i></a>
+        <div class="col-sm-offset-2 col-sm-6" data-ng-switch="isAlreadyStarted(user)">
+          <button data-ng-switch-when="false" type="submit" data-ng-disabled="profileForm.$invalid" class="btn btn-success pull-right">Verify and start <i class="fa fa-arrow-right"></i></button>
+          <a data-ng-switch-default class="btn btn-success pull-right" data-ng-disabled="!isAlreadyStarted(user)" data-ui-sref="question">Fill the test <i class="fa fa-arrow-right"></i></a>
         </div>
       </div>
     </form>
