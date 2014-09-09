@@ -40,22 +40,14 @@ UserSchema.statics.findOrCreate = (data, cb) ->
 UserSchema.methods.start = ({ email, name, address } = {}, cb) ->
   return cb(null, this) if @isStarted
   listQuestions = questions.getRandomQuestionsCombined quizConfig.count
-  @questions.push question for question in listQuestions
 
+  @questions.push question for question in listQuestions
   @address = address if address?
   @email   = email if email?
   @name    = name  if name?
 
   @startedAt = new Date()
   @save cb
-
-UserSchema.methods.isFinished = (cb) ->
-  if @durationLeft <= 0 and not @finished
-    @finish()
-    @durationTook = quizConfig.duration
-    @save cb
-  else
-    cb null, this
 
 UserSchema.virtual('isStarted').get ->
   @startedAt?
