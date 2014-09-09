@@ -199,8 +199,9 @@ describe 'User model', ->
 
   describe '#answer', ->
     user = null
-    beforeEach -> questions.load path.join __dirname, '../../fixtures/questions'
     afterEach questions.clear
+    beforeEach ->
+      questions.load path.join __dirname, '../../fixtures/questions'
     beforeEach (done) ->
       User.create REQUIRED_FIELDS, (err, usr) ->
         usr.start {}, (err, startedUser) ->

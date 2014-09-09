@@ -4,6 +4,7 @@ _        = require 'lodash'
 questions  = require '../questions'
 config     = require '../../config/config'
 quizConfig = require '../../config/quiz'
+log        = require '../../lib/log'
 
 module.exports = UserSchema = mongoose.Schema require('./user.fields'),
   toObject : virtuals : true
@@ -56,10 +57,16 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
   return cb(null, null) unless question
   return cb(null, null) if not question.multipleAnswers and question.answers.length
 
-  id = question.answers.push answer
-  @markModified 'question.anaswers'
-  @save (err, user) ->
-    cb err, question.answers[id - 1]
+  fileName = question.fileName
+  content  = answer.content
+  questions.findAndValidate fileName, content, (err, valid) =>
+    log.error err if err
+    return cb err, null if err
+    answer.valid = valid
+    id           = question.answers.push answer
+    @markModified 'question.anaswers'
+    @save (err, user) ->
+      cb err, question.answers[id - 1]
 
 UserSchema.virtual('isStarted').get ->
   @startedAt?

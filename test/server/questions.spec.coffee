@@ -2,6 +2,7 @@ proxyquire = require 'proxyquire'
 sinon      = require 'sinon'
 path       = require 'path'
 _          = require 'lodash'
+assert     = require 'assert'
 
 questions = proxyquire '../../server/questions',
   'require-dir-sync': -> requireStub arguments...
@@ -105,4 +106,46 @@ describe 'questions', ->
       res = questions.getRandomQuestionsCombined test: 1
       res[0].type.should.eql 'test'
 
+  describe '#findByFilename', ->
+    it 'should exist', ->
+      questions.findByFilename.should.be.ok
 
+    it 'should find model by its fileName', ->
+      questions.list = [ fileName: 'test' ]
+      questions.findByFilename('test').should.be.ok
+
+    it 'should return null if does not exist', ->
+      questions.list = [ fileName: 'test1' ]
+      res = questions.findByFilename 'test'
+      assert res is undefined
+
+  describe '#findAndValidate', ->
+    it 'should return error if model is not found', (done) ->
+      sinon.stub(questions, 'findByFilename').returns null
+      questions.findAndValidate 'asd', 'content', (err, result) ->
+        err.should.be.ok
+        questions.findByFilename.restore()
+        done result
+
+    it 'should return true if question has no validate method', (done) ->
+      sinon.stub(questions, 'findByFilename').returns {}
+      questions.findAndValidate 'asd', 'content', (err, result) ->
+        result.should.be.ok
+        questions.findByFilename.restore()
+        done err
+
+    it 'should return error if validate fn throws', (done) ->
+      validate = -> throw new Error 'WHAT IS THIS'
+      sinon.stub(questions, 'findByFilename').returns { validate }
+      questions.findAndValidate 'asd', 'content', (err, result) ->
+        err.should.be.ok
+        questions.findByFilename.restore()
+        done result
+
+    it 'should return value according to validate callback', (done) ->
+      validate = (data, callback) -> callback null, data
+      sinon.stub(questions, 'findByFilename').returns { validate }
+      questions.findAndValidate 'asd', 'content', (err, result) ->
+        result.should.be.eql 'content'
+        questions.findByFilename.restore()
+        done err

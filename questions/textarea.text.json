@@ -1,0 +1,5 @@
+{
+  "type": "text",
+  "name": "Just a question that accept text",
+  "description": "will accept free form texts and probably wont be validated, but thats up to you."
+}

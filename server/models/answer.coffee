@@ -10,7 +10,8 @@ fields =
     required : true
     trim     : true
 
-  corrent: Boolean
+  valid: Boolean
+
 module.exports = AnswerSchema = mongoose.Schema fields,
   toObject : virtuals : true
   toJSON   : virtuals : true
