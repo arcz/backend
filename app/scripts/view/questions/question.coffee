@@ -46,5 +46,5 @@ QuestionController = question.classy.controller
     @$scope.question = @question
     @$scope.answer   = @Answer.get id: @$state.params.id
 
-  submitAnswer: (answer) ->
-    answer.$save()
+  submitAnswer: (question, answer) ->
+    answer.$save id: question.id

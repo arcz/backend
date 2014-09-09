@@ -6,6 +6,10 @@ questions.factory 'Answer', [ '$resource', ($resource) ->
       method: 'GET'
       url: '/api/answer/:id'
       cache: false
+
+    save:
+      method: 'POST'
+      url: '/api/answer/:id'
 ]
 
 

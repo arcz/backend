@@ -1,4 +1,14 @@
 mongoose = require 'mongoose'
-fields   = require './answer.fields'
 
-module.exports = AnswerSchema = mongoose.Schema fields
+module.exports = AnswerSchema = mongoose.Schema
+  answeredAt:
+    type    : Date
+    default : Date.now
+
+  content:
+    type     : String
+    required : true
+    trim     : true
+
+  corrent: Boolean
+

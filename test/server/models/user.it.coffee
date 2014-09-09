@@ -197,4 +197,19 @@ describe 'User model', ->
         user.timeTotal.should.be.ok
         done err
 
+  describe '#answer', ->
+    user = null
+    beforeEach -> questions.load path.join __dirname, '../../fixtures/questions'
+    afterEach questions.clear
+    beforeEach (done) ->
+      User.create REQUIRED_FIELDS, (err, usr) ->
+        usr.start {}, (err, startedUser) ->
+          user = startedUser
+          done err
+
+    it 'should save answers', (done) ->
+      question = user.questions[0]
+      user.answer question.id, { content: 'tere' }, (err, answer) ->
+        answer.content.should.eql 'tere'
+        done err
 

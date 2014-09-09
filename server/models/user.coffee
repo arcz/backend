@@ -49,6 +49,14 @@ UserSchema.methods.start = ({ email, name, address } = {}, cb) ->
   @startedAt = new Date()
   @save cb
 
+UserSchema.methods.answer = (questionId, answer = {}, cb) ->
+  question = _.find @questions, { id: questionId }
+  return cb(null, null) unless question
+  id = question.answers.push answer
+  @markModified 'question'
+  @save (err, user) ->
+    cb err, question.answers[id - 1]
+
 UserSchema.virtual('isStarted').get ->
   @startedAt?
 
