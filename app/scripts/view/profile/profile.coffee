@@ -29,5 +29,5 @@ profile.config [ '$stateProvider', ($stateProvider) ->
     template: require './profile.tpl.html'
     controller: ProfileController
     resolve:
-      user: [ 'User', (User) -> User.get() ]
+      user: [ 'User', (User) -> User.get().$promise ]
 ]
