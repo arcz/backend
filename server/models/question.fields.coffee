@@ -1,3 +1,4 @@
+mongoose     = require 'mongoose'
 AnswerSchema = require './answer'
 
 module.exports =
@@ -19,3 +20,7 @@ module.exports =
   content:
     type     : String
 
+  code:
+    type: String
+
+  variants: Object

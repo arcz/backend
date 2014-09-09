@@ -1,6 +1,7 @@
 # All new test templates should go here
 TEMPLATES =
-  'text': require './text.tpl.html'
+  'text'     : require './text.tpl.html'
+  'checkbox' : require './checkbox.tpl.html'
 
 module.exports = questionTemplates = angular.module 'testlab.view.question.templates', []
 

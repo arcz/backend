@@ -14,24 +14,24 @@ describe 'validate-question', ->
   it 'should return false if no type is given', ->
     validateQuestion({'description', 'name'}).should.not.be.ok
 
-  describe 'question type', ->
-    type = 'question'
-    it 'should return true if question has all valid fields', ->
-      validateQuestion({ 'name', 'description', 'options', type }).should.be.ok
+  describe 'checkbox type', ->
+    type = 'checkbox'
+    it 'should return true if checkbox has all valid fields', ->
+      validateQuestion({ 'name', 'description', 'variants', type }).should.be.ok
 
-    it 'should return true if question has more fields than needed', ->
-      validateQuestion({ 'name', 'description', 'XXX', 'options', type }).should.be.ok
+    it 'should return true if checkbox has more fields than needed', ->
+      validateQuestion({ 'name', 'description', 'XXX', 'variants', type }).should.be.ok
 
-    it 'should return false if question has less fields than needed', ->
+    it 'should return false if checkbox has less fields than needed', ->
       validateQuestion({ 'name', type }).should.not.be.ok
 
   describe 'code type', ->
     type = 'code'
     it 'should return true if question has all valid fields', ->
-      validateQuestion({ 'name', 'description', 'code', 'options', type }).should.be.ok
+      validateQuestion({ 'name', 'description', 'code', 'variants', type }).should.be.ok
 
     it 'should return true if question has more fields than needed', ->
-      validateQuestion({ 'name', 'description', 'XXX', 'code','options', type }).should.be.ok
+      validateQuestion({ 'name', 'description', 'XXX', 'code','variants', type }).should.be.ok
 
     it 'should return false if question has less fields than needed', ->
       validateQuestion({ 'name', type }).should.not.be.ok

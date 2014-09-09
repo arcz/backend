@@ -3,7 +3,7 @@ module.exports =
   count:
     text     : 1
     code     : 3
-    question : 4
+    checkbox : 4
 
   # Test duration (ms)
   duration: 1000 * 60 * 20

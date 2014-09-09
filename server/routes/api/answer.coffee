@@ -8,8 +8,8 @@ module.exports = (app) ->
   app.get "/api/answer/:questionId", (req, res) ->
     id   = req.params.questionId
     user = req.user
-    question = _.find user.questions, { id }
-    answer   = _.last question.answers
+    question = _.find user?.questions, { id }
+    answer   = _.last question?.answers
     res.send answer
 
   app.post "/api/answer/:questionId", (req, res) ->

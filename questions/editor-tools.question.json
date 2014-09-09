@@ -1,8 +1,8 @@
 {
-  "type": "question",
+  "type": "checkbox",
   "name": "Which editor do you prefer?",
   "description": "choose the right editor for you",
-  "options": {
+  "variants": {
     "a": "Vim",
     "b": "Emacs",
     "c": "Ed"

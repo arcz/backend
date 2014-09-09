@@ -6,7 +6,7 @@ module.exports = AnswerSchema = mongoose.Schema
     default : Date.now
 
   content:
-    type     : String
+    type     : mongoose.Schema.Types.Mixed
     required : true
     trim     : true
 

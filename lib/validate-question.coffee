@@ -2,7 +2,7 @@ _ = require 'lodash'
 
 # Question types and their required fields
 TYPES =
-  question : [ 'name', 'description', 'options' ]
+  checkbox : [ 'name', 'description', 'variants' ]
   code     : [ 'name', 'description', 'code' ]
   text     : [ 'name', 'description' ]
 
