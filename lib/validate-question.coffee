@@ -5,6 +5,7 @@ TYPES =
   checkbox : [ 'name', 'description', 'variants' ]
   code     : [ 'name', 'description', 'code' ]
   text     : [ 'name', 'description' ]
+  radio    : [ 'name', 'description', 'variants' ]
 
 removeNilFields = (obj) ->
   _.transform obj, (obj, val, key) ->
