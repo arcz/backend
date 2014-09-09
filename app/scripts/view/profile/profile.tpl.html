@@ -23,6 +23,24 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="country" class="col-sm-2 control-label">Country</label>
+        <div class="col-sm-6">
+          <input type="country" class="form-control" data-ng-disabled="isAlreadyStarted(user)" id="country" name="country" data-ng-model="user.address.country" placeholder="Name yerrr country!">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="city" class="col-sm-2 control-label">City</label>
+        <div class="col-sm-6">
+          <input type="city" class="form-control" data-ng-disabled="isAlreadyStarted(user)" id="city" name="city" data-ng-model="user.address.city" placeholder="In what city do you live?">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="timezone" class="col-sm-2 control-label">Timezone</label>
+        <div class="col-sm-6">
+          <input type="timezone" class="form-control" data-ng-disabled="isAlreadyStarted(user)" id="timezone" name="timezone" data-ng-model="user.address.timezone" placeholder="Whats your timezone?">
+        </div>
+      </div>
+      <div class="form-group">
         <div class="col-sm-offset-2 col-sm-6">
           <button type="submit" data-ng-disabled="profileForm.$invalid || isAlreadyStarted(user)" class="btn btn-default">Validate and start</button>
           <a class="btn btn-success" data-ng-disabled="!isAlreadyStarted(user)" data-ui-sref="question">Fill the test</a>
