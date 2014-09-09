@@ -1,5 +1,5 @@
 <section id="running-timer" data-ng-if="isStarted()">
-  Time Left:
+  Time taken:
   <span data-ng-class="{ 'critical': isCritical(timeLeft), 'warning': isWarning(timeLeft) }">
     {{ getFormattedDuration(user.timeTotal, timeLeft) }} <span class="separator">/</span> {{ getFormattedTotal(user.timeTotal) }}
   </span>
