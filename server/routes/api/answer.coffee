@@ -1,7 +1,7 @@
 _ = require 'lodash'
 
 module.exports = (app) ->
-  app.all '/api/answer', (req, res, next) ->
+  app.all '/api/answer/**', (req, res, next) ->
     return next() if req.user
     res.status(403).send('Not logged in')
 

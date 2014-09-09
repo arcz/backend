@@ -1,5 +1,5 @@
 module.exports = (app) ->
-  app.all '/api/questions', (req, res, next) ->
+  app.all '/api/questions/**', (req, res, next) ->
     return next() if req.user
     res.status(403).send('Not logged in')
 
