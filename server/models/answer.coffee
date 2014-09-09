@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
 
-module.exports = AnswerSchema = mongoose.Schema
+fields =
   answeredAt:
     type    : Date
     default : Date.now
@@ -11,6 +11,9 @@ module.exports = AnswerSchema = mongoose.Schema
     trim     : true
 
   corrent: Boolean
+module.exports = AnswerSchema = mongoose.Schema fields,
+  toObject : virtuals : true
+  toJSON   : virtuals : true
 
 AnswerSchema.virtual('id').get ->
   @_id.toHexString()

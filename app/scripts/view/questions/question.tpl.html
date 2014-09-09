@@ -11,6 +11,6 @@
 
 <div class="form-group">
   <div class="col-sm-6">
-    <button data-ng-click="submitAnswer(question, answer)" class="btn btn-success">Answer</button>
+    <button data-ng-disabled="canAnswer(question, answer)" data-ng-click="submitAnswer(question, answer)" class="btn btn-success">Answer</button>
   </div>
 </div>

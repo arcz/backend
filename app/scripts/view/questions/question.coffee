@@ -46,5 +46,8 @@ QuestionController = question.classy.controller
     @$scope.question = @question
     @$scope.answer   = @Answer.get id: @$state.params.id
 
+  canAnswer: (question, answer) ->
+    not question.multipleAnswers and answer.id
+
   submitAnswer: (question, answer) ->
     answer.$save id: question.id

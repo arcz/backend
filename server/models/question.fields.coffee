@@ -17,8 +17,12 @@ module.exports =
     type     : String
     required : true
 
+  multipleAnswers:
+    type    : Boolean
+    default : false
+
   content:
-    type     : String
+    type : String
 
   code:
     type: String
