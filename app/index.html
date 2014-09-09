@@ -27,7 +27,7 @@
 <![endif]-->
 
 <div class="container">
-  <div class="col-md-12 content">
+  <div class="col-md-12">
     <ol class="breadcrumb">
       <li class="step">
         <a href="#" data-ui-sref="login"><span>Login</span></a>
@@ -46,60 +46,8 @@
 
     <section data-ui-view></section>
     <section data-small-profile></section>
-
-    <div id="coding" class="screen">
-      <div class="row">
-        <div class="col-md-6">
-          <h2>Code</h2>
-        </div>
-        <div class="col-md-6 pagination-js"></div>
-      </div>
-      <div class="assignments">
-      </div>
-    </div>
-
-    <div id="result" class="screen">
-      <div class="jumbotron">
-        <h2>Your total score is</h2>
-        <span class="score total-score"></span>
-
-        <div class="dense text-left" style="margin-top: 25px">
-          You completed the test in <span class="took-time number"></span>.
-          <span class="rightAnswers number"></span> answer(s) marked right.
-          You wrongly marked <span class="wrongAnswers number"></span> answer(s).
-          And didn't mark <span class="missedRightAnswers number"></span> right one(s). You've solved <span class="doneSolutions number"></span> of
-          <span class="totalSolutions number"></span> coding problems.
-        </div>
-
-        <div class="dense text-left" style="margin-top: 25px">
-          <div class="message bad hide">Thank you for trying the test! You
-            came close. We wish you all success for the future and definitely keep
-            developing your coding skills.</div>
-
-          <div class="message ok hide">Cool! It seems that your skills are pretty high!</div>
-
-          <div class="message good hide">Quite impressive. You certainly
-            know some about front-end development.</div>
-        </div>
-      </div>
-    </div>
-
-    <div id="admin" class="screen">
-      <h3>Admin console</h3>
-      <div class="users">
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4 right-side">
-    <div id="loggedin-user"></div>
-    <button id="finish-button" class=" btn btn-success btn-block btn-lg">Finish test!</button>
-    <div class="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <span class="msg"></span>
-    </div>
   </div>
 </div>
-
 
 <!-- build:js scripts/vendor.js -->
 <script src="vendor/angular/angular.js"></script>
