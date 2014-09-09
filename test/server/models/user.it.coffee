@@ -10,7 +10,7 @@ clearDB    = require('mocha-mongoose') helpers.dbURL
 
 # Require the schema
 UserSchema = proxyquire '../../../server/models/user',
-  '../../config/quiz': count: text: 1
+  '../../config/quiz': count: text: 2
   '../../config/config': admins: [ 'test@test.ee' ]
 
 # Required for mocking purposes
@@ -25,6 +25,11 @@ describe 'User model', ->
 
   it 'should exist', ->
     User.should.be.ok
+
+  it 'should set id', (done) ->
+    User.create REQUIRED_FIELDS, (err, user) ->
+      user.id.should.be.ok
+      done err
 
   describe 'creating a user', ->
     it 'should not add questions', (done) ->
@@ -142,7 +147,7 @@ describe 'User model', ->
       User.create REQUIRED_FIELDS, (err, user) ->
         user.questions.length.should.eql 0
         user.start { }, (err, user) ->
-          user.questions.length.should.eql 1
+          user.questions.length.should.eql 2
           done err
 
   describe 'admin', ->
@@ -184,11 +189,6 @@ describe 'User model', ->
         user.timeLeft.should.be.ok
         done err
 
-  describe '#id', ->
-    it 'should set id', (done) ->
-      User.create REQUIRED_FIELDS, (err, user) ->
-        user.id.should.be.ok
-        done err
 
   describe '#timeTotal', ->
     # TODO: Add a better test
@@ -207,9 +207,36 @@ describe 'User model', ->
           user = startedUser
           done err
 
-    it 'should save answers', (done) ->
+    it 'should save answer', (done) ->
       question = user.questions[0]
       user.answer question.id, { content: 'tere' }, (err, answer) ->
         answer.content.should.eql 'tere'
         done err
 
+    it 'should should save multiple answers', (done) ->
+      question = _.find user.questions, { multipleAnswers: true }
+      user.answer question.id, { content: 'tere' }, (err, answer) ->
+        user.answer question.id, { content: 'tere' }, (err, answer) ->
+          question.answers.length.should.eql 2
+          done err
+
+    it 'should not save answers if timeLeft is 0', (done) ->
+      question = user.questions[0]
+      sinon.stub(user, 'get').withArgs('timeLeft').returns 0
+      user.answer question.id, { content: 'tere' }, (err, answer) ->
+        assert answer is null
+        user.get.restore()
+        done err
+
+    it 'should not save answers if questionId is invalid', (done) ->
+      user.answer 'blah', { content: 'tere' }, (err, answer) ->
+        assert answer is null
+        done err
+
+    it 'should not save answers if they are already answered and multipleAnswers is false', (done) ->
+      question = _.find user.questions, { multipleAnswers: false }
+      user.answer question.id, { content: 'tere' }, (err, answer) ->
+        answer.should.be.ok
+        user.answer question.id, { content: 'tere' }, (err, answer) ->
+          assert answer is null
+          done err

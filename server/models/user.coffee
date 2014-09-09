@@ -51,7 +51,11 @@ UserSchema.methods.start = ({ email, name, address } = {}, cb) ->
 
 UserSchema.methods.answer = (questionId, answer = {}, cb) ->
   question = _.find @questions, { id: questionId }
+
+  return cb(null, null) if @timeLeft <= 0
   return cb(null, null) unless question
+  return cb(null, null) if not question.multipleAnswers and question.answers.length
+
   id = question.answers.push answer
   @markModified 'question.anaswers'
   @save (err, user) ->
