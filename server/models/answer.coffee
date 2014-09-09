@@ -12,3 +12,5 @@ module.exports = AnswerSchema = mongoose.Schema
 
   corrent: Boolean
 
+AnswerSchema.virtual('id').get ->
+  @_id.toHexString()

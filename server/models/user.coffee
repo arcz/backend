@@ -53,7 +53,7 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
   question = _.find @questions, { id: questionId }
   return cb(null, null) unless question
   id = question.answers.push answer
-  @markModified 'question'
+  @markModified 'question.anaswers'
   @save (err, user) ->
     cb err, question.answers[id - 1]
 

@@ -1,7 +1,5 @@
 _ = require 'lodash'
 
-{ Answer, Question } = require '../../models'
-
 module.exports = (app) ->
   app.all '/api/answer', (req, res, next) ->
     return next() if req.user
