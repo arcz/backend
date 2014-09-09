@@ -1,4 +1,16 @@
-<div class="jumbotron">
   <h2>{{ question.name }}</h2>
-  <p> {{ question.description }} </p>
+  <div class="col-md-12">
+    <blockquote>
+      <p> {{ question.description }} </p>
+    </blockquote>
+  </div>
+
+<div class="form-group col-md-12">
+  <section data-ng-include="question.type"></section>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-6">
+    <button data-ng-click="submitAnswer(question, answer)" class="btn btn-success">Answer</button>
+  </div>
 </div>

@@ -1,9 +1,11 @@
-Question = require '../../resource/questions.coffee'
+templates = require './templates/index.coffee'
+Question  = require '../../resource/questions.coffee'
 
 _ = require 'lodash'
 
 module.exports = question = angular.module 'testlab.view.question', [
   Question.name
+  templates.name
   'classy'
   'ui.router'
 ]
@@ -37,6 +39,8 @@ QuestionController = question.classy.controller
   ]
 
   init: ->
-    console.log @question
     @$scope.question = @question
+    @$scope.answer   = {}
 
+  submitAnswer: (question, answer) ->
+    question.$answer answer
