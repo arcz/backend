@@ -10,24 +10,24 @@ ProfileController = profile.classy.controller
   name: 'ProfileController'
   inject: [
     '$scope'
-    '$location'
-    'User'
+    '$state'
+    'user'
   ]
 
   init: ->
-    @$scope.user = @User.get()
+    @$scope.user = @user
 
   isAlreadyStarted: (user) ->
     !!user.startedAt
 
   validateAndStart: (user) ->
-    user.$start =>
-      @$location.path '/questions'
+    user.$start => @$state.go 'question'
 
 profile.config [ '$stateProvider', ($stateProvider) ->
   $stateProvider.state 'profile',
     url: '/',
     template: require './profile.tpl.html'
     controller: ProfileController
-    resolve: [ 'User', (User) -> User.get() ]
+    resolve:
+      user: [ 'User', (User) -> User.get() ]
 ]

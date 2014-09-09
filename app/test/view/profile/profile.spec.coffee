@@ -8,13 +8,12 @@ describe 'profile view', ->
   scope      = null
 
   beforeEach helpers.module profile.name
-  beforeEach inject ($controller, $rootScope, $httpBackend) ->
-    $httpBackend.whenGET('/api/user').respond 200
+  beforeEach inject ($controller, $rootScope) ->
     scope      = $rootScope.$new()
     controller = $controller 'ProfileController',
       $scope: scope
+      user: {}
     scope.$digest()
-    $httpBackend.flush()
 
   describe '#validateAndStart', ->
     it 'should trigger $start on user', ->
@@ -22,18 +21,13 @@ describe 'profile view', ->
       scope.validateAndStart { $start }
       $start.called.should.be.ok
 
-    it 'should reroute to /questions if success', inject ($location, $httpBackend) ->
-      $httpBackend.expectPUT('/api/user/start').respond 200
-      scope.validateAndStart scope.user
-      $httpBackend.flush()
-      $location.path().should.eql '/questions'
-
-    it 'should not reroute if fails', inject ($location, $httpBackend) ->
-      $httpBackend.expectPUT('/api/user/start').respond 400
-      scope.validateAndStart scope.user
-      $httpBackend.flush()
-      $location.path().should.not.eql '/questions'
-
+    it 'should reroute to questions if success', inject ($state) ->
+      # Call the fn straight away
+      $start = (cb) -> cb()
+      sinon.stub $state, 'go'
+      scope.validateAndStart { $start }
+      $state.go.calledWith('question').should.be.ok
+      $state.go.restore()
 
   describe '#isAlreadyStarted', ->
     it 'should be true if user has startedAt', ->
