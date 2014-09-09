@@ -10,7 +10,7 @@ describe 'Question model', ->
   REQUIRED_FIELDS = null
   before helpers.connect
   beforeEach ->
-    REQUIRED_FIELDS = { 'description', 'name', 'type' }
+    REQUIRED_FIELDS = { 'description', 'name', 'type', 'fileName' }
 
   it 'should exist', ->
     Question.should.be.ok
@@ -19,6 +19,11 @@ describe 'Question model', ->
     it 'should hide _id', (done) ->
       Question.create REQUIRED_FIELDS, (err, question) ->
         assert question.toJSON()._id is undefined
+        done err
+
+    it 'should hide fileName', (done) ->
+      Question.create REQUIRED_FIELDS, (err, question) ->
+        assert question.toJSON().fileName is undefined
         done err
 
     it 'should hide __v', (done) ->

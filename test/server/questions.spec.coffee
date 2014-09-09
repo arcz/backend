@@ -40,7 +40,14 @@ describe 'questions', ->
       requireStub.returns question
       validateQStub.returns true
       questions.load 'dir'
-      questions.list.should.be.eql question
+      questions.list[0].test.should.eql 'test'
+
+    it 'should add fileNames to question objects', ->
+      question = { asd: { 'test' } }
+      requireStub.returns question
+      validateQStub.returns true
+      questions.load 'dir'
+      questions.list[0].fileName.should.eql 'asd'
 
   describe '#getRandomQuestions', ->
     beforeEach ->

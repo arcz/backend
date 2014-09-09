@@ -10,10 +10,16 @@ exports.list = []
 exports.clear = =>
   @list = []
 
+setFileName = (obj, key) ->
+  obj.fileName = key
+  obj
+
 exports.load = (dir) =>
-  @list = _(requireDirSync dir).values()
-                               .filter validateQuestion
-                               .value()
+  files = requireDirSync dir
+
+  @list = _(files).map setFileName
+                  .filter validateQuestion
+                  .value()
 
 exports.getRandomQuestions = (type, nr = 1) =>
   throw new Error("No question type defined") unless type

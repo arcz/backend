@@ -8,6 +8,10 @@ module.exports =
     trim     : true
     required : true
 
+  fileName:
+    type     : String
+    required : true
+
   description:
     type     : String
     trim     : true

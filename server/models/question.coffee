@@ -10,6 +10,7 @@ QuestionSchema.options.toJSON =
   transform: (doc) ->
     question = doc.toObject()
     # Hide all the fields that start with _
+    delete question.fileName
     delete question[key] for key of question when key.charAt(0) is '_'
     question
 
