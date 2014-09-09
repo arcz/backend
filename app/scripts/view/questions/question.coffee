@@ -1,10 +1,12 @@
 templates = require './templates/index.coffee'
 Question  = require '../../resource/questions.coffee'
+Answer    = require '../../resource/answer.coffee'
 
 _ = require 'lodash'
 
 module.exports = question = angular.module 'testlab.view.question', [
   Question.name
+  Answer.name
   templates.name
   'classy'
   'ui.router'
@@ -35,12 +37,14 @@ question.config [ '$stateProvider', ($stateProvider) ->
 QuestionController = question.classy.controller
   inject: [
     '$scope'
+    '$state'
     'question'
+    'Answer'
   ]
 
   init: ->
     @$scope.question = @question
-    @$scope.answer   = {}
+    @$scope.answer   = @Answer.get id: @$state.params.id
 
-  submitAnswer: (question, answer) ->
-    question.$answer answer
+  submitAnswer: (answer) ->
+    answer.$save()
