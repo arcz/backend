@@ -13,10 +13,10 @@
   <title>Front-End Quiz</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css">
   <!-- endbuild -->
 </head>
 <body>
@@ -100,141 +100,6 @@
   </div>
 </div>
 
-
-<div id="language-chooser-modal" class="options-question modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title">What language you will be solving coding problems with?</h4>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-lg" data-lang='javascript'>JavaScript</button>
-        <button type="button" class="btn btn-primary btn-lg" data-lang='coffeescript'>CoffeeScript</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script id="admin-user" type="text/html">
-  <li class="list-group-item">
-    <div class="media">
-      <a class="pull-left" href="#">
-        <img class="media-object" src="<%-avatar%>" alt="<%-name%>" width="80" height="80">
-      </a>
-      <div class="media-body">
-        <h4 class="media-heading">
-          <strong class="percent pull-right"><%=percent%>%</strong>
-          <a href="<%-url%>"><%-name||"(no name)"%></a>
-        </h4>
-        (<%-email%>)
-        <br/>
-        <button class="btn btn-xs btn-default js-show-details" data-id="<%=id%>" style="margin-top:10px;">Show details</button>
-      </div>
-    </div>
-    <div class="details id-<%=id%>" style="margin-top:15px;"></div>
-  </li>
-</script>
-
-<script id="admin-user-detailed" type="text/html">
-  <% tests.forEach(function(test){ %>
-  <ul class="list-group question">
-    <li class="list-group-item active"><%=test.name%></li>
-
-    <% if(test.options) test.options.forEach(function(option){ %>
-    <li class="answer list-group-item <%if(option.currentAnswer){%>correct<%}%>">
-      <% if(option.currentAnswer === option.userChecked){ %>
-      <span class="icon-ok-sign"></span>
-      <% }else{ %>
-      <span class="icon-remove-sign"></span>
-      <% } %>
-      <%=option.text%>
-    </li>
-    <% }) %>
-
-    <% if(test.cloze){ %>
-      <li class="answer list-group-item"><%=test.cloze%></li>
-    <% } %>
-  </ul>
-  <% }) %>
-
-  <% codes.forEach(function(code){ %>
-  <div class="panel panel-default code-assignment">
-    <div class="panel-heading"><%=code.name%></div>
-    <div class="panel-body">
-      <% code.solutions.forEach(function(sol, index){ %>
-        <button data-index="<%=index%>" class="btn btn-xs <%=sol.pass?'btn-success':'btn-danger'%> code-solution-index"><%=index%></button>
-      <% }) %>
-      <% code.solutions.forEach(function(sol, index){ %>
-      <pre data-index="<%=index%>" class='brush: javascript; toolbar: false; gutter: false;tab-size: 2; smart-tabs: false; class-name: move-up;'><%-sol.code%></pre>
-      <% }) %>
-    </div>
-  </div>
-  <% }) %>
-  <!--<div class="row">-->
-    <!--<div class="col-md-3">-->
-      <!---->
-      <!--&lt;!&ndash;<ul class="nav nav-pills nav-stacked">&ndash;&gt;-->
-        <!--&lt;!&ndash;<li class="active"><a href="#">Test</a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li><a href="#">Profile</a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li><a href="#">Messages</a></li>&ndash;&gt;-->
-      <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-    <!--</div>-->
-    <!--<div class="col-md-9">-->
-
-    <!--</div>-->
-  <!--</div>-->
-</script>
-
-
-<script id="pagination-tmpl" type="text/html">
-  <ul class="pagination pull-right">
-    <% _.each(questions, function(question, i){ %>
-      <li <% if(i===current){%> class="active" <%}%> ><a class="page <%= question.name %> <%= doneClass(question) %>" href="#" data-index='<%= i %>'><%= labels[question.name] || i + 1  %></a></li>
-    <% }) %>
-    <li><a href="#" class="next"><%= nextLabel %> <i class="icon-arrow-right" style="margin-left: 5px"></i></a></li>
-  </ul>
-</script>
-
-<script id="test-question-tmpl" type="text/html">
-  <div class="row question <%= name %>" data-name="<%= name %>">
-    <div class="col-md-12">
-      <%= description %>
-
-      <div class="your-answer">
-        <% if (options) { %>
-          <ul class="list-unstyled options">
-            <% _.each(options, function(option, i){ %>
-              <li><label class="option-answer"><input class="option <%= name %> index-<%= i %>" type="checkbox" data-question-name="<%= name %>" data-index="<%= i %>"/> <%= option %></label></li>
-            <% }) %>
-          </ul>
-        <% } %>
-
-        <% if (cloze) { %>
-          <%= cloze %>
-        <% } %>
-      </div>
-    </div>
-  </div>
-</script>
-
-<script id="code-assignment-tmpl" type="text/html">
-  <div class="assignment <%= name %>" data-name="<%= name %>">
-    <div class="row">
-      <div class="col-md-12">
-        <%= description %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="btn-group pull-right">
-          <button class="reset-code btn btn-default">Reset initial code</button>
-          <button class="test-code btn btn-primary">Test and save your code</button>
-        </div>
-      </div>
-    </div>
-    <textarea class="code name-<%= name %>" name="" id="" cols="30" rows="10"><%= solution || placeholderCode %></textarea>
-  </div>
-</script>
 
 <!-- build:js scripts/vendor.js -->
 <script src="vendor/angular/angular.js"></script>
