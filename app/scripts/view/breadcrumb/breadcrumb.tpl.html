@@ -19,7 +19,7 @@
   </li>
   <li class="step">
     <button
-      data-ng-disabled="!user || isFinished(user)"
+      data-ng-disabled="isFinished(user) || !isStarted(user)"
       data-ng-class="{ current: isActive('question', 'question.id') }"
       data-ng-click="navigate('question')"
       class="btn btn-link">
@@ -28,7 +28,7 @@
   </li>
   <li class="step">
     <button
-      data-ng-disabled="!user"
+      data-ng-disabled="!isFinished(user)"
       data-ng-class="{ current: isActive('result') }"
       data-ng-click="navigate('result')"
       class="btn btn-link">

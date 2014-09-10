@@ -29,5 +29,8 @@ breadcrumb.directive 'breadcrumb', ->
       _.any names, (name) =>
         @$state.current.name is name
 
+    isStarted: (user) ->
+      user?.startedAt
+
     isFinished: (user) ->
-      user.finishedAt
+      user?.finishedAt
