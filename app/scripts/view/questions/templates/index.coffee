@@ -2,6 +2,7 @@
 TEMPLATES =
   'text'     : require './text.tpl.html'
   'checkbox' : require './checkbox.tpl.html'
+  'radio'	 : require './radio.tpl.html'
 
 module.exports = questionTemplates = angular.module 'testlab.view.question.templates', []
 
