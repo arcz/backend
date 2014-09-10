@@ -10,4 +10,8 @@ user.factory 'User', [ '$resource', ($resource) ->
     start:
       method: 'PUT'
       url: '/api/user/start'
+
+    finish:
+      method: 'POST'
+      url: '/api/user/finish'
 ]

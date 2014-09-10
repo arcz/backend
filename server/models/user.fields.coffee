@@ -22,10 +22,6 @@ module.exports =
     type     : String
     required : true
 
-  finished:
-    type    : Boolean
-    default : false
-
   address:
     country:
       type: String

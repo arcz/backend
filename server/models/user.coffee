@@ -73,6 +73,11 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
     @save (err, user) ->
       cb err, question.answers[id - 1]
 
+UserSchema.methods.finish = (cb) ->
+  return cb null, this unless @startedAt
+  @finishedAt = Date.now()
+  @save cb
+
 UserSchema.virtual('isStarted').get ->
   @startedAt?
 
@@ -81,6 +86,7 @@ UserSchema.virtual('admin').get ->
 
 UserSchema.virtual('timeLeft').get ->
   return unless @isStarted
+  return 0 if @finishedAt
   res = Math.ceil (@timeTotal - (Date.now() - @startedAt.getTime()))
   res = 0 if res < 0
   res

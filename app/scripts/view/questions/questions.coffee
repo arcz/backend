@@ -1,9 +1,11 @@
+userResource     = require '../../resource/user.coffee'
 questionResource = require '../../resource/questions.coffee'
 questionView     = require './question.coffee'
 
 _ = require 'lodash'
 
 module.exports = questions = angular.module 'testlab.view.questions', [
+  userResource.name
   questionResource.name
   questionView.name
   'classy'
@@ -17,6 +19,7 @@ questions.config [ '$stateProvider', ($stateProvider) ->
       controller: QuestionsController
       resolve:
         questions: [ 'Question', (Question) -> Question.list().$promise ]
+        user: [ 'User', (User) -> User.get().$promise ]
 ]
 
 QuestionsController = questions.classy.controller
@@ -24,6 +27,7 @@ QuestionsController = questions.classy.controller
     '$scope'
     '$state'
     'questions'
+    'user'
   ]
 
   init: ->
@@ -34,4 +38,8 @@ QuestionsController = questions.classy.controller
     id = @$state.params.id
     index = _.findIndex @questions, { id }
     index is @questions.length - 1
+
+  finish: ->
+    @user.$finish()
+
 

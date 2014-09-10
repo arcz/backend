@@ -183,6 +183,12 @@ describe 'User model', ->
         user.timeLeft.should.be.ok
         done err
 
+    it 'should be 0 if finishedAt is set', (done) ->
+      fields = _.extend REQUIRED_FIELDS, { startedAt: Date.now() }
+      User.create fields, (err, user) ->
+        user.finish (err, user) ->
+          user.timeLeft.should.be.eql 0
+          done err
 
   describe '#timeTotal', ->
     # TODO: Add a better test
@@ -253,3 +259,20 @@ describe 'User model', ->
         user.answer question.id, { content: 'tere' }, (err, answer) ->
           err.should.be.a.Error
           done answer
+
+  describe '#finish', ->
+    it 'should not change timeLeft if not started', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        oldTimeLeft = user.timeLeft
+        user.finish (err, user) ->
+          assert user.timeLeft is oldTimeLeft
+          done err
+
+    it 'should set finishedAt', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start {}, (err, user) ->
+          assert user.finishedAt is undefined
+          user.finish (err, user) ->
+            user.finishedAt.should.be.a.Date
+            done err
+
