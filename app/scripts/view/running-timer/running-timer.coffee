@@ -22,7 +22,7 @@ runningTimer.directive 'runningTimer', ->
     ]
 
     init: ->
-      @User.get().$promise.then (user) =>
+      @User.get (user) =>
         @$scope.user     = user
         @$scope.timeLeft = user.timeLeft
         @updateRunningTimer() if @isStarted

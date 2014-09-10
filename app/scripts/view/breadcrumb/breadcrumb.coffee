@@ -19,7 +19,7 @@ breadcrumb.directive 'breadcrumb', ->
     ]
 
     init: ->
-      @User.get().$promise.then (user) =>
+      @User.get (user) =>
         @$scope.user = user
 
     navigate: (state) ->
