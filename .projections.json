@@ -1,4 +1,6 @@
 {
   "server/*.coffee": { "alternate": "test/server/{}.spec.coffee" },
+  "test/server/*.coffee": { "alternate": "server/{}.coffee" },
+  "app/test/*.spec.coffee": { "alternate": "app/scripts/{}.coffee" },
   "app/scripts/*.coffee": { "alternate": "app/test/{}.spec.coffee" }
 }
