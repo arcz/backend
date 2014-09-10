@@ -2,7 +2,7 @@ _ = require 'lodash'
 
 removeProhibitedKeys = (questions) ->
   _.map questions, (question) ->
-    _.omit question, 'answers'
+    _.omit question, [ 'answers', 'answer' ]
 
 module.exports = (app) ->
   app.all '/api/questions', (req, res, next) ->

@@ -17,3 +17,6 @@ QuestionSchema.options.toJSON =
 
 QuestionSchema.virtual('id').get ->
   @_id.toHexString()
+
+QuestionSchema.virtual('answer').get ->
+  _.last @answers
