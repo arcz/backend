@@ -5,4 +5,5 @@ result.factory 'Result', [ '$resource', ($resource) ->
     get:
       method: 'GET'
       cache: true
+      isArray: true
 ]
