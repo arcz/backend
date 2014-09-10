@@ -30,4 +30,4 @@ breadcrumb.directive 'breadcrumb', ->
         @$state.current.name is name
 
     isFinished: (user) ->
-      user.timeLeft is 0
+      user.finishedAt
