@@ -8,7 +8,6 @@ fields =
 
   content:
     type     : mongoose.Schema.Types.Mixed
-    required : true
     trim     : true
 
   valid: Boolean

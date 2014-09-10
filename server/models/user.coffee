@@ -68,10 +68,10 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
     log.error err if err
     return cb err, null if err
     answer.valid = valid
-    id           = question.answers.push answer
+    answerCount  = question.answers.push answer
     @markModified 'question.answers'
     @save (err, user) ->
-      cb err, question.answers[id - 1]
+      cb err, question.answers[answerCount - 1]
 
 UserSchema.methods.finish = (cb) ->
   return cb null, this unless @startedAt
