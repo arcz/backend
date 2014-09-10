@@ -12,6 +12,7 @@ init.run [ 'User', '$state', (User, $state) ->
   successCb = (user) ->
     path = 'profile'
     path = 'question' if user.isStarted
+    path = 'result' if user.finishedAt
     redirect path
 
   User.get().$promise.then successCb, _.partial(redirect, 'login')
