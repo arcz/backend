@@ -8,6 +8,7 @@ $background-color: #f5f5f5;
 @import 'view/small-profile';
 @import 'view/running-timer';
 @import 'view/breadcrumb';
+@import 'view/results';
 
 .browsehappy {
   margin: 0.2em 0;
@@ -19,8 +20,10 @@ $background-color: #f5f5f5;
 html{
   height: 100%;
 }
+
 body{
   min-height: 100%;
   position: relative;
+  padding-top: 20px;
 }
 
