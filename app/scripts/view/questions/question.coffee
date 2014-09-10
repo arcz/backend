@@ -1,12 +1,12 @@
 templates = require './templates/index.coffee'
-Question  = require '../../resource/questions.coffee'
-Answer    = require '../../resource/answer.coffee'
+question  = require '../../resource/questions.coffee'
+answer    = require '../../resource/answer.coffee'
 
 _ = require 'lodash'
 
 module.exports = question = angular.module 'testlab.view.question', [
-  Question.name
-  Answer.name
+  question.name
+  answer.name
   templates.name
   'classy'
   'ui.router'
