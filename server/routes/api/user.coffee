@@ -15,9 +15,9 @@ module.exports = (app) ->
   app.put "/api/user/start", (req, res) ->
     user = req.user
     user.start req.body, (err, user) ->
-      res.send removeProhibitedKeys user
+      res.send removeProhibitedKeys user.toJSON()
 
   app.post "/api/user/finish", (req, res) ->
     user = req.user
     user.finish (err, user) ->
-      res.send user
+      res.send removeProhibitedKeys user.toJSON()
