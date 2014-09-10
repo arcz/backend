@@ -1,4 +1,5 @@
-_ = require 'lodash'
+log = require '../../../lib/log'
+_   = require 'lodash'
 
 removeProhibitedKeys = (answer) ->
   _.omit answer, 'valid'
@@ -19,4 +20,5 @@ module.exports = (app) ->
     id   = req.params.questionId
     user = req.user
     user.answer id, req.body, (err, answer) ->
-      res.send removeProhibitedKeys answer.toJSON()
+      log.error err if err
+      res.send removeProhibitedKeys answer?.toJSON()

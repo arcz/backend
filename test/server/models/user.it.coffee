@@ -219,19 +219,37 @@ describe 'User model', ->
       question = user.questions[0]
       sinon.stub(user, 'get').withArgs('timeLeft').returns 0
       user.answer question.id, { content: 'tere' }, (err, answer) ->
-        assert answer is null
         user.get.restore()
-        done err
+        done answer
+
+    it 'should return an error if timeLeft is 0', (done) ->
+      question = user.questions[0]
+      sinon.stub(user, 'get').withArgs('timeLeft').returns 0
+      user.answer question.id, { content: 'tere' }, (err, answer) ->
+        err.should.be.a.Error
+        user.get.restore()
+        done answer
 
     it 'should not save answers if questionId is invalid', (done) ->
       user.answer 'blah', { content: 'tere' }, (err, answer) ->
-        assert answer is null
-        done err
+        done answer
+
+    it 'should return an error if questionId is invalid', (done) ->
+      user.answer 'blah', { content: 'tere' }, (err, answer) ->
+        err.should.be.a.Error
+        done answer
 
     it 'should not save answers if they are already answered and multipleAnswers is false', (done) ->
       question = _.find user.questions, { multipleAnswers: false }
       user.answer question.id, { content: 'tere' }, (err, answer) ->
         answer.should.be.ok
         user.answer question.id, { content: 'tere' }, (err, answer) ->
-          assert answer is null
-          done err
+          done answer
+
+    it 'should return an error when trying to save a non multiple answer for a second time', (done) ->
+      question = _.find user.questions, { multipleAnswers: false }
+      user.answer question.id, { content: 'tere' }, (err, answer) ->
+        answer.should.be.ok
+        user.answer question.id, { content: 'tere' }, (err, answer) ->
+          err.should.be.a.Error
+          done answer

@@ -46,12 +46,21 @@ UserSchema.methods.start = ({ email, name, address } = {}, cb) ->
   @startedAt = new Date()
   @save cb
 
+timeLeftError = ->
+  new Error 'Tried to answer after the time was up'
+
+noQuestionsError = ->
+  new Error 'Invalid questionId'
+
+multipleAnswerError = ->
+  new Error 'Tried to answer a question twice'
+
 UserSchema.methods.answer = (questionId, answer = {}, cb) ->
   question = _.find @questions, { id: questionId }
 
-  return cb(null, null) if @timeLeft <= 0
-  return cb(null, null) unless question
-  return cb(null, null) if not question.multipleAnswers and question.answers.length
+  return cb(timeLeftError(), null) if @timeLeft <= 0
+  return cb(noQuestionsError(), null) unless question
+  return cb(multipleAnswerError(), null) if not question.multipleAnswers and question.answers.length
 
   fileName = question.fileName
   content  = answer.content
