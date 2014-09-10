@@ -127,10 +127,10 @@ describe 'questions', ->
         questions.findByFilename.restore()
         done result
 
-    it 'should return true if question has no validate method', (done) ->
+    it 'should return null if question has no validate method', (done) ->
       sinon.stub(questions, 'findByFilename').returns {}
       questions.findAndValidate 'asd', 'content', (err, result) ->
-        result.should.be.ok
+        assert result is null
         questions.findByFilename.restore()
         done err
 

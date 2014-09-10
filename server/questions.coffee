@@ -21,12 +21,17 @@ exports.clear = =>
 exports.findByFilename = (fileName) ->
   _.find @list, { fileName }
 
+# Finds the module by its filename and validates it
+#
+# Callback is returned with (error, result) params
+# If the module has no #validate method then the callback result
+# will be null
 exports.findAndValidate = (fileName, content, cb) =>
   question = @findByFilename fileName
   unless question
     error = new Error 'Question not found'
     return cb error, null
-  return cb null, true unless question.validate?
+  return cb null, null unless question.validate?
   try
     question.validate content, (error, result) ->
       cb error, result
