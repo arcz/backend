@@ -88,12 +88,6 @@ describe 'User model', ->
         user.toJSON().isStarted.should.exist
         done err
 
-    it 'should not include questions', (done) ->
-      User.create REQUIRED_FIELDS, (err, user) ->
-        user.start {}, (err, user) ->
-          assert user.toJSON().questions is undefined
-          done err
-
   describe '#start', ->
     beforeEach -> questions.load path.join __dirname, '../../fixtures/questions'
     afterEach questions.clear

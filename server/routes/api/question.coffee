@@ -1,3 +1,9 @@
+_ = require 'lodash'
+
+removeProhibitedKeys = (questions) ->
+  _.map questions, (question) ->
+    _.omit question, 'answers'
+
 module.exports = (app) ->
   app.all '/api/questions', (req, res, next) ->
     return next() if req.user
@@ -5,4 +11,4 @@ module.exports = (app) ->
 
   app.get "/api/questions", (req, res) ->
     user = req.user
-    res.send user.questions
+    res.send removeProhibitedKeys user.toJSON().questions

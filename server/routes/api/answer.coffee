@@ -10,13 +10,13 @@ module.exports = (app) ->
 
   app.get "/api/answer/:questionId", (req, res) ->
     id   = req.params.questionId
-    user = req.user
-    question = _.find user?.questions, { id }
-    answer   = _.last question?.answers
+    user = req.user.toJSON()
+    question = _.find user.questions, { id }
+    answer   = _.last question.answers
     res.send removeProhibitedKeys answer
 
   app.post "/api/answer/:questionId", (req, res) ->
     id   = req.params.questionId
     user = req.user
     user.answer id, req.body, (err, answer) ->
-      res.send removeProhibitedKeys answer
+      res.send removeProhibitedKeys answer.toJSON()

@@ -11,14 +11,10 @@ module.exports = UserSchema = mongoose.Schema require('./user.fields'),
   toJSON   : virtuals : true
 
 # Removes all keys that start with _
-# Removes questions object
 UserSchema.options.toJSON =
   transform: (doc) ->
     user = doc.toObject()
-    # Hide all the fields that start with _
-    delete user[key] for key of user when key.charAt(0) is '_'
-    delete user.questions
-    user
+    _.omit user, (val, key) -> key.charAt(0) is '_'
 
 # Finds a current user or creates a new one
 #
@@ -64,7 +60,7 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
     return cb err, null if err
     answer.valid = valid
     id           = question.answers.push answer
-    @markModified 'question.anaswers'
+    @markModified 'question.answers'
     @save (err, user) ->
       cb err, question.answers[id - 1]
 

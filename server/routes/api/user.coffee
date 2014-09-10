@@ -1,3 +1,8 @@
+_ = require 'lodash'
+
+removeProhibitedKeys = (obj) ->
+  _.omit obj, 'questions'
+
 module.exports = (app) ->
   app.all '/api/user', (req, res, next) ->
     return next() if req.user
@@ -5,9 +10,9 @@ module.exports = (app) ->
 
   app.get "/api/user", (req, res) ->
     user = req.user
-    res.send user.toJSON()
+    res.send removeProhibitedKeys user.toJSON()
 
   app.put "/api/user/start", (req, res) ->
     user = req.user
     user.start req.body, (err, user) ->
-      res.send user
+      res.send removeProhibitedKeys user
