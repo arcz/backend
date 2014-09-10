@@ -1,8 +1,8 @@
-_     = require 'lodash'
-User = require './resource/user.coffee'
+_            = require 'lodash'
+userResource = require './resource/user.coffee'
 
 module.exports = init = angular.module 'testlab.init', [
-  User.name
+  userResource.name
   'ui.router'
 ]
 
