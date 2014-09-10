@@ -1,0 +1,31 @@
+_    = require 'lodash'
+user = require '../../resource/user.coffee'
+
+module.exports = breadcrumb = angular.module 'testlab.view.breadcrumb', [
+  user.name
+  'classy'
+  'ui.router'
+]
+
+breadcrumb.directive 'breadcrumb', ->
+  template: require './breadcrumb.tpl.html'
+  controller: breadcrumb.classy.controller
+    inject: [
+      '$scope'
+      '$state'
+      'User'
+    ]
+
+    init: ->
+      @User.get().$promise.then (user) =>
+        @$scope.user = user
+
+    navigate: (state) ->
+      @$state.go state
+
+    isActive: (names...) ->
+      _.any names, (name) =>
+        @$state.current.name is name
+
+    isFinished: (user) ->
+      user.timeLeft is 0

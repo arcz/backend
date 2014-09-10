@@ -1,9 +1,9 @@
 moment = require 'moment'
-User  = require '../../resource/user.coffee'
+user   = require '../../resource/user.coffee'
 
 module.exports = runningTimer = angular.module 'testlab.view.runningtimer', [
+  user.name
   'classy'
-  User.name
 ]
 
 formatMs = (ms) ->
