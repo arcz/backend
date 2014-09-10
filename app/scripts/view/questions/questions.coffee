@@ -29,3 +29,9 @@ QuestionsController = questions.classy.controller
   init: ->
     @$scope.questions = @questions
     @$state.go 'question.id', id: _.first(@questions).id
+
+  isLastQuestion: ->
+    id = @$state.params.id
+    index = _.findIndex @questions, { id }
+    index is @questions.length - 1
+

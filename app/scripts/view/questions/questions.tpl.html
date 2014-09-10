@@ -4,9 +4,16 @@
       <h2>Question</h2>
     </div>
     <div data-ui-view></div>
+    <button
+      data-ng-click="finish()"
+      data-ng-if="isLastQuestion()"
+      class="btn btn-warning pull-right"
+    >Finish the test</button>
   </div>
   <ul class="pagination">
-    <li data-ng-repeat="question in questions"><a data-ui-sref="question.id({ id: question.id })">{{ $index + 1 }}</a></li>
+    <li data-ng-repeat="question in questions">
+      <a data-ui-sref="question.id({ id: question.id })">{{ $index + 1 }}</a>
+    </li>
   </ul>
 </div>
 
