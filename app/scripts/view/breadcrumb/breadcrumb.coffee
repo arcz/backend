@@ -1,8 +1,10 @@
-_    = require 'lodash'
-user = require '../../resource/user.coffee'
+_            = require 'lodash'
+user         = require '../../resource/user.coffee'
+runningtimer = require '../../view/running-timer/running-timer.coffee'
 
 module.exports = breadcrumb = angular.module 'testlab.view.breadcrumb', [
   user.name
+  runningtimer.name
   'classy'
   'ui.router'
 ]
