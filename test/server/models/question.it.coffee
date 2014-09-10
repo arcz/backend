@@ -1,5 +1,6 @@
 mongoose = require 'mongoose'
 assert   = require 'assert'
+_        = require 'lodash'
 
 helpers  = require '../../test-helpers'
 
@@ -35,4 +36,19 @@ describe 'Question model', ->
     it 'should set id', (done) ->
       Question.create REQUIRED_FIELDS, (err, question) ->
         question.id.should.be.ok
+        done err
+
+  describe 'answer', ->
+    it 'should be the last answer', (done) ->
+      fields = _.extend {
+        answers: [ { content: 'jama' }, { content: 'tere' } ]
+      }, REQUIRED_FIELDS
+
+      Question.create fields, (err, question) ->
+        question.answer.content.should.eql 'tere'
+        done err
+
+    it 'should be set even if there are no answers', (done) ->
+      Question.create REQUIRED_FIELDS, (err, question) ->
+        assert question.answer is null
         done err

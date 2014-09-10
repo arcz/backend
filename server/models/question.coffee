@@ -19,4 +19,4 @@ QuestionSchema.virtual('id').get ->
   @_id.toHexString()
 
 QuestionSchema.virtual('answer').get ->
-  _.last @answers
+  _.last(@answers) or null
