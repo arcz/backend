@@ -1,7 +1,7 @@
-User = require '../../resource/user.coffee'
+userResource = require '../../resource/user.coffee'
 
 module.exports = smallProfile = angular.module 'testlab.view.smallprofile', [
-  User.name
+  userResource.name
   'classy'
 ]
 
@@ -14,5 +14,5 @@ smallProfile.directive 'smallProfile', ->
     ]
 
     init: ->
-      @User.get().$promise.then (user) =>
+      @User.get (user) =>
         @$scope.user = user

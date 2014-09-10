@@ -5,7 +5,6 @@ user.factory 'User', [ '$resource', ($resource) ->
     get:
       method: 'GET'
       cache: true
-      isArray: false
 
     start:
       method: 'PUT'

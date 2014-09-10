@@ -1,7 +1,7 @@
-User = require '../../resource/user.coffee'
+userResource = require '../../resource/user.coffee'
 
 module.exports = login = angular.module 'testlab.view.login', [
-  User.name
+  userResource.name
   'ui.router'
 ]
 

@@ -1,7 +1,7 @@
-User = require '../../resource/user.coffee'
+userResource = require '../../resource/user.coffee'
 
 module.exports = profile = angular.module 'testlab.view.profile', [
-  User.name
+  userResource.name
   'classy'
   'ui.router'
 ]
@@ -29,5 +29,5 @@ profile.config [ '$stateProvider', ($stateProvider) ->
     template: require './profile.tpl.html'
     controller: ProfileController
     resolve:
-      user: [ 'User', (User) -> User.get().$promise ]
+      user: [ 'User', (User) -> User.get() ]
 ]
