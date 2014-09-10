@@ -12,7 +12,7 @@ login.config [ '$stateProvider', ($stateProvider) ->
     resolve: [ 'User', '$q', (User, $q) ->
       deffered = $q.defer()
       # If we have the state then do not allow showing the login page
-      User.get().$promise.then deffered.reject, deffered.resolve
+      User.get deffered.reject, deffered.resolve
       deffered.promise
     ]
 ]

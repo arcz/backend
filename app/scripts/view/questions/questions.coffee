@@ -13,13 +13,24 @@ module.exports = questions = angular.module 'testlab.view.questions', [
 ]
 
 questions.config [ '$stateProvider', ($stateProvider) ->
+
+  # We only resolve the user
+  # if it is not finished yet
+  userResolve = (User, $q) ->
+    deffered = $q.defer()
+    User.get (user) ->
+      return deffered.reject() if user.finishedAt
+      deffered.resolve user
+    , deffered.reject
+    deffered.promise
+
   $stateProvider.state 'question',
       url: '/question'
       template: require './questions.tpl.html'
       controller: QuestionsController
       resolve:
         questions: [ 'Question', (Question) -> Question.list().$promise ]
-        user: [ 'User', (User) -> User.get().$promise ]
+        user: [ 'User', '$q', userResolve ]
 ]
 
 QuestionsController = questions.classy.controller
@@ -40,6 +51,7 @@ QuestionsController = questions.classy.controller
     index is @questions.length - 1
 
   finish: ->
-    @user.$finish()
+    @user.$finish =>
+      @$state.go 'result'
 
 
