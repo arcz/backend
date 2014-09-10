@@ -15,5 +15,5 @@ init.run [ 'User', '$state', (User, $state) ->
     path = 'result' if user.finishedAt
     redirect path
 
-  User.get().$promise.then successCb, _.partial(redirect, 'login')
+  User.get successCb, _.partial(redirect, 'login')
 ]
