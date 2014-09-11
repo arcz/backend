@@ -30,6 +30,24 @@ describe 'running timer', ->
     $httpBackend.flush()
     elm.children().length.should.not.be.ok
 
+  it 'should not render anything if the user has finished its test', inject ($httpBackend) ->
+    $httpBackend.expectGET('/api/user').respond { isStarted: true, finishedAt: true }
+    elm = create html
+    $httpBackend.flush()
+    elm.children().length.should.not.be.ok
+
+  it 'should not render if the user no has started key', inject ($httpBackend) ->
+    $httpBackend.expectGET('/api/user').respond { isStarted: false }
+    elm = create html
+    $httpBackend.flush()
+    elm.children().length.should.not.be.ok
+
+  it 'should render if the user has started key', inject ($httpBackend) ->
+    $httpBackend.expectGET('/api/user').respond { isStarted: true }
+    elm = create html
+    $httpBackend.flush()
+    elm.children().length.should.be.ok
+
   describe 'state notifiers', ->
     element = null
     beforeEach inject ($httpBackend) ->

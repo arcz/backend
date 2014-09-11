@@ -21,19 +21,29 @@ runningTimer.directive 'runningTimer', ->
       'User'
     ]
 
+    watch:
+      'user': 'updateRunningTimer'
+
     init: ->
       @User.get (user) =>
-        @$scope.user     = user
-        @$scope.timeLeft = user.timeLeft
-        @updateRunningTimer() if @isStarted
+        @$scope.user = user
 
     isStarted: ->
-      return @$scope.user?.isStarted
+      @$scope.user?.isStarted
+
+    isFinished: ->
+      @$scope.user?.finishedAt
 
     updateRunningTimer: ->
-      return if @$scope.timeLeft <= 0
-      @$scope.timeLeft -= 1000
-      @$timeout @updateRunningTimer, 1000
+      return if @timerId
+      return if @isFinished()
+      return unless @$scope.user?.timeLeft?
+      return unless @isStarted()
+      @$scope.user.timeLeft -= 1000
+      @timerId = @$timeout =>
+        @timerId = null
+        @updateRunningTimer()
+      , 1000
 
     getFormattedTotal: (time) ->
       return unless @isStarted()
@@ -41,7 +51,8 @@ runningTimer.directive 'runningTimer', ->
 
     getFormattedDuration: (total, left) ->
       return unless @isStarted()
-      formatMs total - left
+      time = total - left
+      formatMs time or 0
 
     isCritical: (ms) ->
       toMin(ms) <= 2
