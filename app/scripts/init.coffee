@@ -6,14 +6,21 @@ module.exports = init = angular.module 'testlab.init', [
   'ui.router'
 ]
 
-init.run [ 'User', '$state', (User, $state) ->
-  redirect = $state.go
+init.config [ '$httpProvider', '$injector', ($httpProvider, $injector) ->
+  $state = null
+  $httpProvider.interceptors.push [ '$q', '$injector', ($q, $injector) ->
+     'responseError': (response) ->
+       if response.status is 403
+         $state ?= $injector.get '$state'
+         $state.go 'login'
+       $q.reject response
+  ]
+]
 
-  successCb = (user) ->
+init.run [ 'User', '$state', (User, $state) ->
+  User.get (user) ->
     path = 'profile'
     path = 'question' if user.isStarted
-    path = 'result' if user.finishedAt
-    redirect path
-
-  User.get successCb, _.partial(redirect, 'login')
+    path = 'result'   if user.finishedAt
+    $state.go path
 ]
