@@ -78,6 +78,10 @@ UserSchema.methods.finish = (cb) ->
   @finishedAt = Date.now()
   @save cb
 
+UserSchema.methods.validateState = (cb) ->
+  return cb null, this if @finishedAt or @timeLeft > 0
+  @finish cb
+
 UserSchema.virtual('isStarted').get ->
   @startedAt?
 

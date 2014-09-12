@@ -1,6 +1,7 @@
 requireDirSync = require 'require-dir-sync'
 passport       = require 'passport'
 path           = require 'path'
+log            = require '../lib/log'
 
 { User }   = require './models'
 
@@ -12,5 +13,8 @@ passport.serializeUser (user, done) ->
   done null, user.id
 
 passport.deserializeUser (id, done) ->
-  User.findById id, done
-
+  User.findById id, (err, user) ->
+    if err
+      log.error err
+      return done err, null
+    user.validateState done

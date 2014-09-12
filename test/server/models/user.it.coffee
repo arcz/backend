@@ -282,3 +282,27 @@ describe 'User model', ->
             user.finishedAt.should.be.a.Date
             done err
 
+  describe '#validateState', ->
+    it 'should return if startedAt is not set', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        sinon.stub(user, 'get').withArgs('startedAt').returns null
+        user.validateState (err, user) ->
+          user.get.restore()
+          done err
+
+    it 'should return if finishedAt is not set', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        sinon.stub(user, 'get').withArgs('finishedAt').returns null
+        user.validateState (err, user) ->
+          user.get.restore()
+          done err
+
+    it 'should set finishedAt if timeLeft is 0', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        userStub = sinon.stub user, 'get'
+        userStub.withArgs('startedAt').returns Date.now()
+        userStub.withArgs('timeLeft').returns 0
+        user.validateState (err, user) ->
+          user.get.restore()
+          user.finishedAt.should.be.a.Date
+          done err
