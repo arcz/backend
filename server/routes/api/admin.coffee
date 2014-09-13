@@ -10,9 +10,4 @@ module.exports = (app) ->
   app.get '/api/admin/users', (req, res) ->
     User.find (err, users) ->
       log.error if err
-      res.send users
-
-
-  app.get '/api/admin/users/:id', (req, res) ->
-    User.findById req.params.id, (err, doc) ->
-      res.send JSON.stringify doc
+      res.send users.map (user) -> user.toJSON()

@@ -8,7 +8,7 @@
            class="avatar"/>
 
       <section class="score">
-        <h1>80%</h1>
+        <h1>{{ calculateResult(user.questions)}}%</h1>
       </section>
 
       <ul class="description">
@@ -47,7 +47,7 @@
                           data-ng-click="answer.$showMore = !answer.$showMore"
                           data-ng-class="{ 'btn-success': answer.valid == true
                                           ,'btn-default': answer.valid == null
-                                          ,'btn-error'  : !answer.valid }"> {{ $index }}</button>
+                                          ,'btn-error'  : answer.valid == false}"> {{ $index }}</button>
 
                   <section data-ng-if="answer.$showMore">
                     {{ answer.content }}

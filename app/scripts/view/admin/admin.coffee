@@ -1,4 +1,7 @@
+lodash        = require 'lodash'
 adminResource = require '../../resource/admin.coffee'
+
+resultCalc = require '../../lib/result-calc.coffee'
 
 module.exports = admin = angular.module 'testlab.view.admin', [
   adminResource.name
@@ -14,6 +17,10 @@ AdminController = admin.classy.controller
 
   init: ->
     @$scope.users = @users
+
+  calculateResult: (questions) ->
+    res = resultCalc(questions).toFixed 2
+    res*100
 
 
 admin.config [ '$stateProvider', ($stateProvider) ->

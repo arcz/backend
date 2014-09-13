@@ -11,7 +11,7 @@ describe 'Question model', ->
   REQUIRED_FIELDS = null
   before helpers.connect
   beforeEach ->
-    REQUIRED_FIELDS = { 'description', 'name', 'type', 'fileName' }
+    REQUIRED_FIELDS = { 'description', 'name', 'type', 'fileName', expectedAnswer: true }
 
   it 'should exist', ->
     Question.should.be.ok
