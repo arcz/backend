@@ -9,6 +9,10 @@ setFileName = (obj, key) ->
   obj.fileName = key
   obj
 
+setExpectedAnswer = (obj, key) ->
+  obj.expectedAnswer = typeof obj.validate is 'function'
+  obj
+
 # Swap the arguments of a function
 swapArgs = (fn) -> (a, b) -> fn b, a
 
@@ -41,6 +45,7 @@ exports.findAndValidate = (fileName, content, cb) =>
 exports.load = (dir) =>
   files = requireDirSync dir
   @list = _(files).map setFileName
+                  .map setExpectedAnswer
                   .filter validateQuestion
                   .value()
 

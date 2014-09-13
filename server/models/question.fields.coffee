@@ -3,6 +3,7 @@ AnswerSchema = require './answer'
 
 module.exports =
   answers: [ AnswerSchema ]
+  group: String
   name:
     type     : String
     trim     : true
@@ -18,8 +19,8 @@ module.exports =
     required : true
 
   coenficent:
-    type: Number
-    default: 1
+    type    : Number
+    default : 1
 
   type:
     type     : String
@@ -32,7 +33,9 @@ module.exports =
   content:
     type : String
 
-  code:
-    type: String
+  expectedAnswer:
+    type     : Boolean
+    required : true
 
   variants: Object
+

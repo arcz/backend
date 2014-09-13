@@ -50,6 +50,20 @@ describe 'questions', ->
       questions.load 'dir'
       questions.list[0].fileName.should.eql 'asd'
 
+    it 'should add expectedAnswer true to question objects that has validate method', ->
+      question = { asd: { 'test', validate: -> } }
+      requireStub.returns question
+      validateQStub.returns true
+      questions.load 'dir'
+      questions.list[0].expectedAnswer.should.eql true
+
+    it 'should add expectedAnswer false to question objects that have no validate method', ->
+      question = { asd: { 'test' } }
+      requireStub.returns question
+      validateQStub.returns true
+      questions.load 'dir'
+      questions.list[0].expectedAnswer.should.eql false
+
   describe '#getRandomQuestions', ->
     beforeEach ->
       type = "test"
