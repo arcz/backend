@@ -40,7 +40,7 @@ module.exports = (grunt) ->
     watch:
       server:
         files: ['**/*.coffee', '!node_modules/**/*', '!<%= path.app %>/**', '!<%= path.dist %>/**']
-        tasks: [ 'mochacov:it', 'mochacov:spec' ]
+        tasks: [ 'mochacov:spec', 'mochacov:it' ]
 
     # Using nodemon to restart the express server for each backend change
     nodemon:
