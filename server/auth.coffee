@@ -17,4 +17,5 @@ passport.deserializeUser (id, done) ->
     if err
       log.error err
       return done err, null
+    return done null, null unless user
     user.validateState done
