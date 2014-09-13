@@ -1,0 +1,11 @@
+{
+  "type": "radio",
+  "name": "Remote work",
+  "description": "How many years of experience do you have working remote, self-employed or in open source?",
+  "variants": {
+    "a": "None",
+    "b": "Less than 1 year",
+    "c": "Between 1 - 3 years",
+    "d": "More than 3 years"
+  }
+}

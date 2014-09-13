@@ -3,7 +3,10 @@ AnswerSchema = require './answer'
 
 module.exports =
   answers: [ AnswerSchema ]
-  group: String
+  group:
+    type     : String
+    required : true
+
   name:
     type     : String
     trim     : true

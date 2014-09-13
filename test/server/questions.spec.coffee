@@ -65,40 +65,54 @@ describe 'questions', ->
       questions.list[0].expectedAnswer.should.eql false
 
   describe '#getRandomQuestions', ->
+    group = "test"
     beforeEach ->
-      type = "test"
       questions.list = [
-        { type, "nr": 1 }
-        { type, "nr": 2 }
-        { type, "nr": 3 }
+        { group, "nr": 1 }
+        { group, "nr": 2 }
+        { group, "nr": 3 }
+        { group: '*', "nr": 4 }
+        { group: '*', "nr": 5 }
       ]
 
     afterEach questions.clear
 
-    it 'should throw if no type is defined', ->
+    it 'should not throw if no group is defined', ->
       (->
         questions.getRandomQuestions null
-      ).should.throw "No question type defined"
+      ).should.not.throw()
 
     it 'should return one question by default', ->
-      res = questions.getRandomQuestions "test"
+      res = questions.getRandomQuestions group
       res.length.should.be.eql 1
 
+    it 'should return question without any group if asked with *', ->
+      res = questions.getRandomQuestions null
+      res.length.should.be.eql 1
+
+    it 'should return questions without any group if asked with *', ->
+      res = questions.getRandomQuestions null, 2
+      res.length.should.be.eql 2
+
+    it 'should write questions without groups as group *', ->
+      res = questions.getRandomQuestions null
+      res[0].group.should.eql '*'
+
     it 'should return the right number of questions', ->
-      res = questions.getRandomQuestions "test", 3
+      res = questions.getRandomQuestions group, 3
       res.length.should.be.eql 3
 
-    it 'should return an empty array if the type is not defined', ->
+    it 'should return an empty array if the group is not defined', ->
       res = questions.getRandomQuestions "does-not-exist", 12
       res.length.should.be.eql 0
 
   describe '#getRandomQuestionsCombined', ->
+    group = "test"
     beforeEach ->
-      type = "test"
       questions.list = [
-        { type, "nr": 1 }
-        { type, "nr": 2 }
-        { type, "nr": 3 }
+        { group, "nr": 1 }
+        { group, "nr": 2 }
+        { group, "nr": 3 }
       ]
 
     afterEach questions.clear
@@ -118,7 +132,7 @@ describe 'questions', ->
 
     it 'should return random questions', ->
       res = questions.getRandomQuestionsCombined test: 1
-      res[0].type.should.eql 'test'
+      res[0].group.should.eql 'test'
 
   describe '#findByFilename', ->
     it 'should exist', ->

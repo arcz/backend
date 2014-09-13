@@ -1,0 +1,6 @@
+{
+  "group": "information",
+  "type": "text",
+  "name": "Whats your address",
+  "description": "Please provider us with your country, city, address and timezone information"
+}

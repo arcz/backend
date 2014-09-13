@@ -1,5 +1,6 @@
-exports.type = 'checkbox'
-exports.name = 'Choose a correct editor'
+exports.group       = 'preference'
+exports.type        = 'checkbox'
+exports.name        = 'Choose a correct editor'
 exports.description = 'from the following list choose the correct editor.'
 exports.variants = {
   'vim'

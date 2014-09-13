@@ -10,7 +10,7 @@ clearDB    = require('mocha-mongoose') helpers.dbURL
 
 # Require the schema
 UserSchema = proxyquire '../../../server/models/user',
-  '../../config/quiz': count: text: 2
+  '../../config/quiz': groups: '*': 2
   '../../config/config': admins: [ 'test@test.ee' ]
 
 # Required for mocking purposes
@@ -191,7 +191,6 @@ describe 'User model', ->
           done err
 
   describe '#timeTotal', ->
-    # TODO: Add a better test
     it 'should be quizConfig duration', (done) ->
       User.create REQUIRED_FIELDS, (err, user) ->
         user.timeTotal.should.be.ok
