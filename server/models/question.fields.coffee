@@ -17,6 +17,10 @@ module.exports =
     trim     : true
     required : true
 
+  coenficent:
+    type: Number
+    default: 1
+
   type:
     type     : String
     required : true
