@@ -4,7 +4,7 @@ module.exports =
     text     : 1
     code     : 3
     checkbox : 4
-    radio	 : 1
+    radio    : 1
 
   # Test duration (ms)
   duration: 1000 * 60 * 20
