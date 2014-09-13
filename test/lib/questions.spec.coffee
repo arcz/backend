@@ -4,7 +4,7 @@ path       = require 'path'
 _          = require 'lodash'
 assert     = require 'assert'
 
-questions = proxyquire '../../server/questions',
+questions = proxyquire '../../lib/questions',
   'require-dir-sync': -> requireStub arguments...
   '../lib/validate-question': -> validateQStub arguments...
 

@@ -46,7 +46,7 @@ require('./routes') app
 require './db'
 
 # Require all the questions
-require('./questions').load quizConfig.dir
+require('../lib/questions').load quizConfig.dir
 
 # Start the application
 app.listen process.env.PORT or 3000, ->

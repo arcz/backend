@@ -14,7 +14,7 @@ UserSchema = proxyquire '../../../server/models/user',
   '../../config/config': admins: [ 'test@test.ee' ]
 
 # Required for mocking purposes
-questions = require '../../../server/questions'
+questions = require '../../../lib/questions'
 
 User = mongoose.model 'User', UserSchema
 

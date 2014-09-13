@@ -1,9 +1,9 @@
 mongoose = require 'mongoose'
 _        = require 'lodash'
 
-questions  = require '../questions'
 config     = require '../../config/config'
 quizConfig = require '../../config/quiz'
+questions  = require '../../lib/questions'
 log        = require '../../lib/log'
 
 module.exports = UserSchema = mongoose.Schema require('./user.fields'),
