@@ -1,3 +1,4 @@
+<section id="question">
   <h2>{{ question.name }}</h2>
   <div class="col-md-12">
     <blockquote>
@@ -5,16 +6,17 @@
     </blockquote>
   </div>
 
-<div class="form-group col-md-12">
-  <section data-ng-include="question.type"></section>
-</div>
-
-<div class="form-group">
-  <div class="col-sm-6">
-    <button
-      data-ng-disabled="canAnswer(question, answer)"
-      data-ng-click="submitAnswer(question, answer)"
-      class="btn btn-success"
-    >Answer</button>
+  <div class="form-group col-md-12">
+    <section data-ng-include="question.type"></section>
   </div>
-</div>
+
+  <div class="form-group">
+    <div class="col-sm-6">
+      <button
+        data-ng-disabled="canAnswer(question, answer)"
+        data-ng-click="submitAnswer(question, answer)"
+        class="btn btn-success"
+        >Answer</button>
+    </div>
+  </div>
+</section>
