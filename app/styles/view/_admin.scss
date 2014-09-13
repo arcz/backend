@@ -1,0 +1,53 @@
+#admin {
+
+  .avatar {
+    $height: 95px;
+    float: left;
+    height: $height;
+    width: $height;
+  }
+
+  .user {
+    float: left;
+    width: 100%;
+
+    .score {
+      position: absolute;
+      right: 10px;
+      h1 {
+        line-height: 1.5;
+      }
+    }
+
+    ul.description {
+      list-style: none;
+      margin-left: 70px;
+
+      .name h2 {
+        margin: 0;
+      }
+
+      button {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .question {
+    .show-more {
+      padding: 0;
+    }
+
+    .answers-list {
+      padding:  5px 0 5px;
+      width: 100%;
+      display: block;
+      list-style: none;
+      float: left;
+      li {
+        float: left;
+        list-style: none;
+      }
+    }
+  }
+}

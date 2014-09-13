@@ -22,5 +22,6 @@ init.run [ 'User', '$state', (User, $state) ->
     path = 'profile'
     path = 'question' if user.isStarted
     path = 'result'   if user.finishedAt
+    path = 'admin'    if user.admin
     $state.go path
 ]
