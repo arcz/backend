@@ -58,4 +58,14 @@ describe 'result calculations', ->
       }
     ]
     res = resultCalc questions
-    res.should.eql 1
+
+  it 'should not throw if input is empty array', ->
+    (-> resultCalc []).should.not.throw()
+
+  it 'should not throw if question has no answer', ->
+    (-> resultCalc [
+      expectedAnswer: true
+    ]).should.not.throw()
+
+  it 'should not throw if input is undefined', ->
+    (-> resultCalc undefined).should.not.throw()
