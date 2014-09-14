@@ -8,6 +8,6 @@ module.exports = (app) ->
     res.status(403).send 'Not an admin'
 
   app.get '/api/admin/users', (req, res) ->
-    User.find (err, users) ->
+    User.findFinished (err, users) ->
       log.error if err
       res.send users.map (user) -> user.toJSON()

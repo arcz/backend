@@ -278,6 +278,15 @@ describe 'User model', ->
           assert user.timeLeft is oldTimeLeft
           done err
 
+    it 'should not change finishedAt if already finished', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start {}, (err, user) ->
+          user.finish (err, user) ->
+            oldFinishedAt = user.finishedAt
+            user.finish (err, user) ->
+              assert user.finishedAt is oldFinishedAt
+              done err
+
     it 'should set finishedAt', (done) ->
       User.create REQUIRED_FIELDS, (err, user) ->
         user.start {}, (err, user) ->
@@ -310,3 +319,32 @@ describe 'User model', ->
           user.get.restore()
           user.finishedAt.should.be.a.Date
           done err
+
+  describe '#findFinished', ->
+    clock = null
+    beforeEach -> clock = sinon.useFakeTimers()
+    afterEach -> clock.restore()
+
+    it 'should find all finished users', (done) ->
+      User.create { 'email', name: 'hello', 'authType' }, (err, user) ->
+        user.start {}, (err, user) ->
+          user.finish (err, user) ->
+            User.findFinished (err, users) ->
+              users.length.should.eql 1
+              users[0].name.should.eql 'hello'
+              done err
+
+    it 'should not find any users if there are no finished ones', (done) ->
+      User.create { 'email', name: 'hello', 'authType' }, (err, user) ->
+        user.start {}, (err, user) ->
+          User.findFinished (err, users) ->
+            users.length.should.eql 0
+            done err
+
+    it 'should update all users whos timeLeft is 0 to finished', (done) ->
+      User.create { 'email', name: 'hello test', 'authType' }, (err, user) ->
+        user.start {}, (err, user) ->
+          clock.tick 2000000
+          User.findFinished (err, users) ->
+            users[0].name.should.eql 'hello test'
+            done err

@@ -7,5 +7,5 @@ exports.variants = {
   'emacs'
   'ed'
 }
-exports.validate = ({ vim, emacs, ed }, callback) ->
+exports.validate = ({ vim, emacs, ed } = {}, callback) ->
   callback null, vim and not emacs and not ed

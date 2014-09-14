@@ -1,5 +1,6 @@
 mongoose = require 'mongoose'
 _        = require 'lodash'
+async    = require 'async'
 
 config     = require '../../config/config'
 quizConfig = require '../../config/quiz'
@@ -15,6 +16,15 @@ UserSchema.options.toJSON =
   transform: (doc) ->
     user = doc.toObject()
     _.omit user, (val, key) -> key.charAt(0) is '_'
+
+# Find all users and validate their state
+UserSchema.statics.findFinished = (cb) ->
+  # We find all models because we cannot query for virtuals
+  @find (err, users) ->
+    log.error err if err
+    return cb err, null if err
+    usersWithNoTime = _.filter users, timeLeft: 0
+    async.map usersWithNoTime, ((user, next) -> user.finish next), cb
 
 # Finds a current user or creates a new one
 #
@@ -74,7 +84,7 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
       cb err, question.answers[answerCount - 1]
 
 UserSchema.methods.finish = (cb) ->
-  return cb null, this unless @startedAt
+  return cb null, this if not @startedAt or @finishedAt
   @finishedAt = Date.now()
   @save cb
 

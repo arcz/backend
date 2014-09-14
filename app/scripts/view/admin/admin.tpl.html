@@ -1,4 +1,5 @@
 <section id="admin">
+  <h1>Finished users:</h1>
   <ul class="list-group">
     <li class="list-group-item user"
         data-ng-repeat="user in users">
@@ -8,7 +9,7 @@
            class="avatar"/>
 
       <section class="score">
-        <h1>{{ calculateResult(user.questions)}}%</h1>
+        <h1>{{ calculateResult(user.questions) }}%</h1>
       </section>
 
       <ul class="description">

@@ -20,7 +20,7 @@ AdminController = admin.classy.controller
 
   calculateResult: (questions) ->
     res = resultCalc(questions).toFixed 2
-    res*100
+    res * 100
 
 
 admin.config [ '$stateProvider', ($stateProvider) ->
