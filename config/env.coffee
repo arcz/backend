@@ -15,7 +15,7 @@ module.exports =
 
   # Question ordering by groups
   # All groups not defined in config will be in random order after that
-  groups: [
+  groupOrder: [
     'information'
     '*'
   ]

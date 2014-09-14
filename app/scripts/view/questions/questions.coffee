@@ -32,7 +32,7 @@ questions.config [ '$stateProvider', ($stateProvider) ->
       template: require './questions.tpl.html'
       controller: QuestionsController
       resolve:
-        questions: [ 'Question', (Question) -> Question.list().$promise ]
+        questions: [ 'Question', (Question) -> Question.list() ]
         user: [ 'User', '$q', userResolve ]
         env: [ 'Env', (Env) -> Env.get().$promise ]
 ]
