@@ -5,4 +5,12 @@ module.exports =
   # Test duration (ms)
   duration: 1000 * 60 * 20
 
+  # Allowed logins
+  logins: [
+    'Facebook'
+    'GitHub'
+    'linkedIn'
+    'Google'
+  ]
+
 

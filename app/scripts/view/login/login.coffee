@@ -20,6 +20,9 @@ LoginController = login.classy.controller
   toMin: (ms) ->
     ms / 60 / 1000
 
+  toLowerCase: (name) ->
+    name?.toLowerCase()
+
 login.config [ '$stateProvider', ($stateProvider) ->
   $stateProvider.state 'login',
     url: '/login',
