@@ -2,7 +2,7 @@
   <div class="jumbotron">
     <h1>Ready to start?</h1>
 
-    <p class="lead">Log in to take the Front-End skill test:</p>
+    <p class="lead">Log in to take the test:</p>
 
     <p>
     <a class="btn btn-lg btn-primary" href="/auth/github"><i class="fa fa-github"></i> </a>
@@ -15,9 +15,8 @@
     <div class="col-lg-9">
       <h4>What is behind login?</h4>
       <ul>
-        <li>You have 30 minutes to complete the test</li>
-        <li>There will be 3 questions with pre-determined selectable answers</li>
-        <li>Additionally you're challenged with 2 code assignments + a bonus for extra capable developers</li>
+        <li>Profile information checks</li>
+        <li>You have {{ toMin(env.duration) }} minutes to complete the test</li>
         <li>We'll show you test results immediately for rapid feedback</li>
       </ul>
     </div>

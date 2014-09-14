@@ -1,7 +1,9 @@
 _            = require 'lodash'
 userResource = require './resource/user.coffee'
+envResource  = require './resource/env.coffee'
 
 module.exports = init = angular.module 'testlab.init', [
+  envResource.name
   userResource.name
   'ui.router'
 ]
@@ -17,11 +19,14 @@ init.config [ '$httpProvider', '$injector', ($httpProvider, $injector) ->
   ]
 ]
 
-init.run [ 'User', '$state', (User, $state) ->
+init.run [ 'User', 'Env', '$state', '$rootScope', (User, Env, $state, $rootScope) ->
   User.get (user) ->
     path = 'profile'
     path = 'question' if user.isStarted
     path = 'result'   if user.finishedAt
     path = 'admin'    if user.admin
     $state.go path
+
+  Env.get (env) ->
+    $rootScope.title = env.title
 ]
