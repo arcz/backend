@@ -262,6 +262,11 @@ describe 'User model', ->
     it 'should not throw an error if content is missing', (done) ->
       question = _.find user.questions, { multipleAnswers: false }
       user.answer question.id, {}, (err, answer) ->
+        done err
+
+    it 'should save the answer if content is missing', (done) ->
+      question = _.find user.questions, { multipleAnswers: false }
+      user.answer question.id, {}, (err, answer) ->
         answer.should.be.ok
         done err
 

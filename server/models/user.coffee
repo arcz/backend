@@ -63,7 +63,7 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
   return cb(multipleAnswerError(), null) if not question.multipleAnswers and question.answers.length
 
   fileName = question.fileName
-  content  = answer.content
+  content  = answer.content or null
   questions.findAndValidate fileName, content, (err, valid) =>
     log.error err if err
     return cb err, null if err
