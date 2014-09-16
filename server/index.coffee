@@ -7,7 +7,6 @@ passport       = require 'passport'
 bodyParser     = require 'body-parser'
 cookieParser   = require 'cookie-parser'
 expressSession = require 'express-session'
-serveStatic    = require 'serve-static'
 
 config     = require '../config/config'
 quizConfig = require '../config/quiz'
@@ -21,13 +20,15 @@ env = process.env.NODE_ENV or 'development'
 # Development only settings
 if env is 'development'
   log.warn 'Running in development mode'
+  # Serve static files
+  log.warn "Serving static files from #{config.frontend}"
+  app.use require('serve-static') config.frontend
   # Analyse the eventloop
   timeEv = require 'time-eventloop'
   timeEv.start interval: 10
 
 app.use bodyParser.json()
 app.use cookieParser()
-app.use serveStatic path.join __dirname, '../dist'
 app.set "port", process.env.PORT or 3000
 app.use expressSession
   secret: config.sessionKey
