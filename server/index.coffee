@@ -2,6 +2,7 @@ requireDirSync = require 'require-dir-sync'
 express        = require 'express'
 path           = require 'path'
 passport       = require 'passport'
+fs             = require 'fs'
 
 # Express middleware
 bodyParser     = require 'body-parser'
@@ -17,9 +18,12 @@ log        = require '../lib/log'
 app = express()
 env = process.env.NODE_ENV or 'development'
 
+
 # Development only settings
 if env is 'development'
   log.warn 'Running in development mode'
+
+  throw new Error "Frontend not accessable from #{config.frontend}" unless fs.existsSync config.frontend
   # Serve static files
   log.warn "Serving static files from #{config.frontend}"
   app.use require('serve-static') config.frontend
