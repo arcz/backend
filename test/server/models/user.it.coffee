@@ -214,7 +214,7 @@ describe 'User model', ->
         done err
 
     it 'should should save multiple answers', (done) ->
-      question = _.find user.questions, { multipleAnswers: true }
+      question = user.questions[0]
       user.answer question.id, { content: 'tere' }, (err, answer) ->
         user.answer question.id, { content: 'tere' }, (err, answer) ->
           question.answers.length.should.eql 2
@@ -244,28 +244,13 @@ describe 'User model', ->
         err.should.be.a.Error
         done answer
 
-    it 'should not save answers if they are already answered and multipleAnswers is false', (done) ->
-      question = _.find user.questions, { multipleAnswers: false }
-      user.answer question.id, { content: 'tere' }, (err, answer) ->
-        answer.should.be.ok
-        user.answer question.id, { content: 'tere' }, (err, answer) ->
-          done answer
-
-    it 'should return an error when trying to save a non multiple answer for a second time', (done) ->
-      question = _.find user.questions, { multipleAnswers: false }
-      user.answer question.id, { content: 'tere' }, (err, answer) ->
-        answer.should.be.ok
-        user.answer question.id, { content: 'tere' }, (err, answer) ->
-          err.should.be.a.Error
-          done answer
-
     it 'should not throw an error if content is missing', (done) ->
-      question = _.find user.questions, { multipleAnswers: false }
+      question = user.questions[0]
       user.answer question.id, {}, (err, answer) ->
         done err
 
     it 'should save the answer if content is missing', (done) ->
-      question = _.find user.questions, { multipleAnswers: false }
+      question = user.questions[0]
       user.answer question.id, {}, (err, answer) ->
         answer.should.be.ok
         done err
