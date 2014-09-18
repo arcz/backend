@@ -11,3 +11,8 @@ module.exports = (app) ->
     User.findFinished (err, users) ->
       log.error if err
       res.send users.map (user) -> user.toJSON()
+
+  app.get '/api/admin/overview', (req, res) ->
+    User.findFinished (err, users) ->
+      log.error if err
+      res.send finished: users.length
