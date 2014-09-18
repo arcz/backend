@@ -7,6 +7,12 @@ module.exports = QuestionSchema = mongoose.Schema fields,
   toObject : virtuals : true
   toJSON   : virtuals : true
 
+QuestionSchema.pre 'save', (next) ->
+  @schema.eachPath (path, schemaType) =>
+    if schemaType.instance is 'String'
+      @set path, _.escape @get path
+  next()
+
 # Removes all keys that start with _
 # Removes fileName
 QuestionSchema.options.toJSON =

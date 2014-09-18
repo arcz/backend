@@ -23,6 +23,20 @@ describe 'Question model', ->
   it 'should exist', ->
     Question.should.be.ok
 
+  describe '#create', ->
+    it 'should work with apostrophes', (done) ->
+      fields =
+        description    : "\'hello\'"
+        group          : "asd"
+        name           : "\'name"
+        fileName       : "n'ame"
+        type           : "name"
+        expectedAnswer : true
+      Question.create fields, (err, question) ->
+        question.should.be.ok
+        done err
+
+
   describe '#toJSON', ->
     it 'should hide _id', (done) ->
       Question.create REQUIRED_FIELDS, (err, question) ->
