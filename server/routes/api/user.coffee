@@ -1,4 +1,5 @@
-_ = require 'lodash'
+_   = require 'lodash'
+log = require '../../../lib/log'
 
 removeProhibitedKeys = (obj) ->
   _.omit obj, 'questions'
@@ -15,9 +16,11 @@ module.exports = (app) ->
   app.put "/api/user/start", (req, res) ->
     user = req.user
     user.start req.body, (err, user) ->
+      log.error err if err
       res.send removeProhibitedKeys user.toJSON()
 
   app.post "/api/user/finish", (req, res) ->
     user = req.user
     user.finish (err, user) ->
+      log.error err if err
       res.send removeProhibitedKeys user.toJSON()
