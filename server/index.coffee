@@ -13,6 +13,7 @@ config     = require '../config/config'
 quizConfig = require '../config/quiz'
 
 log        = require '../lib/log'
+questions  = require '../lib/questions'
 
 # Express configuration
 app = express()
@@ -51,7 +52,8 @@ require('./routes') app
 require './db'
 
 # Require all the questions
-require('../lib/questions').load quizConfig.dir
+questions.load quizConfig.dir
+log.success "loaded #{questions.list.length} questions"
 
 # Start the application
 app.listen process.env.PORT or 3000, ->
