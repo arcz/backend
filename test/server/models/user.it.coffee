@@ -280,6 +280,29 @@ describe 'User model', ->
             user.finishedAt.should.be.a.Date
             done err
 
+    it 'should set finishedAt at as a normal date if it does not exeed', (done) ->
+      finishedAt = new Date()
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start {}, (err, user) ->
+          user.finish (err, user) ->
+            userFinished = user.finishedAt
+            userFinished.getMinutes().should.eql finishedAt.getMinutes()
+            userFinished.getHours().should.eql finishedAt.getHours()
+            userFinished.getSeconds().should.eql finishedAt.getSeconds()
+            done err
+
+    it 'should set finishedAt at max duration if it exceeds it', (done) ->
+      User.create REQUIRED_FIELDS, (err, user) ->
+        newStartedAt = new Date()
+        newStartedAt.setHours newStartedAt.getHours() - 1
+        user.start {}, (err, user) ->
+          user.startedAt = newStartedAt
+          user.save (err, user) ->
+            done err if err
+            user.finish (err, user) ->
+              user.finishedAt.should.eql new Date newStartedAt.getTime() + user.timeTotal
+              done err
+
   describe '#validateState', ->
     it 'should return if startedAt is not set', (done) ->
       User.create REQUIRED_FIELDS, (err, user) ->

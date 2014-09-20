@@ -81,7 +81,11 @@ UserSchema.methods.answer = (questionId, answer = {}, cb) ->
 
 UserSchema.methods.finish = (cb) ->
   return cb null, this if not @startedAt or @finishedAt
-  @finishedAt = Date.now()
+  finishingTime  = Date.now()
+  timeDifference = finishingTime - @startedAt
+  if timeDifference > @timeTotal
+    finishingTime = new Date @startedAt.getTime() + @timeTotal
+  @finishedAt = finishingTime
   @save cb
 
 UserSchema.methods.validateState = (cb) ->
