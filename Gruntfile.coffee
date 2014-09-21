@@ -11,9 +11,9 @@ module.exports = (grunt) ->
   grunt.registerTask 'test', [ 'mochacov:spec', 'mochacov:it' ]
   grunt.registerTask 'test:spec', [ 'mochacov:spec' ]
   grunt.registerTask 'test:it', [ 'mochacov:it' ]
+  grunt.registerTask 'test:watch', [ 'watch:server' ]
   grunt.registerTask 'lint', [ 'coffeelint' ]
   grunt.registerTask 'server', [ 'concurrent:dev' ]
-
 
   grunt.initConfig
     path: paths
