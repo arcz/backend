@@ -8,6 +8,9 @@ mongoose   = require 'mongoose'
 path       = require 'path'
 clearDB    = require('mocha-mongoose') helpers.dbURL
 
+notifications = proxyquire '../../../server/notifications',
+  '../../config/notifications': {}
+
 # Require the schema
 UserSchema = proxyquire '../../../server/models/user',
   '../../config/quiz': groups: '*': 2
@@ -278,6 +281,15 @@ describe 'User model', ->
           assert user.finishedAt is undefined
           user.finish (err, user) ->
             user.finishedAt.should.be.a.Date
+            done err
+
+    it 'should set finishedAt', (done) ->
+      sinon.stub notifications.trigger, 'finish'
+      User.create REQUIRED_FIELDS, (err, user) ->
+        user.start {}, (err, user) ->
+          user.finish (err, user) ->
+            notifications.trigger.finish.called.should.be.ok
+            notifications.trigger.finish.restore()
             done err
 
     it 'should set finishedAt at as a normal date if it does not exeed', (done) ->

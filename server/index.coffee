@@ -51,6 +51,14 @@ require('./routes') app
 # Initialize the db connection
 require './db'
 
+# Initialize notifications
+try
+  notifications = require './notifications'
+  notifications.load require '../config/notifications'
+catch ignored
+  log.warn ignored
+  log.warn 'notification setup failed'
+
 # Require all the questions
 questions.load quizConfig.dir
 log.success "loaded #{questions.list.length} questions"

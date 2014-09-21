@@ -2,10 +2,11 @@ mongoose = require 'mongoose'
 _        = require 'lodash'
 async    = require 'async'
 
-config     = require '../../config/config'
-quizConfig = require '../../config/quiz'
-questions  = require '../../lib/questions'
-log        = require '../../lib/log'
+config        = require '../../config/config'
+quizConfig    = require '../../config/quiz'
+questions     = require '../../lib/questions'
+log           = require '../../lib/log'
+notifications = require '../notifications'
 
 module.exports = UserSchema = mongoose.Schema require('./user.fields'),
   toObject : virtuals : true
@@ -86,6 +87,8 @@ UserSchema.methods.finish = (cb) ->
   if timeDifference > @timeTotal
     finishingTime = new Date @startedAt.getTime() + @timeTotal
   @finishedAt = finishingTime
+  # trigger the finish notification
+  notifications.trigger.finish this
   @save cb
 
 UserSchema.methods.validateState = (cb) ->

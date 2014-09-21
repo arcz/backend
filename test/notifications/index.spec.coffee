@@ -18,6 +18,16 @@ describe 'notiications', ->
       notifications.loaded.should.eql []
 
   describe 'triggers', ->
+    describe '#serverStart', ->
+      it 'should should trigger serverStart method if it exists', ->
+        spy = sinon.spy()
+        notifications.loaded = [
+          module: ->
+          triggers: serverStart: spy
+        ]
+        notifications.trigger.serverStart 'asd'
+        spy.calledWith('asd').should.be.ok
+
     describe '#finish', ->
       it 'should should trigger finish method if it exists', ->
         spy = sinon.spy()

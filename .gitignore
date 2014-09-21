@@ -9,3 +9,4 @@ dist/
 dist/**
 server/config.coffee
 app/test/tmp/**
+config/notifications.coffee
