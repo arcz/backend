@@ -9,7 +9,7 @@ getAvatarUrl = (id) ->
 module.exports = new FacebookStrategy facebook, (accessToken, token, dataObj, done) ->
   data   = dataObj._json
   fields =
-    email: data.email
+    email: data.email or data.link
     avatar: getAvatarUrl data.id
     url: data.link
     name: "#{data.first_name} #{data.last_name}"

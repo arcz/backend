@@ -6,7 +6,7 @@ GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 module.exports = new GoogleStrategy google, (accessToken, token, dataObj, done) ->
   data   = dataObj._json
   fields =
-    email: data.email
+    email: data.email or data.link
     avatar: data.picture
     url: data.link
     name: data.name

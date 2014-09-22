@@ -6,7 +6,7 @@ GitHubStrategy = require('passport-github').Strategy
 module.exports = new GitHubStrategy github, (accessToken, token, dataObj, done) ->
   data   = dataObj._json
   fields =
-    email: data.email
+    email: data.email or data.html_url
     avatar: data.avatar_url
     url: data.html_url
     name: data.name
