@@ -1,8 +1,10 @@
-_   = require 'lodash'
-env = require '../../config/env'
+envConfig  = require '../../config/env'
+quizConfig = require '../../config/quiz'
+
+buildConf = (env, quiz) ->
+  env.duration = quiz.duration
+  env
 
 module.exports = (app) ->
   app.get '/env', (req, res) ->
-    res.send env
-
-
+    res.send buildConf envConfig, quizConfig
