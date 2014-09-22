@@ -6,9 +6,9 @@ GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 module.exports = new GoogleStrategy google, (accessToken, token, dataObj, done) ->
   data   = dataObj._json
   fields =
-    email: data.email or data.link
+    email: data.email
     avatar: data.picture
-    url: data.link
+    url: data.link or data.id
     name: data.name
     authType: 'google'
 

@@ -23,7 +23,7 @@ User = mongoose.model 'User', UserSchema
 
 describe 'User model', ->
   REQUIRED_FIELDS = null
-  beforeEach -> REQUIRED_FIELDS = { 'email', 'name', 'authType' }
+  beforeEach -> REQUIRED_FIELDS = { 'email', 'url', 'name', 'authType' }
   before helpers.connect
 
   it 'should exist', ->
@@ -68,6 +68,12 @@ describe 'User model', ->
       User.findOrCreate fields, ->
         User.findOne 'email': 'kitty', (err, user) ->
           user.should.be.ok
+          done err
+
+    it 'should not create another user if urls or emails match', (done) ->
+      User.create { 'type', 'name', 'email', 'url', 'authType' }, (err, user1)->
+        User.findOrCreate { 'url', 'authType', 'email' }, (err, user2)->
+          user1._id.should.eql user2._id
           done err
 
   describe '#toJSON', ->
@@ -346,7 +352,7 @@ describe 'User model', ->
     afterEach -> clock.restore()
 
     it 'should find all finished users', (done) ->
-      User.create { 'email', name: 'hello', 'authType' }, (err, user) ->
+      User.create { 'email', name: 'hello', 'authType', 'url' }, (err, user) ->
         user.start {}, (err, user) ->
           user.finish (err, user) ->
             User.findFinished (err, users) ->
@@ -355,14 +361,14 @@ describe 'User model', ->
               done err
 
     it 'should not find any users if there are no finished ones', (done) ->
-      User.create { 'email', name: 'hello', 'authType' }, (err, user) ->
+      User.create { 'email', name: 'hello', 'authType', 'url' }, (err, user) ->
         user.start {}, (err, user) ->
           User.findFinished (err, users) ->
             users.length.should.eql 0
             done err
 
     it 'should update all users whos timeLeft is 0 to finished', (done) ->
-      User.create { 'email', name: 'hello test', 'authType' }, (err, user) ->
+      User.create { 'email', name: 'hello test', 'authType', 'url' }, (err, user) ->
         user.start {}, (err, user) ->
           clock.tick 2000000
           User.findFinished (err, users) ->

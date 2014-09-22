@@ -4,9 +4,12 @@ QuestionSchema = require './question'
 
 module.exports =
   avatar     : String
-  url        : String
   finishedAt : Date
   startedAt  : Date
+
+  url :
+    type     : String
+    required : true
 
   email:
     type     : String

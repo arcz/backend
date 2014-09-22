@@ -32,14 +32,13 @@ UserSchema.statics.findFinished = (cb) ->
 # If we have found a current user by its url and it has a different email
 # then lets update the users email and return the updated user
 UserSchema.statics.findOrCreate = (data, cb) ->
-  { email, url } = data
-  condition = $or: [{email}, {url}]
-  @findOne condition, (err, user) =>
+  { url, email } = data
+  @findOne { url }, (err, user) =>
     return cb err, null if err
     return @create data, cb unless user
     # So it seems that the users email is changed
     # lets update the user
-    if user.email isnt email
+    if email and user.email isnt email
       user.email = email
       user.save cb
     else
