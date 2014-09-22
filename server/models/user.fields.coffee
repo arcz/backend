@@ -11,7 +11,6 @@ module.exports =
   email:
     type     : String
     trim     : true
-    required : true
 
   name:
     type     : String
