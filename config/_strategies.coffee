@@ -1,4 +1,9 @@
 module.exports =
+  # Redirect paths for success/failure scenarios
+  redirects:
+    failureRedirect : '/'
+    successRedirect : '/'
+
   github:
     clientID: 'client-id'
     clientSecret: 'client-secret'
