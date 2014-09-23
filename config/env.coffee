@@ -1,6 +1,6 @@
 module.exports =
   # Your test title
-  title: 'What the fuck is this'
+  title: 'Super test'
 
   # Allowed logins
   logins: [
