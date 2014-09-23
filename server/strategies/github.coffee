@@ -9,7 +9,7 @@ module.exports = new GitHubStrategy github, (accessToken, token, dataObj, done) 
     email: data.email
     avatar: data.avatar_url
     url: data.html_url
-    name: data.name or data.html_url
+    name: data.name or data.login
     authType: 'github'
 
   User.findOrCreate fields, done
