@@ -29,8 +29,7 @@ module.exports =
     type     : String
     required : true
 
-  content:
-    type : String
+  content: mongoose.Schema.Types.Mixed
 
   expectedAnswer:
     type     : Boolean
