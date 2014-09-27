@@ -3,9 +3,12 @@ mongoose = require 'mongoose'
 QuestionSchema = require './question'
 
 module.exports =
+  # Meant to be holding optional data about the user
   avatar     : String
   finishedAt : Date
   startedAt  : Date
+  questions  : [ QuestionSchema ]
+  meta       : mongoose.Schema.Types.Mixed
 
   url :
     type     : String
@@ -37,4 +40,3 @@ module.exports =
       type: String
       trim: true
 
-  questions: [ QuestionSchema ]

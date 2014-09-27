@@ -16,3 +16,10 @@ module.exports = (app) ->
     User.findFinished (err, users) ->
       log.error if err
       res.send finished: users.length
+
+  app.put '/api/admin/update/:id', (req, res) ->
+    id   = req.params.id
+    meta = req.params.meta
+    User.findByIdAndUpdate id, req.body, {}, (err, user) ->
+      log.error if err
+      res.send user

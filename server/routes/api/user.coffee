@@ -2,7 +2,7 @@ _   = require 'lodash'
 log = require '../../../lib/log'
 
 removeProhibitedKeys = (obj) ->
-  _.omit obj, 'questions'
+  _.omit obj, [ 'questions', 'meta' ]
 
 module.exports = (app) ->
   app.all '/api/user', (req, res, next) ->
