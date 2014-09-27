@@ -3,6 +3,9 @@ AnswerSchema = require './answer'
 
 module.exports =
   answers: [ AnswerSchema ]
+  content: mongoose.Schema.Types.Mixed
+  variants: mongoose.Schema.Types.Mixed
+
   group:
     type     : String
     required : true
@@ -29,11 +32,8 @@ module.exports =
     type     : String
     required : true
 
-  content: mongoose.Schema.Types.Mixed
-
   expectedAnswer:
     type     : Boolean
     required : true
 
-  variants: Object
 
