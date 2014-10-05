@@ -2,9 +2,9 @@ mongoose     = require 'mongoose'
 AnswerSchema = require './answer'
 
 module.exports =
-  answers: [ AnswerSchema ]
-  content: mongoose.Schema.Types.Mixed
-  variants: mongoose.Schema.Types.Mixed
+  answers : [ AnswerSchema ]
+  content : mongoose.Schema.Types.Mixed
+  opts    : mongoose.Schema.Types.Mixed
 
   group:
     type     : String
@@ -32,6 +32,11 @@ module.exports =
     type     : String
     required : true
 
+
+  # If the quesiton has validate method
+  # then expectedAnswer will be set as true.
+  #
+  # Will be used to tranverse the validate object later on
   expectedAnswer:
     type     : Boolean
     required : true
