@@ -23,3 +23,12 @@ module.exports = (app) ->
     User.findByIdAndUpdate id, req.body, {}, (err, user) ->
       log.error if err
       res.send user
+
+  app.del '/api/admin/user/:id', (req, res) ->
+    id = req.params.id
+    User.remove { _id: id }, (err, usr) ->
+      if err
+        log.error
+        res.status(400).send()
+      else
+        res.status(200).send {}
