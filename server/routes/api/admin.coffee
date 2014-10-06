@@ -1,6 +1,7 @@
-_        = require 'lodash'
-log      = require '../../../lib/log'
-{ User } = require '../../models'
+_          = require 'lodash'
+log        = require '../../../lib/log'
+adminCount = require '../../../lib/admin-overview-count'
+{ User }   = require '../../models'
 
 module.exports = (app) ->
   app.all '/api/admin*', (req, res, next) ->
@@ -13,9 +14,9 @@ module.exports = (app) ->
       res.send users.map (user) -> user.toJSON()
 
   app.get '/api/admin/overview', (req, res) ->
-    User.findFinished (err, users) ->
+    User.find (err, users) ->
       log.error if err
-      res.send finished: users.length
+      res.send adminCount users
 
   app.put '/api/admin/update/:id', (req, res) ->
     id   = req.params.id
