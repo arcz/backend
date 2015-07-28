@@ -22,7 +22,8 @@
     "passport-google-oauth": "^0.1.5",
     "passport-linkedin-oauth2": "^1.1.1",
     "require-dir-sync": "0.0.1",
-    "serve-static": "^1.5.3"
+    "serve-static": "^1.5.3",
+    "xregexp": "^2.0.0"
   },
   "devDependencies": {
     "coffee-script": "^1.7.1",
