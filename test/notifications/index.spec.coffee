@@ -2,7 +2,7 @@ notifications = require '../../server/notifications/index'
 
 sinon = require 'sinon'
 
-describe 'notiications', ->
+describe 'notifications', ->
   describe '#load', ->
     it 'should should exist', ->
       notifications.load.should.be.a.Function
